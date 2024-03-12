@@ -47,6 +47,7 @@ class UserFeedVM extends ChangeNotifier {
               NavigationService.navigatorKey.currentContext!,
               listen: false)
           .currentamityUser;
+      log("amityUser: $amityUser");
     } else {
       log("isNotCurrentUser:$userId");
       if (otherUser != null) {

@@ -87,7 +87,7 @@ class AmitySLEUIKit {
         .then((value) async {
       log("login success");
       await Provider.of<UserVM>(context, listen: false)
-          .initAccessToken()
+          .initAccessToken(authToken: authToken)
           .then((value) {
         log("initAccessToken success");
         if (Provider.of<UserVM>(context, listen: false).accessToken != null ||

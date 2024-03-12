@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/utils/dynamicSilverAppBar.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screenV2.dart';
@@ -638,7 +640,12 @@ class UserProfileScreenState extends State<UserProfileScreen>
           ),
         );
       } else {
-        return const Scaffold();
+        log("UserProfileScreen:body: UserFeedVM.amityUser is null. Loading...");
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       }
     });
   }

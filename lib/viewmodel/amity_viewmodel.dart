@@ -32,7 +32,10 @@ class AmityVM extends ChangeNotifier {
                 title: "Error!", message: error.toString());
           });
         } else {
-          await AmityCoreClient.login(userID).submit().then((value) async {
+          await AmityCoreClient.login(userID)
+              .authToken(authToken!)
+              .submit()
+              .then((value) async {
             log("success");
             isProcessing = false;
 
@@ -49,6 +52,7 @@ class AmityVM extends ChangeNotifier {
         if (displayName != null) {
           await AmityCoreClient.login(userID)
               .displayName(displayName)
+              .authToken(authToken!)
               .submit()
               .then((value) async {
             log("success");
@@ -64,7 +68,7 @@ class AmityVM extends ChangeNotifier {
           });
         } else {
           await AmityCoreClient.login(userID).submit().then((value) async {
-            log("success");
+            log("flat login success");
             isProcessing = false;
             getUserByID(userID);
             currentamityUser = value;

@@ -313,6 +313,7 @@ class _PostWidgetState extends State<PostWidget>
   // @override
   @override
   Widget build(BuildContext context) {
+    print("Post");
     return Column(
       children: [
         GestureDetector(

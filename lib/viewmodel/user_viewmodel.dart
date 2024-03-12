@@ -21,14 +21,15 @@ class UserVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> initAccessToken({String? apikey}) async {
+  Future<void> initAccessToken({String? apikey, String? authToken}) async {
     var dio = Dio();
     await dio
         .post(
       "https://api.${env!.region}.amity.co/api/v3/sessions",
       data: {
         'userId': AmityCoreClient.getUserId(),
-        'deviceId': AmityCoreClient.getUserId()
+        'deviceId': AmityCoreClient.getUserId(),
+        'authToken': authToken
       },
       options: Options(
         headers: {
