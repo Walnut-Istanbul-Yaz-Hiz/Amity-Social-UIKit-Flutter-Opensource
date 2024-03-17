@@ -551,14 +551,19 @@ class _CommunityListPageState extends State<CommunityListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF292C45),
         elevation: 0.0, // Remove shadow
 
         title: Text(
           widget.category.name ?? "Community",
-          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+          style: Provider.of<AmityUIConfiguration>(context)
+              .titleTextStyle
+              .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Color(0xff998455), weight: 800.0),
       ),
       body: Consumer<ExplorePageVM>(
         builder: (context, vm, _) {
