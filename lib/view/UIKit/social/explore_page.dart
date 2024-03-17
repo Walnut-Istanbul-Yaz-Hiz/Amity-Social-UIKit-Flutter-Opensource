@@ -86,7 +86,7 @@ class _CommunityPageState extends State<CommunityPage> {
                       ),
                       tabs: [
                         Tab(
-                          text: "Newfeed",
+                          text: "Newsfeed",
                         ),
                         Tab(text: "Explore"),
                       ],
