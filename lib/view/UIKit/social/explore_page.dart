@@ -85,10 +85,10 @@ class _CommunityPageState extends State<CommunityPage> {
                         fontFamily: 'SF Pro Text',
                       ),
                       tabs: [
+                        Tab(text: "Explore"),
                         Tab(
                           text: "Newsfeed",
                         ),
-                        Tab(text: "Explore"),
                       ],
                     ),
                   ],
@@ -103,6 +103,7 @@ class _CommunityPageState extends State<CommunityPage> {
         ),
         body: TabBarView(
           children: [
+            const ExplorePage(),
             Scaffold(
               floatingActionButton: FloatingActionButton(
                 shape: const CircleBorder(),
@@ -121,7 +122,6 @@ class _CommunityPageState extends State<CommunityPage> {
                 isShowMyCommunity: widget.isShowMyCommunity,
               ),
             ),
-            const ExplorePage(),
           ],
         ),
       ),
