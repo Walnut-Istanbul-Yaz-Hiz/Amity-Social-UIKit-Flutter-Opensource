@@ -21,15 +21,26 @@ class _FollowScreenState extends State<FollowScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar:AppBar(
+        elevation: 0.0, // Add this line to remove the shadow
+        leading: IconButton(
+          icon: const Icon(Icons.close,
+          color: Color(0xff998455),),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           widget.displayName ?? "",
-          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+          .copyWith(
+            color: Color(0xff998455),
+            fontWeight: FontWeight.w800,
+            fontSize: 20
+          ),
         ),
+        backgroundColor: Color(0xFF292C45),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      backgroundColor: Provider.of<AmityUIConfiguration>(context)
-          .messageRoomConfig
-          .backgroundColor,
+      backgroundColor: Color(0xff1E2034),
       body: SafeArea(
         bottom: false,
         child: DefaultTabController(
@@ -37,30 +48,43 @@ class _FollowScreenState extends State<FollowScreen> {
           child: Scaffold(
             body: Column(
               children: [
-                TabBar(
-                  tabAlignment: TabAlignment.start,
-                  controller: _tabController,
-                  isScrollable: true,
-                  labelColor: const Color(0xFF1054DE),
-                  unselectedLabelColor: Colors.black,
-                  indicatorColor: const Color(0xFF1054DE),
-                  labelStyle: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'SF Pro Text',
+                Container(
+                  color: Color(0xff756548),
+                  child: TabBar(
+                    tabAlignment: TabAlignment.start,
+                    controller: _tabController,
+                    isScrollable: true,
+                    indicatorColor: Color(0xff3DDAB4),
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorWeight: 6,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Color(0xff998455),
+                    labelStyle: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'SF Pro Text',
+                    ),
+                    tabs: const [
+                      Tab(
+                        child: Text(
+                          "Following",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800  
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Followers",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800  
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  tabs: const [
-                    Tab(
-                      child: Text(
-                        "Following",
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        "Followers",
-                      ),
-                    ),
-                  ],
                 ),
                 Expanded(
                   child: Consumer<FollowerVM>(builder: (context, vm, _) {

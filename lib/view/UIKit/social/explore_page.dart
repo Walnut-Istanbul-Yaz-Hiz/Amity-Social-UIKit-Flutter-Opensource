@@ -1,11 +1,15 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/view/UIKit/social/my_community_feed.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/post_target_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/search_communities.dart';
+import 'package:amity_uikit_beta_service/view/chat/chats_page.dart';
 import 'package:amity_uikit_beta_service/view/social/community_feed.dart';
 import 'package:amity_uikit_beta_service/view/social/global_feed.dart';
+import 'package:amity_uikit_beta_service/view/user/user_profile.dart';
 import 'package:amity_uikit_beta_service/viewmodel/community_feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/explore_page_viewmodel.dart';
+import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +21,9 @@ class CommunityPage extends StatefulWidget {
   State<CommunityPage> createState() => _CommunityPageState();
 }
 
-class _CommunityPageState extends State<CommunityPage> {
+class _CommunityPageState extends State<CommunityPage> with TickerProviderStateMixin{
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +32,14 @@ class _CommunityPageState extends State<CommunityPage> {
     explorePageVM.getTrendingCommunities();
     explorePageVM
         .queryCommunityCategories(AmityCommunityCategorySortOption.NAME);
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.index = 0;
+    
+  }
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,29 +47,33 @@ class _CommunityPageState extends State<CommunityPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: const Color(0xFFEBECEF),
+        backgroundColor: Color(0xff1E2034),
         appBar: AppBar(
           elevation: 0.05, // Add this line to remove the shadow
-          backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.blue),
+          backgroundColor: Color(0xFF292C45),
           leading: IconButton(
             icon: const Icon(
               Icons.close,
-              color: Colors.black,
+              color: Color(0xff998455)
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
           // centerTitle: false,
           automaticallyImplyLeading: false,
+          centerTitle: true,
           title: Text(
             "Community",
-            style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 30,
+              color: Colors.white,
+            ),
           ),
           actions: [
             IconButton(
               icon: const Icon(
                 Icons.search,
-                color: Colors.black,
+                color: Color(0xff998455),
               ),
               onPressed: () {
                 // Implement search functionality
@@ -64,62 +82,150 @@ class _CommunityPageState extends State<CommunityPage> {
               },
             )
           ],
-          bottom: const PreferredSize(
+          bottom:  PreferredSize(
             preferredSize: Size.fromHeight(
                 48.0), // Provide a height for the AppBar's bottom
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    TabBar(
-                      tabAlignment: TabAlignment.start,
-                      isScrollable:
-                          true, // Ensure that the TabBar is scrollable
-
-                      labelColor: Color(0xFF1054DE), // #1054DE color
-                      unselectedLabelColor: Colors.grey,
-                      indicatorColor: Color(0xFF1054DE),
-                      labelStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'SF Pro Text',
-                      ),
-                      tabs: [
-                        Tab(text: "Explore"),
-                        Tab(
-                          text: "Newsfeed",
-                        ),
-                      ],
+            child: Container(
+              color: Color(0xff756548),
+              child: Row(
+                children: [
+                  TabBar(
+                    controller: _tabController,
+                    tabAlignment: TabAlignment.start,
+                    isScrollable: true,
+                    indicatorColor: Color(0xff3DDAB4),
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorWeight: 6,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Color(0xff998455),
+                    labelStyle: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'SF Pro Text',
                     ),
-                  ],
-                ),
-                // Divider(
-                //   color: Colors.grey,
-                //   height: 0,
-                // )
-              ],
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          'Explore',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800  
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Newsfeed',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800  
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: [
-            const ExplorePage(),
-            Scaffold(
-              floatingActionButton: FloatingActionButton(
-                shape: const CircleBorder(),
-                onPressed: () {
-                  // Navigate or perform action based on 'Newsfeed' tap
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Scaffold(body: PostToPage()),
-                  ));
-                },
-                backgroundColor: AmityUIConfiguration().primaryColor,
-                child: Provider.of<AmityUIConfiguration>(context)
-                    .iconConfig
-                    .postIcon(iconSize: 28, color: Colors.white),
+             ExplorePage(),
+             NewsfeedPage(),
+          ],
+        ),
+        bottomNavigationBar: _bottomNavigationBar(),
+      ),
+    );
+  }
+  Widget _bottomNavigationBar(){
+    return Container(
+      height: 80,
+        decoration: BoxDecoration(
+          color: Color(0xFF292C45),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 5.0,
+              spreadRadius: 2.0,
+              offset: Offset(0, -3),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16, left: 16,top: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _navigationButton(
+                route: 'Feed',
+                icon: 'images/icons/weserved_icons/newsfeed_icon.png',
+                text: 'NEWS',
+                index: 1,
               ),
-              body: GlobalFeedScreen(
-                isShowMyCommunity: widget.isShowMyCommunity,
+              _navigationButton(
+                route: 'Groups',
+                icon: 'images/icons/weserved_icons/groups_icon.png',
+                text: 'GROUPS',
+              ),
+              _navigationButton(
+                route: 'Explore',
+                icon: 'images/icons/weserved_icons/explore_icon.png',
+                text: 'EXPLORE',
+                index: 0,
+              ),
+              _navigationButton(
+                route: 'Chat',
+                icon: 'images/icons/weserved_icons/chat_icon.png',
+                text: 'CHAT',
+              ),
+              _navigationButton(
+                route: 'Profile',
+                icon: 'images/icons/weserved_icons/navbar_profile_icon.png',
+                text: 'CHAT',
+              ),
+            ],
+          ),
+        ),
+      );
+  }
+  Widget _navigationButton({
+    required String icon,
+    required String route,
+    required String text,
+    int? index,
+
+  }) {
+    return Container(
+      color: Color(0xFF292C45),
+      width: MediaQuery.of(context).size.width * 0.18,
+      child: MaterialButton(
+        padding: EdgeInsets.zero,
+        splashColor: Colors.transparent,
+        highlightColor: Color(0xff3DDAB4),
+        onPressed: () {
+          goPage(route, context);
+          _tabController.index = index ?? 0;
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(
+              icon,
+              height: 40,
+              width: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top:5,bottom: 5),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Color(0xff756548),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700
+                ),
               ),
             ),
           ],
@@ -128,7 +234,65 @@ class _CommunityPageState extends State<CommunityPage> {
     );
   }
 }
+Future<void> goPage(String route, BuildContext context) async {
+    switch (route) {
+      case 'Groups':
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              const Scaffold(body: MyCommunityPage()),
+        ));
+        break;
+      case 'Profile':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (_) =>
+                  UserProfileScreen(
+                    amityUser:
+                        AmityCoreClient
+                            .getCurrentUser(),
+                    amityUserId:
+                        AmityCoreClient
+                            .getUserId(),
+                  ))
+          );
+        break;
+      // case 'Chat':
+      //   Navigator.of(context).push(MaterialPageRoute(
+      //       builder: (context) =>ChatsPage()
+      //     )
+      //   );
+      //   break;
+      // case 'More':
+      default:
+    }
+  }
 
+class NewsfeedPage extends StatelessWidget {
+  final isShowMyCommunity;
+  const NewsfeedPage({super.key, this.isShowMyCommunity=true});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {
+          // Navigate or perform action based on 'Newsfeed' tap
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const Scaffold(body: PostToPage()),
+          ));
+        },
+        backgroundColor: Color(0xff998455),
+        child: Provider.of<AmityUIConfiguration>(context)
+            .iconConfig
+            .postIcon(iconSize: 28, color: Color(0xFF292C45)),
+      ),
+      body: GlobalFeedScreen(
+        isShowMyCommunity: isShowMyCommunity,
+      ),
+    );
+  }
+}
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
 
@@ -153,7 +317,7 @@ class RecommendationSection extends StatelessWidget {
       builder: (context, vm, _) {
         return Container(
           padding: const EdgeInsets.only(bottom: 24),
-          color: const Color(0xFFEBECEF), // Set background color
+          color: Color(0xff1E2034), // Set background color
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -161,7 +325,11 @@ class RecommendationSection extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16, top: 20),
                 child: Text(
                   'Recommendation for you',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff998455),  
+                  ),
                 ),
               ),
               const SizedBox(
@@ -180,14 +348,15 @@ class RecommendationSection extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  CommunityScreen(community: community)));
+                                  CommunityScreen(community: community))
+                          );
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(4), // No border radius
                           ),
-                          color: Colors.white,
+                          color: Color(0xFF292C45),
                           child: Container(
                             width: 131,
                             height: 194,
@@ -212,6 +381,7 @@ class RecommendationSection extends StatelessWidget {
                                 Text(
                                   community.displayName ?? '',
                                   style: const TextStyle(
+                                      color: Color(0xff998455),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15),
                                   overflow: TextOverflow
@@ -224,14 +394,14 @@ class RecommendationSection extends StatelessWidget {
                                     ? const Text(
                                         '',
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 13),
+                                            color: Colors.white, fontSize: 13),
                                         overflow: TextOverflow
                                             .ellipsis, // Handle text overflow
                                       )
                                     : Text(
                                         '${community.categories?[0]?.name}',
                                         style: const TextStyle(
-                                            color: Colors.black, fontSize: 13),
+                                            color: Colors.white, fontSize: 13),
                                         overflow: TextOverflow
                                             .ellipsis, // Handle text overflow
                                       ),
@@ -241,7 +411,10 @@ class RecommendationSection extends StatelessWidget {
                                 Text(
                                   '${community.membersCount} Members',
                                   style:
-                                      const TextStyle(color: Color(0xff636878)),
+                                      const TextStyle(
+                                        color: Color(0xff3DDAB4),
+                                        fontSize: 13,
+                                      ),
                                   overflow: TextOverflow
                                       .ellipsis, // Handle text overflow
                                 ),
@@ -252,7 +425,10 @@ class RecommendationSection extends StatelessWidget {
                                   child: Text(
                                     community.description ?? '',
                                     softWrap: true,
-                                    style: const TextStyle(fontSize: 13),
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                    ),
                                     overflow: TextOverflow
                                         .ellipsis, // Handle text overflow
                                     maxLines: 3, // Display up to two lines
@@ -283,7 +459,7 @@ class TrendingSection extends StatelessWidget {
     return Consumer<ExplorePageVM>(
       builder: (context, vm, _) {
         return Container(
-          color: Colors.white,
+          color:  Color(0xFF292C45) ,
           padding: const EdgeInsets.only(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,7 +468,11 @@ class TrendingSection extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16, top: 20),
                 child: Text(
                   'Today\'s Trending',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff998455),
+                  ),
                 ),
               ),
               ListView.builder(
@@ -320,7 +500,7 @@ class TrendingSection extends StatelessWidget {
                           height: 40,
                           width: 40,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFD9E5FC),
+                            color: Color(0xFF292C45),
                             shape: BoxShape.circle,
                           ),
                           child: community.avatarImage != null
@@ -334,7 +514,7 @@ class TrendingSection extends StatelessWidget {
                         Text("${index + 1}",
                             style: const TextStyle(
                                 fontSize: 20,
-                                color: Color(0xff1054DE),
+                                color: Color(0xffFC0069),
                                 fontWeight: FontWeight.bold)), // Ranking number
                         // Spacing between rank and avatar
                       ],
@@ -342,19 +522,20 @@ class TrendingSection extends StatelessWidget {
                     title: Text(
                       community.displayName ?? '',
                       style: const TextStyle(
-                          color: Color(0xff292B32),
+                          color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
                     subtitle: community.categories!.isEmpty
                         ? Text(
                             'no category • ${community.membersCount} members',
                             style: const TextStyle(
-                                fontSize: 13, color: Color(0xff636878)),
+                                fontSize: 13, color: Color(0xff3DDAB4)),
                           )
                         : Text(
                             '${community.categories?[0]?.name ?? ""} • ${community.membersCount} members',
                             style: const TextStyle(
-                                fontSize: 13, color: Color(0xff636878)),
+                                fontSize: 13, color: Color(0xff3DDAB4)
+                              ),
                           ),
                   );
                 },
@@ -376,7 +557,7 @@ class CategorySection extends StatelessWidget {
       builder: (context, vm, _) {
         return Container(
           padding: const EdgeInsets.only(left: 16, top: 20, bottom: 25),
-          color: Colors.white,
+          color: Color(0xFF292C45),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -388,8 +569,11 @@ class CategorySection extends StatelessWidget {
                 children: [
                   Text(
                     'Categories',
-                    style: Provider.of<AmityUIConfiguration>(context)
-                        .titleTextStyle,
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff998455),
+                    ),
                   ),
                   const SizedBox(
                     height: 30,
@@ -407,6 +591,7 @@ class CategorySection extends StatelessWidget {
                       child: Icon(
                         Icons.chevron_right,
                         size: 18,
+                        color: Color(0xff998455),
                       ),
                     ),
                   ),
@@ -440,14 +625,14 @@ class CategorySection extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      color: Colors.white,
+                      color: Color(0xFF292C45),
                       child: Row(
                         children: [
                           Container(
                             height: 40,
                             width: 40,
                             decoration: const BoxDecoration(
-                                color: Color(0xFFD9E5FC),
+                                color: Color(0xFF292C45),
                                 shape: BoxShape.circle),
                             child: const Icon(
                               Icons.category,
@@ -459,6 +644,10 @@ class CategorySection extends StatelessWidget {
                             child: Text(
                               category.name ?? '',
                               overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Color(0xff3DDAB4),
+                              ),
                             ),
                           ),
                         ],
@@ -481,14 +670,26 @@ class CategoryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF292C45),
         elevation: 0.0, // Remove shadow
         title: Text(
           "Category",
-          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+          style: Provider.of<AmityUIConfiguration>(context)
+              .titleTextStyle
+              .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
         ),
-        iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: Color(0xff998455)
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
       ),
       body: Consumer<ExplorePageVM>(
         builder: (context, vm, _) {
@@ -510,7 +711,7 @@ class CategoryListPage extends StatelessWidget {
                   height: 40,
                   width: 40,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFD9E5FC),
+                    color: Color(0xFF292C45),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -518,7 +719,12 @@ class CategoryListPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                title: Text(category.name ?? ''),
+                title: Text(category.name ?? '',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xff3DDAB4),
+                  ),
+                ),
               );
             },
           );
@@ -550,6 +756,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
         backgroundColor: Color(0xFF292C45),
         elevation: 0.0, // Remove shadow
@@ -582,7 +789,7 @@ class _CommunityListPageState extends State<CommunityListPage> {
                   height: 40,
                   width: 40,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFD9E5FC),
+                    color: Color(0xFF292C45),
                     shape: BoxShape.circle,
                   ),
                   child: community.avatarImage != null
@@ -595,7 +802,12 @@ class _CommunityListPageState extends State<CommunityListPage> {
                           color: Colors.white,
                         ),
                 ),
-                title: Text(community.displayName ?? ''),
+                title: Text(community.displayName ?? '',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                  ),
+                ),
               );
             },
           );

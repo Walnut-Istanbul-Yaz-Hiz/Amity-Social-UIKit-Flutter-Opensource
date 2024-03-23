@@ -51,13 +51,14 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF292C45),
         leading: IconButton(
           icon: const Icon(
             Icons.close,
-            color: Colors.black,
+            color: Color(0xff998455),
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -65,7 +66,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
         ),
         title: const Text(
           'Create community',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Color(0xff998455)),
         ),
       ),
       body: Padding(
@@ -105,7 +106,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      border: Border.all(color: Colors.white),
+                      border: Border.all(color: Color(0xff3DDAB4)),
                       borderRadius:
                           BorderRadius.circular(5.0), // Adding rounded corners
                     ),
@@ -115,7 +116,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                       children: [
                         Icon(
                           Icons.camera_alt,
-                          color: Colors.white,
+                          color: Color(0xff3DDAB4),
                         ), // Adding a camera icon
                         SizedBox(
                             width:
@@ -123,7 +124,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                         Text(
                           'Upload image',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xff3DDAB4),
                           ),
                         ),
                       ],
@@ -183,13 +184,16 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                           height: 40,
                           width: 40,
                           decoration: BoxDecoration(
-                              color: Colors.grey[200], shape: BoxShape.circle),
-                          child: const Icon(Icons.public),
+                              color: Color(0xff998455), shape: BoxShape.circle),
+                          child: const Icon(Icons.public,color: Color(0xFF292C45),),
                         ),
-                        title: const Text('Public'),
+                        title: const Text('Public',style: TextStyle(color: Colors.white),),
                         subtitle: const Text(
-                            'Anyone can join, view and search this community'),
+                            'Anyone can join, view and search this community',
+                            style: TextStyle(color: Colors.white38),),
                         trailing: Radio(
+                          activeColor: Color(0xff3DDAB4),
+                          hoverColor: Color(0xff998455),
                           value: true,
                           groupValue: _isPublic,
                           onChanged: (bool? value) {
@@ -208,13 +212,16 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                           height: 40,
                           width: 40,
                           decoration: BoxDecoration(
-                              color: Colors.grey[200], shape: BoxShape.circle),
-                          child: const Icon(Icons.lock),
+                              color: Color(0xff998455), shape: BoxShape.circle),
+                          child: const Icon(Icons.lock,color: Color(0xFF292C45),),
                         ),
-                        title: const Text('Private'),
+                        title: const Text('Private',style: TextStyle(color: Colors.white),),
                         subtitle: const Text(
-                            'Only members invited by the moderators can join, view and search this community'),
+                            'Only members invited by the moderators can join, view and search this community',
+                            style: TextStyle(color: Colors.white38),),
                         trailing: Radio(
+                          activeColor: Color(0xff3DDAB4),
+                          hoverColor: Color(0xff998455),
                           value: true,
                           groupValue: !_isPublic,
                           onChanged: (bool? value) {
@@ -235,7 +242,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Divider(
-                                color: Colors.grey[300],
+                                color: Color(0xff998455),
                                 thickness: 1,
                               ),
                               const SizedBox(
@@ -244,14 +251,11 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                               RichText(
                                 text: TextSpan(
                                   text: 'Add members',
-                                  style: Provider.of<AmityUIConfiguration>(
-                                          context,
-                                          listen: false)
-                                      .titleTextStyle,
+                                  style: TextStyle(color: Colors.white),
                                   children: const [
                                     TextSpan(
                                       text: ' *',
-                                      style: TextStyle(color: Colors.red),
+                                      style: TextStyle(color: Color(0xffFC0069)),
                                     ),
                                   ],
                                 ),
@@ -267,7 +271,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
               ),
             ),
             Divider(
-              color: Colors.grey[300],
+              color:  Color(0xff998455),
               thickness: 1,
             ),
             Center(
@@ -306,9 +310,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Provider.of<AmityUIConfiguration>(context,
-                            listen: false)
-                        .primaryColor,
+                    backgroundColor: Color(0xffFC0069),
                     minimumSize: const Size(10, 50),
                   ),
                   child: const Row(
@@ -355,12 +357,15 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
             RichText(
               text: TextSpan(
                 text: title,
-                style: Provider.of<AmityUIConfiguration>(context, listen: false)
-                    .titleTextStyle,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
                 children: [
                   TextSpan(
                     text: isRequred ? ' *' : "",
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Color(0xffFC0069)),
                   ),
                 ],
               ),
@@ -372,7 +377,8 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                     child: Text(
                       '${controller.text.length}/$maxCharacters',
                       style: const TextStyle(
-                          fontSize: 13.4), // Setting font size to 13.4
+                          fontSize: 13.4,
+                          color: Colors.white), // Setting font size to 13.4
                     ),
                   )
                 : Container(), // Updated here to show the current character count
@@ -380,9 +386,15 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
         ),
         TextField(
           controller: controller,
+          style: TextStyle(
+            color: Colors.white
+          ),
           decoration: InputDecoration(
             border: InputBorder.none, // This line removes the underline
             hintText: hintText,
+            hintStyle: TextStyle(
+              color: Color(0xff3DDAB4)
+            ),
             counterText:
                 "", // Added this line to remove the counter below the TextField
           ),
@@ -419,28 +431,27 @@ class MemberSection extends StatelessWidget {
         // Insert selected user chips here
         for (var user in Provider.of<UserVM>(context).selectedCommunityUsers)
           Chip(
-            backgroundColor: Colors.grey[280],
+            backgroundColor: Color(0xff1E2034),
             avatar: CircleAvatar(
-              backgroundColor: const Color(0xFFD9E5FC),
+              backgroundColor: const Color(0xff998455),
               backgroundImage:
                   user.avatarUrl == null ? null : NetworkImage(user.avatarUrl!),
               child: user.avatarUrl != null
                   ? null
                   : const Icon(Icons.person,
                       size: 13,
-                      color: Colors
-                          .white), // Adjust to use the correct attribute for avatar URL
+                      color: Color(0xFF292C45)), // Adjust to use the correct attribute for avatar URL
             ),
 
             label: Text(user.displayName ??
-                ""), // Display user's name, replace 'name' with the appropriate attribute for the user's name
+                "",style: TextStyle(color: Colors.white),), // Display user's name, replace 'name' with the appropriate attribute for the user's name
             onDeleted: () {
               // Handle the logic to remove the user when "X" is tapped
               Provider.of<UserVM>(context, listen: false)
                   .toggleUserSelection(user);
             },
             deleteIcon: const Icon(Icons.close),
-            deleteIconColor: Colors.black54,
+            deleteIconColor: Color(0xff998455),
           ),
         GestureDetector(
           onTap: () async {
@@ -452,8 +463,8 @@ class MemberSection extends StatelessWidget {
             height: 40,
             width: 40,
             decoration:
-                BoxDecoration(color: Colors.grey[200], shape: BoxShape.circle),
-            child: const Icon(Icons.add),
+                BoxDecoration(color: Color(0xff998455), shape: BoxShape.circle),
+            child: const Icon(Icons.add,color: Color(0xFF292C45),),
           ),
         ),
       ],

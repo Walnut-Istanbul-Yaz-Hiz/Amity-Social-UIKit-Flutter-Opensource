@@ -119,7 +119,7 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
 
   Widget generateURLWidget(String url) {
     const style = TextStyle(
-      color: Colors.black,
+      color: Color(0xffFC0069),
       fontSize: 16,
       fontWeight: FontWeight.w500,
       height: 1.375,
@@ -161,10 +161,13 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
       metadataTextStyle: style.copyWith(
         fontSize: 14,
         fontWeight: FontWeight.w400,
+        color: Colors.white,
       ),
       animationDuration: const Duration(milliseconds: 300),
       metadataTitleStyle: style.copyWith(
         fontWeight: FontWeight.w800,
+        color: Colors.white,
+
       ),
       textWidget: const SizedBox(
         height: 0,
@@ -810,7 +813,11 @@ class TextPost extends StatelessWidget {
   const TextPost({Key? key, required this.post}) : super(key: key);
 
   Widget buildURLWidget(String text) {
-    return LinkWell(text);
+    return LinkWell(text,
+      style: TextStyle(
+        color: Colors.white
+      ),
+    );
   }
 
   @override

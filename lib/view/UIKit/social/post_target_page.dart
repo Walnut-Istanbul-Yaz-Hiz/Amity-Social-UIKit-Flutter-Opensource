@@ -26,18 +26,24 @@ class _PostToPageState extends State<PostToPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
         elevation: 0.0, // Add this line to remove the shadow
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.close,
+          color: Color(0xff998455),),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           "Post to",
-          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+          .copyWith(
+            color: Color(0xff998455),
+            fontWeight: FontWeight.w800,
+            fontSize: 20
+          ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF292C45),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Consumer<MyCommunityVM>(
@@ -55,7 +61,7 @@ class _PostToPageState extends State<PostToPage> {
                         height: 40,
                         width: 40,
                         decoration: const BoxDecoration(
-                            color: Color(0xFFD9E5FC), shape: BoxShape.circle),
+                            color: Colors.white38, shape: BoxShape.circle),
                         child: const Icon(
                           Icons.person,
                           color: Colors.white,
@@ -63,7 +69,9 @@ class _PostToPageState extends State<PostToPage> {
                       ),
                 title: const Text(
                   "My Timeline",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,
+                    color: Color(0xff3DDAB4),
+                  ),
                   // Adjust as needed),
                 ),
                 onTap: () {
@@ -78,8 +86,9 @@ class _PostToPageState extends State<PostToPage> {
                 child: Text(
                   "My community",
                   style: TextStyle(
-                      fontSize: 15,
-                      color: const Color(0xff292B32).withOpacity(0.4)),
+                    fontSize: 15,
+                    color: Color(0xff998455).withOpacity(0.4),
+                  ),
                 ),
               ),
               ...viewModel.amityCommunities.map((community) {
@@ -98,7 +107,7 @@ class _PostToPageState extends State<PostToPage> {
                                 height: 40,
                                 width: 40,
                                 decoration: const BoxDecoration(
-                                    color: Color(0xFFD9E5FC),
+                                    color: Colors.white38,
                                     shape: BoxShape.circle),
                                 child: const Icon(
                                   Icons.group,
@@ -108,7 +117,9 @@ class _PostToPageState extends State<PostToPage> {
                         title: Text(
                           community.displayName ?? '',
                           style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
+                              fontSize: 15, fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                         ),
                         onTap: () {
                           // Navigate or perform action based on 'Newsfeed' tap

@@ -22,21 +22,27 @@ class UserSettingPage extends StatelessWidget {
         initialData: amityMyFollowInfo,
         builder: (context, snapshot) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xff1E2034),
             appBar: AppBar(
               leading: IconButton(
                 icon: const Icon(
                   Icons.chevron_left,
-                  color: Colors.black,
+                  color: Color(0xff998455),
                   size: 30,
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               elevation: 0.0,
               title: Text("Setting",
-                  style: Provider.of<AmityUIConfiguration>(context)
-                      .titleTextStyle),
-              backgroundColor: Colors.white,
+                style: Provider.of<AmityUIConfiguration>(context)
+                    .titleTextStyle
+                .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20
+                )
+              ),
+              backgroundColor: Color(0xFF292C45),
               iconTheme: const IconThemeData(color: Colors.black),
             ),
             body: ListView(
@@ -45,7 +51,9 @@ class UserSettingPage extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: Text("Basic info",
                       style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17,
+                            color: Color(0xff998455),
+                          )),
                 ),
                 amityUser.userId == AmityCoreClient.getCurrentUser().userId
                     ? ListTile(
@@ -55,17 +63,17 @@ class UserSettingPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   4), // Adjust radius to your need
-                              color: const Color(
-                                  0xfff1f1f1), // Choose the color to fit your design
+                              color: Color(0xff998455),
+                              // Choose the color to fit your design
                             ),
                             child: const Icon(Icons.edit,
-                                color: Color(0xff292B32))),
+                                color: Color(0xFF292C45))),
                         title: const Text(
                           "Edit Profile",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: Color(0xff3DDAB4),
                           ),
                         ),
                         onTap: () async {
@@ -86,17 +94,16 @@ class UserSettingPage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           4), // Adjust radius to your need
-                                      color: const Color(
-                                          0xfff1f1f1), // Choose the color to fit your design
+                                      color: Color(0xff998455)// Choose the color to fit your design
                                     ),
-                                    child: const Icon(Icons.person_remove,
-                                        color: Color(0xff292B32))),
+                                    child: const Icon(Icons.person_add,
+                                        color: Color(0xFF292C45))),
                                 title: const Text(
                                   "Follow",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.black,
+                                    color: Color(0xff3DDAB4),
                                   ),
                                 ),
                                 onTap: () {
@@ -115,17 +122,16 @@ class UserSettingPage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           4), // Adjust radius to your need
-                                      color: const Color(
-                                          0xfff1f1f1), // Choose the color to fit your design
+                                      color: Color(0xff998455), // Choose the color to fit your design
                                     ),
                                     child: const Icon(Icons.person_remove,
-                                        color: Color(0xff292B32))),
+                                        color: Color(0xFF292C45))),
                                 title: const Text(
                                   "Unfollow",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.black,
+                                    color: Color(0xffFC0069),
                                   ),
                                 ),
                                 onTap: () {
@@ -144,17 +150,16 @@ class UserSettingPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
                                       4), // Adjust radius to your need
-                                  color: const Color(
-                                      0xfff1f1f1), // Choose the color to fit your design
+                                  color: Color(0xff998455) // Choose the color to fit your design
                                 ),
                                 child: const Icon(Icons.flag,
-                                    color: Color(0xff292B32))),
+                                    color: Color(0xFF292C45))),
                             title: const Text(
                               "Unreport User",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black,
+                                color: Color(0xffFC0069),
                               ),
                             ),
                             onTap: () {
@@ -168,17 +173,16 @@ class UserSettingPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(
                                       4), // Adjust radius to your need
-                                  color: const Color(
-                                      0xfff1f1f1), // Choose the color to fit your design
+                                  color: Color(0xff998455) // Choose the color to fit your design
                                 ),
                                 child: const Icon(Icons.flag,
-                                    color: Color(0xff292B32))),
+                                    color: Color(0xFF292C45))),
                             title: const Text(
                               "Report User",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black,
+                                color: Color(0xff3DDAB4),
                               ),
                             ),
                             onTap: () {
@@ -196,20 +200,21 @@ class UserSettingPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   4), // Adjust radius to your need
-                              color: const Color(
-                                  0xfff1f1f1), // Choose the color to fit your design
+                              color: Color(0xff998455),// Choose the color to fit your design
                             ),
                             child: const Icon(Icons.person_off,
-                                color: Color(0xff292B32))),
+                                color: Color(0xFF292C45))),
                         title: Text(
                           snapshot.data!.status == AmityFollowStatus.BLOCKED
                               ? "Unblock"
                               : "Block User",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
+                            style:  TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: snapshot.data!.status == AmityFollowStatus.BLOCKED
+                              ?Color(0xff3DDAB4)
+                              :Color(0xffFC0069)
+                            ),
                         ),
                         onTap: () {
                           // Navigate to Members Page or perform an action
@@ -227,7 +232,9 @@ class UserSettingPage extends StatelessWidget {
                             );
                           }
                         }),
-                const Divider()
+                const Divider(
+                  color: Color(0xff998455),
+                )
               ],
             ),
           );

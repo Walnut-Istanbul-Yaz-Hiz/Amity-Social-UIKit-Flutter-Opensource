@@ -38,19 +38,25 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF292C45),
         shadowColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(
             Icons.close,
-            color: Colors.black,
+            color: Color(0xff998455),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           'Select member',
-          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+          .copyWith(
+            color: Color(0xff998455),
+            fontWeight: FontWeight.w800,
+            fontSize: 20
+          ),
         ),
         actions: [
           TextButton(
@@ -70,9 +76,8 @@ class _UserListPageState extends State<UserListPage> {
               },
               child: Text('Done',
                   style: TextStyle(
-                      color: Provider.of<AmityUIConfiguration>(context,
-                              listen: false)
-                          .primaryColor)),
+                      color: 
+                      Color(0xff998455))),
             ),
           ),
         ],
@@ -88,12 +93,16 @@ class _UserListPageState extends State<UserListPage> {
                       padding: const EdgeInsets.all(
                           10.0), // Adjust this value based on your needs
                       child: TextField(
+                        style: TextStyle(color: Color(0xFF292C45)),
                         decoration: InputDecoration(
                           prefixIcon: const Icon(
                             Icons.search,
-                            color: Colors.grey,
+                            color: Color(0xff998455),
                           ),
                           hintText: 'Search',
+                          hintStyle: TextStyle(
+                            color: Color(0xff3DDAB4)
+                          ),
                           filled: true,
                           contentPadding:
                               const EdgeInsets.symmetric(vertical: 0),
@@ -146,7 +155,7 @@ class _UserListPageState extends State<UserListPage> {
                                           children: [
                                             CircleAvatar(
                                               backgroundColor:
-                                                  const Color(0xFFD9E5FC),
+                                                  const Color(0xff998455),
                                               backgroundImage:
                                                   user.avatarUrl == null
                                                       ? null
@@ -156,8 +165,7 @@ class _UserListPageState extends State<UserListPage> {
                                                   ? null
                                                   : const Icon(Icons.person,
                                                       size: 25,
-                                                      color: Colors
-                                                          .white), // Adjust to use the correct attribute for avatar URL
+                                                      color: Color(0xFF292C45)), // Adjust to use the correct attribute for avatar URL
                                             ),
                                             Positioned(
                                               right: 0,
@@ -194,6 +202,9 @@ class _UserListPageState extends State<UserListPage> {
                                           child: Text(
                                             user.displayName ?? "",
                                             overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: Colors.white
+                                            ),
                                           ),
                                         ),
                                       ) // Display user's name, replace 'name' with the appropriate attribute for the user's name
@@ -211,12 +222,12 @@ class _UserListPageState extends State<UserListPage> {
                         return SliverStickyHeader(
                           header: Container(
                             padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
-                            color: Colors.grey[300],
+                            color: Color(0xFF292C45),
                             child: Text(
                               item.keys.first,
                               style: const TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey,
+                                color: Color(0xffFC0069),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -234,7 +245,7 @@ class _UserListPageState extends State<UserListPage> {
                                               vertical: 4.0, horizontal: 16.0),
                                       leading: CircleAvatar(
                                         backgroundColor:
-                                            const Color(0xFFD9E5FC),
+                                            const Color(0xff998455),
                                         backgroundImage: user.avatarUrl == null
                                             ? null
                                             : NetworkImage(user.avatarUrl!),
@@ -242,18 +253,15 @@ class _UserListPageState extends State<UserListPage> {
                                             ? null
                                             : const Icon(Icons.person,
                                                 size: 25,
-                                                color: Colors
-                                                    .white), // Adjust to use the correct attribute for avatar URL
+                                                color: Color(0xFF292C45)), // Adjust to use the correct attribute for avatar URL
                                       ),
 
                                       title: Text(user.displayName ??
-                                          'No name'), // Fallback for a null displayName
+                                          'No name',
+                                          style: TextStyle(color: Colors.white),), // Fallback for a null displayName
                                       trailing: Checkbox(
-                                        activeColor: Provider.of<
-                                                    AmityUIConfiguration>(
-                                                context,
-                                                listen: false)
-                                            .primaryColor, // Set the active color to primary color
+                                        activeColor: Color(0xff3DDAB4),
+                                        hoverColor: Color(0xff998455), // Set the active color to primary color
                                         shape: const CircleBorder(),
                                         value: Provider.of<UserVM>(context)
                                             .selectedCommunityUsers

@@ -7,13 +7,13 @@ import '../viewmodel/configuration_viewmodel.dart';
 Widget getAvatarImage(String? url, {double? radius = 20, String? fileId}) {
   return CircleAvatar(
       radius: radius,
-      backgroundColor: const Color(0xFFD9E5FC),
+      backgroundColor: Color(0xff998455),
       backgroundImage: url != null ? NetworkImage("$url?size=medium") : null,
       child: url != null
           ? const SizedBox()
           : Icon(
               Icons.person,
-              color: Colors.white,
+              color: Color(0xFF292C45),
               size: radius! * 1.5,
             ));
 }

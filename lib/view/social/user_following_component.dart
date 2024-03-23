@@ -64,7 +64,7 @@ class _AmityFollowingScreenScreenState extends State<AmityFollowingScreen> {
                             Provider.of<FollowerVM>(context, listen: false)
                                 .getFollowingListof(userId: widget.userId);
                           },
-                          child: const Icon(Icons.more_horiz)),
+                          child: const Icon(Icons.more_horiz,color: Color(0xff998455),)),
                       title: Row(
                         children: [
                           GestureDetector(
@@ -91,7 +91,8 @@ class _AmityFollowingScreenScreenState extends State<AmityFollowingScreen> {
                                           .displayName ??
                                       "displayname not found",
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w600,
+                                       color: Colors.white),
                                 ),
                               ],
                             ),

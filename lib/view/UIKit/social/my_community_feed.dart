@@ -28,14 +28,14 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
   Widget build(BuildContext context) {
     return Consumer<MyCommunityVM>(builder: (context, vm, _) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff1E2034),
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF292C45),
           leading: IconButton(
             icon: const Icon(
               Icons.close,
-              color: Colors.black,
+              color:  Color(0xff998455),
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -44,11 +44,16 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
           title: Text(
             'My Community',
             style: Provider.of<AmityUIConfiguration>(context)
-                .titleTextStyle, // Adjust as needed
+                .titleTextStyle
+                .copyWith(
+            color: Color(0xff998455),
+            fontWeight: FontWeight.w800,
+            fontSize: 20
+          ), // Adjust as needed
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.add, color: Colors.black),
+              icon: const Icon(Icons.add, color:  Color(0xff998455)),
               onPressed: () async {
                 await Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
@@ -69,16 +74,18 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: TextField(
                   controller: vm.textEditingController,
+                  style: TextStyle(color: Color(0xFF292C45)),
                   decoration: InputDecoration(
                     prefixIcon: const Icon(
                       Icons.search,
-                      color: Colors.grey,
+                      color: Color(0xff998455),
                     ),
                     hintText: 'Search',
+                    hintStyle: TextStyle(
+                      color: Color(0xff3DDAB4),
+                    ),
                     filled: true,
                     contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                    fillColor: Colors.grey[3],
-                    focusColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide.none,
@@ -118,7 +125,7 @@ class CommunityWidget extends StatelessWidget {
         builder: (context, snapshot) {
           var communityStream = snapshot.data ?? community;
           return Card(
-            color: Colors.white,
+            color: Color(0xFF292C45),
             elevation: 0,
             child: ListTile(
               leading: (communityStream.avatarFileId != null)
@@ -131,10 +138,10 @@ class CommunityWidget extends StatelessWidget {
                       height: 40,
                       width: 40,
                       decoration: const BoxDecoration(
-                          color: Color(0xFFD9E5FC), shape: BoxShape.circle),
+                          color: Color(0xff998455), shape: BoxShape.circle),
                       child: const Icon(
                         Icons.group,
-                        color: Colors.white,
+                        color:  Color(0xFF292C45),
                       ),
                     ),
               title: Row(
@@ -144,7 +151,10 @@ class CommunityWidget extends StatelessWidget {
                   Expanded(
                     child: Text(
                       communityStream.displayName ?? "Community",
-                      style: const TextStyle(overflow: TextOverflow.ellipsis),
+                      style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: Colors.white
+                      ),
                     ),
                   ),
                 ],
@@ -168,13 +178,13 @@ class CommunityIconList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Color(0xFF292C45),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 40,
-            color: Colors.white,
+            color: Color(0xFF292C45),
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,37 +194,45 @@ class CommunityIconList extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.bold,
+                    color: Color(0xff998455),
                   ),
                 ),
                 GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            const Scaffold(body: MyCommunityPage()),
-                      ));
-                    },
-                    child: Container(child: const Icon(Icons.chevron_right))),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          const Scaffold(body: MyCommunityPage()),
+                    ));
+                  },
+                  child: Container(
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: Color(0xff998455),
+                    )
+                  ),
+                ),
               ],
             ),
           ),
           Container(
-            color: Colors.white,
             height: 90.0,
+            color: Color(0xFF292C45),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: amityCommunites.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  color: Colors.white,
+                  color: Color(0xFF292C45),
                   padding: EdgeInsets.only(left: index != 0 ? 0 : 16),
                   child: CommunityIconWidget(
-                      amityCommunity: amityCommunites[index]),
+                    amityCommunity: amityCommunites[index]
+                  ),
                 );
               },
             ),
           ),
           const Divider(
-            color: Color(0xffEBECEF),
+            color: Color(0xff998455),
           )
         ],
       ),
@@ -240,31 +258,44 @@ class CommunityIconWidget extends StatelessWidget {
                       CommunityScreen(community: communityStream)));
             },
             child: Container(
-              color: Colors.white,
+              color: Color(0xFF292C45),
               width: 62,
               margin: const EdgeInsets.only(right: 4, bottom: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: (amityCommunity.avatarImage != null)
-                        ? CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(amityCommunity
-                                .avatarImage!
-                                .getUrl(AmityImageSize.SMALL)),
-                          )
+                    child: Container(
+                      width: 62,
+                      child: Center(
+                        child: (amityCommunity.avatarImage != null)
+                        ? Container(
+                          width: 40,
+                          height: 40,
+                          child: Center(
+                            child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: NetworkImage(amityCommunity
+                                    .avatarImage!
+                                    .getUrl(AmityImageSize.SMALL)),
+                              ),
+                          ),
+                        )
                         : Container(
                             height: 40,
                             width: 40,
                             decoration: const BoxDecoration(
-                                color: Color(0xFFD9E5FC),
+                                color: Colors.white38,
                                 shape: BoxShape.circle),
                             child: const Icon(
                               Icons.group,
                               color: Colors.white,
                             ),
                           ),
+                      ),
+                    )
+                    
                   ),
                   Row(
                     children: [
@@ -272,12 +303,21 @@ class CommunityIconWidget extends StatelessWidget {
                           ? const Icon(
                               Icons.lock,
                               size: 12,
+                              color: Colors.white,
                             )
                           : const SizedBox(),
                       Expanded(
-                        child: Text(amityCommunity.displayName ?? "",
-                            style: const TextStyle(
-                                overflow: TextOverflow.ellipsis)),
+                        child: Container(
+                          width: 62,
+                          child: Text(amityCommunity.displayName ?? "",
+                              style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 13,
+                                  color: Color(0xff3DDAB4),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                        ),
                       ),
                     ],
                   ),

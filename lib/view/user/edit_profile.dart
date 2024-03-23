@@ -99,9 +99,14 @@ class ProfileScreenState extends State<ProfileScreen> {
     final myAppBar = AppBar(
       title: Text(
         "Edit Profile",
-        style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+        style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+        .copyWith(
+            color: Color(0xff998455),
+            fontWeight: FontWeight.w800,
+            fontSize: 20
+          ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF292C45),
       leading: IconButton(
         color: Provider.of<AmityUIConfiguration>(context).primaryColor,
         onPressed: () {
@@ -109,7 +114,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         },
         icon: const Icon(
           Icons.chevron_left,
-          color: Colors.black,
+          color: Color(0xff998455),
         ),
       ),
       elevation: 0,
@@ -162,8 +167,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                           context,
                         ).imageState ==
                         ImageState.loading
-                    ? Colors.grey
-                    : Provider.of<AmityUIConfiguration>(context).primaryColor,
+                    ? Color(0xff998455)
+                    : Color(0xff3DDAB4),
                 fontWeight: FontWeight.bold),
           ),
         ),
@@ -174,13 +179,14 @@ class ProfileScreenState extends State<ProfileScreen> {
         myAppBar.preferredSize.height;
     return Consumer<UserFeedVM>(builder: (context, vm, _) {
       return Scaffold(
+        backgroundColor:  Color(0xff1E2034),
         appBar: myAppBar,
         body: FadedSlideAnimation(
           beginOffset: const Offset(0, 0.3),
           endOffset: const Offset(0, 0),
           slideCurve: Curves.linearToEaseOut,
           child: Container(
-            color: Colors.white,
+            color:  Color(0xff1E2034),
             height: bheight,
             child: SingleChildScrollView(
               child: Column(
@@ -210,7 +216,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             padding: const EdgeInsets.all(5),
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color(0xffEBECEF),
+                              color: Color(0xff998455),
                               // boxShadow: [
                               //   BoxShadow(
                               //     color: Colors.grey, // Shadow color
@@ -223,6 +229,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             child: const Icon(
                               Icons.camera_alt_outlined,
                               size: 18,
+                              color: Color(0xFF292C45),
                             ),
                           ),
                         ),

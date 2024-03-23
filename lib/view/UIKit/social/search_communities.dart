@@ -32,23 +32,26 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
     return Consumer2<SearchCommunityVM, UserVM>(
         builder: (context, vm, userVM, _) {
       var searchBar = Container(
-        color: Colors.white,
+        color: Color(0xff1E2034),
         padding: const EdgeInsets.all(10.0),
         child: Row(
           children: [
             Expanded(
               child: TextField(
                 controller: textcontroller,
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(
                     Icons.search,
-                    color: Colors.grey,
+                    color: Color(0xff998455),
                   ),
                   hintText: 'Search',
+                  hintStyle: TextStyle(
+                    color: Color(0xff3DDAB4),
+                  ),
                   filled: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                  fillColor: Colors.grey[3],
-                  focusColor: Colors.white,
+                  fillColor: Color(0xFF292C45),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
@@ -74,6 +77,9 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
                 padding: EdgeInsets.all(8.0),
                 child: Text(
                   "cancel",
+                  style: TextStyle(
+                    color: Color(0xff998455)
+                  ),
                 ),
               ),
             )
@@ -83,7 +89,7 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
       return DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xff1E2034),
           body: SafeArea(
             child: Stack(
               children: [
@@ -126,15 +132,15 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
                     textcontroller.text.isEmpty
                         ? const SizedBox()
                         : Container(
-                            color: Colors.white,
+                            color: Color(0xff756548),
                             child: const TabBar(
                               tabAlignment: TabAlignment.start,
-                              isScrollable:
-                                  true, // Ensure that the TabBar is scrollable
-
-                              labelColor: Color(0xFF1054DE), // #1054DE color
-                              unselectedLabelColor: Colors.black,
-                              indicatorColor: Color(0xFF1054DE),
+                              isScrollable: true,
+                              indicatorColor: Color(0xff3DDAB4),
+                              indicatorSize: TabBarIndicatorSize.label,
+                              indicatorWeight: 6,
+                              labelColor: Colors.white,
+                              unselectedLabelColor: Color(0xff998455),
                               labelStyle: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
@@ -142,10 +148,22 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
                               ),
                               tabs: [
                                 Tab(
-                                  text: "Community",
+                                  child: Text(
+                                    "Community",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800  
+                                    ),
+                                  )
                                 ),
                                 Tab(
-                                  text: "User",
+                                  child: Text(
+                                    "User",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800  
+                                    ),
+                                  )
                                 ),
                               ],
                             ),
@@ -173,7 +191,7 @@ class CommunityWidget extends StatelessWidget {
         builder: (context, snapshot) {
           var communityStream = snapshot.data ?? community;
           return Card(
-            color: Colors.white,
+            color: Color(0xFF292C45),
             elevation: 0,
             child: ListTile(
               leading: (communityStream.avatarFileId != null)
@@ -186,10 +204,10 @@ class CommunityWidget extends StatelessWidget {
                       height: 40,
                       width: 40,
                       decoration: const BoxDecoration(
-                          color: Color(0xFFD9E5FC), shape: BoxShape.circle),
+                          color: Color(0xff998455), shape: BoxShape.circle),
                       child: const Icon(
                         Icons.group,
-                        color: Colors.white,
+                        color: Color(0xFF292C45),
                       ),
                     ),
               title: Row(
@@ -201,7 +219,9 @@ class CommunityWidget extends StatelessWidget {
                       communityStream.displayName ?? "Community",
                       style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                          ),
                     ),
                   ),
                 ],
@@ -213,6 +233,7 @@ class CommunityWidget extends StatelessWidget {
                     : "${communityStream.categories![0]!.name}" ?? "Community",
                 style: const TextStyle(
                   overflow: TextOverflow.ellipsis,
+                  color: Color(0xff3DDAB4)
                 ),
               ),
               onTap: () {
@@ -243,7 +264,7 @@ class UserWidget extends StatelessWidget {
         builder: (context, snapshot) {
           var userStream = snapshot.data ?? amityUser;
           return Card(
-            color: Colors.white,
+            color: Color(0xFF292C45),
             elevation: 0,
             child: ListTile(
               leading: (userStream.avatarFileId != null)
@@ -255,10 +276,10 @@ class UserWidget extends StatelessWidget {
                       height: 40,
                       width: 40,
                       decoration: const BoxDecoration(
-                          color: Color(0xFFD9E5FC), shape: BoxShape.circle),
+                          color: Color(0xff998455), shape: BoxShape.circle),
                       child: const Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Color(0xFF292C45),
                       ),
                     ),
               title: Row(
@@ -270,7 +291,9 @@ class UserWidget extends StatelessWidget {
                       userStream.displayName ?? "Community",
                       style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,    
+                      ),
                     ),
                   ),
                 ],
@@ -298,7 +321,7 @@ class CommunityIconList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Color(0xFF292C45),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -314,6 +337,7 @@ class CommunityIconList extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white
                   ),
                 ),
                 GestureDetector(
@@ -328,7 +352,7 @@ class CommunityIconList extends StatelessWidget {
             ),
           ),
           Container(
-            color: Colors.white,
+            color: Color(0xFF292C45),
             height: 90.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -386,11 +410,11 @@ class CommunityIconWidget extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: const BoxDecoration(
-                                color: Color(0xFFD9E5FC),
+                                color: Color(0xff998455),
                                 shape: BoxShape.circle),
                             child: const Icon(
                               Icons.group,
-                              color: Colors.white,
+                              color:  Color(0xFF292C45),
                             ),
                           ),
                   ),
@@ -399,13 +423,16 @@ class CommunityIconWidget extends StatelessWidget {
                       !amityCommunity.isPublic!
                           ? const Icon(
                               Icons.lock,
+                              color: Colors.white,
                               size: 12,
                             )
                           : const SizedBox(),
                       Expanded(
                         child: Text(amityCommunity.displayName ?? "",
                             style: const TextStyle(
-                                overflow: TextOverflow.ellipsis)),
+                                overflow: TextOverflow.ellipsis,
+                                color: Colors.white
+                                )),
                       ),
                     ],
                   ),

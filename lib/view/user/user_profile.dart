@@ -69,11 +69,11 @@ class UserProfileScreenState extends State<UserProfileScreen>
 
   Color getFollowingStatusColor(AmityFollowStatus amityFollowStatus) {
     if (amityFollowStatus == AmityFollowStatus.NONE) {
-      return Provider.of<AmityUIConfiguration>(context).primaryColor;
+      return Color(0xff998455);
     } else if (amityFollowStatus == AmityFollowStatus.PENDING) {
-      return Colors.grey;
+      return Colors.white38;
     } else if (amityFollowStatus == AmityFollowStatus.ACCEPTED) {
-      return Colors.white;
+      return Color(0xffFC0069);
     } else {
       return Colors.white;
     }
@@ -85,7 +85,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
     } else if (amityFollowStatus == AmityFollowStatus.PENDING) {
       return Colors.white;
     } else if (amityFollowStatus == AmityFollowStatus.ACCEPTED) {
-      return Provider.of<AmityUIConfiguration>(context).primaryColor;
+      return Colors.white;
     } else {
       return Colors.red;
     }
@@ -107,7 +107,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
     final myAppBar = AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF292C45),
       leading: IconButton(
         color: Provider.of<AmityUIConfiguration>(context).primaryColor,
         onPressed: () {
@@ -115,7 +115,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
         },
         icon: const Icon(
           Icons.chevron_left,
-          color: Colors.black,
+          color: Color(0xff998455),
           size: 24,
         ),
       ),
@@ -129,7 +129,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
       if (vm.amityUser != null) {
         Widget buildPrivateAccountWidget(double bheight) {
           return Container(
-            color: Colors.white,
+            color: Color(0xff1E2034),
             width: MediaQuery.of(context).size.width,
             height: bheight - 300,
             child: Column(
@@ -138,6 +138,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                 Image.asset(
                   "assets/images/privateIcon.png",
                   package: "amity_uikit_beta_service",
+                  color: Colors.white,
                 ),
                 const SizedBox(height: 12),
                 const Text(
@@ -145,14 +146,14 @@ class UserProfileScreenState extends State<UserProfileScreen>
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xff292B32)),
+                      color: Colors.white),
                 ),
                 const Text(
                   "Follow this user to see all posts",
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xffA5A9B5)),
+                      color: Colors.white54),
                 ),
               ],
             ),
@@ -161,7 +162,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
 
         Widget buildNoPostsWidget(double bheight, BuildContext context) {
           return Container(
-            color: Colors.white,
+            color: Color(0xff1E2034),
             width: MediaQuery.of(context).size.width,
             height: bheight - 300,
             child: Column(
@@ -170,6 +171,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                 Image.asset(
                   "assets/images/noPostYet.png",
                   package: "amity_uikit_beta_service",
+                  color: Colors.white,
                 ),
                 const SizedBox(height: 12),
                 const Text(
@@ -177,7 +179,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xffA5A9B5)),
+                      color: Colors.white),
                 ),
               ],
             ),
@@ -186,7 +188,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
 
         Widget buildPostsList(BuildContext context) {
           return Container(
-            color: Colors.grey[200],
+            color: Color(0xff1E2034),
             child: ListView.builder(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
@@ -256,12 +258,12 @@ class UserProfileScreenState extends State<UserProfileScreen>
                     Provider.of<UserFeedVM>(context, listen: false)
                         .initUserFeed(userId: widget.amityUserId);
                   },
-                  backgroundColor: AmityUIConfiguration().primaryColor,
+                  backgroundColor: Color(0xff998455),
                   child: Provider.of<AmityUIConfiguration>(context)
                       .iconConfig
-                      .postIcon(iconSize: 28, color: Colors.white),
+                      .postIcon(iconSize: 28, color: Color(0xFF292C45)),
                 ),
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xff1E2034),
           body: DefaultTabController(
             length: 2,
             child: NestedScrollView(
@@ -309,9 +311,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                             ? Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Provider.of<AmityUIConfiguration>(
-                                              context)
-                                          .primaryColor,
+                                      color: Color(0xff998455),
                                       style: BorderStyle.solid,
                                       width: 1),
                                   borderRadius: BorderRadius.circular(10),
@@ -323,6 +323,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   textAlign: TextAlign.center,
                                   style: theme.textTheme.titleSmall!.copyWith(
                                     fontSize: 12,
+                                    color: Colors.white
                                   ),
                                 ),
                               )
@@ -402,23 +403,23 @@ class UserProfileScreenState extends State<UserProfileScreen>
                 );
                 return <Widget>[
                   DynamicSliverAppBar(
-                    shadowColor: Colors.white,
+                    shadowColor: Color(0xFF292C45),
                     elevation: 0,
                     surfaceTintColor: Colors.transparent,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Color(0xFF292C45),
                     floating: false,
                     pinned: true,
                     leading: IconButton(
                       icon: const Icon(
                         Icons.chevron_left,
-                        color: Color(0xff292B32),
+                        color: Color(0xff998455),
                         size: 30,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                     flexibleSpace: Column(
                       children: [
-                        const SizedBox(height: 120),
+                        const SizedBox(height: 100),
                         Padding(
                           padding: const EdgeInsets.only(left: 16, right: 16),
                           child: Column(
@@ -455,6 +456,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                               style: const TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w700,
+                                                  color: Colors.white,
                                                   letterSpacing: -0.4),
                                             ),
                                             Row(
@@ -477,7 +479,11 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                                         .displayName))));
                                                   },
                                                   child: Text(
-                                                      '${vm.amityMyFollowInfo.followingCount.toString()} following  '),
+                                                      '${vm.amityMyFollowInfo.followingCount.toString()} following  ',
+                                                        style: TextStyle(
+                                                          color:  Color(0xff3DDAB4),
+                                                        ),
+                                                      ),
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
@@ -495,7 +501,11 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                                         .displayName))));
                                                   },
                                                   child: Text(
-                                                      '${vm.amityMyFollowInfo.followerCount.toString()} followers'),
+                                                      '${vm.amityMyFollowInfo.followerCount.toString()} followers',
+                                                        style: TextStyle(
+                                                          color:  Color(0xff3DDAB4),
+                                                        ),
+                                                      ),
                                                 ),
                                               ],
                                             )
@@ -514,7 +524,8 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   children: [
                                     Text(
                                       getAmityUser().description ?? "",
-                                      style: const TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16,
+                                      color: Colors.white54),
                                     ),
                                   ],
                                 ),
@@ -539,13 +550,12 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: const Color(
-                                                          0xffA5A9B5),
+                                                      color: Color(0xffFC0069),
                                                       style: BorderStyle.solid,
                                                       width: 1),
                                                   borderRadius:
                                                       BorderRadius.circular(4),
-                                                  color: Colors.white),
+                                                  color: Color(0xffFC0069)),
                                               padding:
                                                   const EdgeInsets.fromLTRB(
                                                       10, 10, 10, 10),
@@ -554,13 +564,15 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   const Icon(
-                                                      Icons.edit_outlined),
+                                                    Icons.edit_outlined,
+                                                    color: Colors.white,      
+                                                  ),
                                                   Text(
                                                     "Edit Profile",
                                                     style: theme
                                                         .textTheme.titleSmall!
                                                         .copyWith(
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 15,
                                                     ),
                                                     textAlign: TextAlign.center,
@@ -576,7 +588,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 60),
                       ],
                     ),
                     actions: [
@@ -588,7 +600,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                               builder: (context, snapshot) {
                                 return IconButton(
                                   icon: const Icon(Icons.more_horiz,
-                                      color: Colors.black),
+                                      color: Color(0xff998455)),
                                   onPressed: () {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -609,22 +621,36 @@ class UserProfileScreenState extends State<UserProfileScreen>
                         children: [
                           Expanded(
                             child: Container(
-                              color: Colors.white,
+                              color: Color(0xff756548),
                               child: TabBar(
                                 tabAlignment: TabAlignment.start,
                                 controller: _tabController,
                                 isScrollable: true,
-                                labelColor: const Color(0xFF1054DE),
-                                unselectedLabelColor: Colors.black,
-                                indicatorColor: const Color(0xFF1054DE),
+                                indicatorColor: Color(0xff3DDAB4),
+                                indicatorSize: TabBarIndicatorSize.label,
+                                indicatorWeight: 6,
+                                labelColor: Colors.white,
+                                unselectedLabelColor: Color(0xff998455),
                                 labelStyle: const TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'SF Pro Text',
                                 ),
                                 tabs: const [
-                                  Tab(text: "Timeline"),
-                                  Tab(text: "Gallery"),
+                                  Tab(child: Text("Timeline",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w800  
+                                      ),
+                                    ),
+                                  ),
+                                  Tab(child: Text("Gallery",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w800  
+                                      ),
+                                    ),
+                                  )   
                                 ],
                               ),
                             ),
@@ -635,6 +661,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                   ),
                 ];
               },
+              
               body: TabBarView(controller: _tabController, children: tablist),
             ),
           ),

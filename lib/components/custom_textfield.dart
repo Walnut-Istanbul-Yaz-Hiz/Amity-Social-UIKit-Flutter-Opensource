@@ -42,12 +42,15 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
             RichText(
               text: TextSpan(
                 text: widget.title,
-                style: Provider.of<AmityUIConfiguration>(context, listen: false)
-                    .titleTextStyle,
+                style: TextStyle(
+                      color: Color(0xff998455),
+                      fontWeight: FontWeight.w800,
+                      fontSize: 18
+                    ),
                 children: [
                   TextSpan(
                     text: widget.isRequired ? ' *' : "",
-                    style: const TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Color(0xffFC0069)),
                   ),
                 ],
               ),
@@ -57,7 +60,9 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Text(
                       '${widget.controller.text.length}/${widget.maxCharacters}',
-                      style: const TextStyle(fontSize: 13.4),
+                      style: const TextStyle(fontSize: 13.4,
+                        color: Color(0xff3DDAB4),
+                      ),
                     ),
                   )
                 : Container(),
@@ -65,10 +70,16 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
         ),
         TextField(
           controller: widget.controller,
+          style: TextStyle(
+            color: Colors.white,
+          ),
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: widget.hintText,
             counterText: "",
+            hintStyle: TextStyle(
+              color: Color(0xff3DDAB4),
+            ),
           ),
           maxLength: widget.maxCharacters,
           keyboardType: widget.keyboardType,
@@ -80,7 +91,7 @@ class _TextFieldWithCounterState extends State<TextFieldWithCounter> {
           },
         ),
         Divider(
-          color: Colors.grey[200],
+          color: Color(0xff998455),
           thickness: 1,
         ),
       ],

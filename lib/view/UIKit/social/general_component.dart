@@ -35,8 +35,9 @@ class TimeAgoWidget extends StatelessWidget {
     return Text(
       _formatDate(createdAt),
       style: const TextStyle(
-          // Add your text style here
-          ),
+        fontSize: 13,
+        color: Colors.white38
+      ),
     );
   }
 

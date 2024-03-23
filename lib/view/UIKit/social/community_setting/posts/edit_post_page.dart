@@ -35,18 +35,23 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
 
     return Consumer<EditPostVM>(builder: (context, vm, _) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff1E2034),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF292C45),
           elevation: 0,
           title: Text(
             "Edit post",
-            style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+            style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+            .copyWith(
+              color: Color(0xff998455),
+              fontWeight: FontWeight.w800,
+              fontSize: 20
+            )
           ),
           leading: IconButton(
             icon: const Icon(
               Icons.chevron_left,
-              color: Colors.black,
+              color: Color(0xff998455),
             ),
             onPressed: () {
               if (hasContent) {
@@ -79,9 +84,8 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
               child: Text("Save",
                   style: TextStyle(
                       color: vm.isPostValid
-                          ? Provider.of<AmityUIConfiguration>(context)
-                              .primaryColor
-                          : Colors.grey)),
+                          ? Color(0xff3DDAB4)
+                          : Color(0xff998455))),
             ),
           ],
         ),
@@ -99,9 +103,15 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
                           controller: vm.textEditingController,
                           scrollPhysics: const NeverScrollableScrollPhysics(),
                           maxLines: null,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Write something to post",
+                            hintStyle: TextStyle(
+                              color: Color(0xff3DDAB4),
+                            ),
                           ),
                           // style: t/1heme.textTheme.bodyText1.copyWith(color: Colors.grey),
                         ),

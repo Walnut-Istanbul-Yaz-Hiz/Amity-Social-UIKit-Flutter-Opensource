@@ -38,20 +38,25 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
 
     return Consumer<CreatePostVMV2>(builder: (context, vm, _) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff1E2034),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF292C45),
           elevation: 0,
           title: Text(
             widget.community != null
                 ? widget.community?.displayName ?? "Community"
                 : "My Feed",
-            style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+            style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+            .copyWith(
+              color: Color(0xff998455),
+              fontWeight: FontWeight.w800,
+              fontSize: 20
+            ),
           ),
           leading: IconButton(
             icon: const Icon(
               Icons.chevron_left,
-              color: Colors.black,
+              color: Color(0xff998455),
             ),
             onPressed: () {
               if (hasContent) {
@@ -109,9 +114,8 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
               child: Text("Post",
                   style: TextStyle(
                       color: vm.isPostValid
-                          ? Provider.of<AmityUIConfiguration>(context)
-                              .primaryColor
-                          : Colors.grey)),
+                          ? Color(0xff3DDAB4)
+                          : Color(0xff998455))),
             ),
           ],
         ),
@@ -128,10 +132,12 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                           onChanged: (value) => vm.updatePostValidity(),
                           controller: vm.textEditingController,
                           scrollPhysics: const NeverScrollableScrollPhysics(),
+                          style: TextStyle(color: Colors.white),
                           maxLines: null,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Write something to post",
+                            hintStyle: TextStyle(color: Color(0xff3DDAB4))
                           ),
                           // style: t/1heme.textTheme.bodyText1.copyWith(color: Colors.grey),
                         ),
@@ -144,7 +150,9 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                   ),
                 ),
               ),
-              const Divider(),
+              const Divider(
+                color: Color(0xff998455),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 16),
                 child: Row(
@@ -217,12 +225,12 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
         debugingText == null ? const SizedBox() : Text(debugingText),
         CircleAvatar(
           radius: 16,
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Color(0xff998455),
           child: IconButton(
             icon: Icon(
               icon,
               size: 18,
-              color: isEnable ? Colors.black : Colors.grey,
+              color: isEnable ?  Color(0xff1E2034) : Colors.white54
             ),
             onPressed: () {
               if (isEnable) {
@@ -258,7 +266,10 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                   ListTile(
                     leading: _iconButton(Icons.camera_alt_outlined,
                         isEnable: true, label: "Camera", onTap: () {}),
-                    title: const Text('Camera'),
+                    title: const Text('Camera',
+                    style: TextStyle(
+                        color: Color(0xff1E2034),
+                      ),),
                     onTap: () {
                       _handleCameraTap(context);
                       Navigator.pop(context);
@@ -267,7 +278,10 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                   ListTile(
                     leading: _iconButton(Icons.image_outlined,
                         isEnable: true, label: "Photo", onTap: () {}),
-                    title: const Text('Photo'),
+                    title: const Text('Photo',
+                    style: TextStyle(
+                        color: Color(0xff1E2034),
+                      ),),
                     onTap: () {
                       _handleImageTap(context);
                       Navigator.pop(context);
@@ -276,7 +290,10 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                   ListTile(
                     leading: _iconButton(Icons.attach_file_rounded,
                         isEnable: true, label: "Attachment", onTap: () {}),
-                    title: const Text('Attachment'),
+                    title: const Text('Attachment',
+                    style: TextStyle(
+                        color: Color(0xff1E2034),
+                      ),),
                     onTap: () {
                       _handleFileTap(context);
                       Navigator.pop(context);
@@ -285,7 +302,11 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                   ListTile(
                     leading: _iconButton(Icons.play_circle_outline_outlined,
                         isEnable: true, label: "Video", onTap: () {}),
-                    title: const Text('Video'),
+                    title: const Text('Video',
+                      style: TextStyle(
+                        color: Color(0xff1E2034),
+                      ),
+                    ),
                     onTap: () {
                       _handleVideoTap(context);
                       Navigator.pop(context);

@@ -79,14 +79,14 @@ class CategoryListState extends State<CategoryList> {
     final theme = Theme.of(context);
     return Consumer<CategoryVM>(builder: (context, vm, _) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff1E2034),
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF292C45),
           leading: IconButton(
             icon: const Icon(
               Icons.close,
-              color: Colors.black,
+              color: Color(0xff998455),
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -96,7 +96,10 @@ class CategoryListState extends State<CategoryList> {
             'Select category',
             style: Provider.of<AmityUIConfiguration>(context)
                 .titleTextStyle
-                .copyWith(fontWeight: FontWeight.bold),
+                .copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff998455)
+                ),
           ),
         ),
         body: SafeArea(
@@ -105,7 +108,7 @@ class CategoryListState extends State<CategoryList> {
               Expanded(
                 child: Container(
                   height: bHeight,
-                  color: Colors.white,
+                  color: Color(0xFF292C45),
                   child: FadedSlideAnimation(
                     beginOffset: const Offset(0, 0.3),
                     endOffset: const Offset(0, 0),
@@ -183,7 +186,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: Color(0xFF292C45),
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -210,15 +213,17 @@ class CategoryWidget extends StatelessWidget {
                     height: 40,
                     width: 40,
                     decoration: const BoxDecoration(
-                        color: Color(0xFFD9E5FC), shape: BoxShape.circle),
+                        color: Color(0xff998455), shape: BoxShape.circle),
                     child: const Icon(
                       Icons.category,
-                      color: Colors.white,
+                      color: Color(0xFF292C45),
                     ),
                   ),
           ),
           title: Text(category.name ?? "Category",
-              style: Provider.of<AmityUIConfiguration>(context).hintTextStyle),
+              style: TextStyle(
+                color: Colors.white
+              )),
           trailing: Provider.of<CategoryVM>(context, listen: true)
                   .checkIfSelected(
                       Provider.of<CategoryVM>(context, listen: false)
@@ -226,8 +231,7 @@ class CategoryWidget extends StatelessWidget {
                           .categoryId!)
               ? Icon(
                   Icons.check_rounded,
-                  color:
-                      Provider.of<AmityUIConfiguration>(context).primaryColor,
+                  color: Color(0xff3DDAB4),
                 )
               : null,
         ),

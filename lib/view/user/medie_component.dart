@@ -16,7 +16,7 @@ class MediaGalleryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Color(0xff1E2034),
       child: Column(
         children: [
           const SizedBox(
@@ -75,17 +75,17 @@ class MediaGalleryPage extends StatelessWidget {
         foregroundColor: galleryFeed == GalleryFeed.community
             ? Provider.of<CommuFeedVM>(context).getMediaType() == type
                 ? Colors.white
-                : const Color(0xff636878)
+                :  Color(0xFF292C45)
             : Provider.of<UserFeedVM>(context).getMediaType() == type
                 ? Colors.white
-                : const Color(0xff636878),
+                :  Color(0xFF292C45),
         backgroundColor: galleryFeed == GalleryFeed.community
             ? Provider.of<CommuFeedVM>(context).getMediaType() == type
-                ? Provider.of<AmityUIConfiguration>(context).primaryColor
-                : const Color(0xffEBECEF)
+                ?  Color(0xff3DDAB4)
+                : Color(0xff998455)
             : Provider.of<UserFeedVM>(context).getMediaType() == type
-                ? Provider.of<AmityUIConfiguration>(context).primaryColor
-                : const Color(0xffEBECEF),
+                ?  Color(0xff3DDAB4)
+                : Color(0xff998455),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
         ),
@@ -102,6 +102,7 @@ class MediaGalleryPage extends StatelessWidget {
         Image.asset(
           "assets/images/privateIcon.png",
           package: "amity_uikit_beta_service",
+          color: Colors.white,
         ),
         const SizedBox(height: 12),
         const Text(
@@ -109,14 +110,14 @@ class MediaGalleryPage extends StatelessWidget {
           style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w600,
-              color: Color(0xff292B32)),
+              color: Colors.white),
         ),
         const Text(
           "Follow this user to see all posts",
           style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w400,
-              color: Color(0xffA5A9B5)),
+              color: Colors.white38),
         ),
       ],
     );
@@ -132,6 +133,7 @@ class MediaGalleryPage extends StatelessWidget {
             Image.asset(
               "assets/images/Icon name.png",
               package: "amity_uikit_beta_service",
+              color: Colors.white,
             ),
             const SizedBox(height: 12),
             const Text(
@@ -139,7 +141,7 @@ class MediaGalleryPage extends StatelessWidget {
               style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xffA5A9B5)),
+                  color: Colors.white),
             ),
           ],
         ),
@@ -208,6 +210,7 @@ class MediaGalleryPage extends StatelessWidget {
             Image.asset(
               "assets/images/noVideo.png",
               package: "amity_uikit_beta_service",
+              color: Colors.white,
             ),
             const SizedBox(height: 12),
             const Text(
@@ -215,7 +218,7 @@ class MediaGalleryPage extends StatelessWidget {
               style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xffA5A9B5)),
+                  color: Colors.white),
             ),
           ],
         ),
