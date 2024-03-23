@@ -25,17 +25,24 @@ class _CommentsNotificationSettingPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
         title: const Text(
           'Comments',
           style: TextStyle(
-            color: Colors.black,
+            color: Color(0xff998455),
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: Color(0xff998455)
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Color(0xFF292C45),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -75,7 +82,7 @@ class _CommentsNotificationSettingPageState
               });
             },
           ),
-          const Divider(),
+          const Divider(color: Color(0xff998455),),
 
           // Section 2: New Comments
           _buildSectionHeader('New Comments'),
@@ -111,7 +118,7 @@ class _CommentsNotificationSettingPageState
               });
             },
           ),
-          const Divider(),
+          const Divider(color: Color(0xff998455),),
 
           // Section 3: Replies
           _buildSectionHeader('Replies'),
@@ -161,7 +168,7 @@ class _CommentsNotificationSettingPageState
         style: const TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 16,
-          color: Color(0xff292B32),
+          color: Colors.white,
         ),
       ),
     );
@@ -174,7 +181,7 @@ class _CommentsNotificationSettingPageState
         text,
         style: const TextStyle(
           fontSize: 14,
-          color: Color(0xff636878),
+          color: Colors.white38,
         ),
       ),
     );
@@ -190,12 +197,11 @@ class _CommentsNotificationSettingPageState
         title,
         style: const TextStyle(
           fontSize: 14,
-          color: Color(0xff292B32),
+          color: Colors.white54,
         ),
       ),
       trailing: Radio<T>(
-        focusColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
-        activeColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
+        activeColor: Color(0xff3DDAB4),
         value: value,
         groupValue: groupValue,
         onChanged: onChanged,

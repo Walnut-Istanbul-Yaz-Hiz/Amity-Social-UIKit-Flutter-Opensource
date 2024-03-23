@@ -27,11 +27,22 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
       appBar: AppBar(
         title: Text(
           'Notifications',
-          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
+          style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+          .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20
+                ),
         ),
-        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: Color(0xff998455)
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Color(0xFF292C45),
         elevation: 0,
-        iconTheme: const IconThemeData(color: Color(0xff292B32)),
       ),
       body: ListView(
         children: [
@@ -40,14 +51,16 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
             padding: EdgeInsets.all(16.0),
             child: Text(
               'Allow Notification',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.white),
             ),
           ),
           ListTile(
             title: const Text(
               'Turn on to receive push notification from this community',
+              style: TextStyle(color: Colors.white38),
             ),
             trailing: Switch(
+              activeColor: Color(0xff3DDAB4),
               value: isNotificationEnabled,
               onChanged: (value) {
                 setState(() {
@@ -56,7 +69,9 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
               },
             ),
           ),
-          const Divider(),
+          const Divider(
+            color: Color(0xff998455),
+          ),
 
           // Section 2: Post and Comment
 
@@ -71,15 +86,14 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               8), // Adjust radius to your need
-                          color: Colors
-                              .grey[200], // Choose the color to fit your design
+                          color: Color(0xff998455), // Choose the color to fit your design
                         ),
                         child: const Icon(Icons.newspaper_outlined,
-                            color: Color(0xff292B32)),
+                            color: Color(0xFF292C45)),
                       ), // You may want to replace with your icon
-                      title: const Text('Posts'),
+                      title: const Text('Posts',style: TextStyle(color: Colors.white),),
                       trailing: const Icon(Icons.chevron_right,
-                          color: Color(0xff292B32)),
+                          color: Color(0xff3DDAB4)),
                       onTap: () {
                         // Navigate to post settings page
                         Navigator.of(context).push(MaterialPageRoute(
@@ -94,17 +108,16 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               4), // Adjust radius to your need
-                          color: const Color(
-                              0xfff1f1f1), // Choose the color to fit your design
+                          color: Color(0xff998455), // Choose the color to fit your design
                         ),
                         child: const Icon(
                           Icons.chat_bubble_outlined,
-                          color: Color(0xff292B32),
+                          color: Color(0xFF292C45),
                         ),
                       ), // You may want to replace with your icon
-                      title: const Text('Comments'),
+                      title: const Text('Comments',style: TextStyle(color: Colors.white),),
                       trailing: const Icon(Icons.chevron_right,
-                          color: Color(0xff292B32)),
+                          color: Color(0xff3DDAB4)),
                       onTap: () {
                         // Navigate to comment settings page
                         Navigator.of(context).push(MaterialPageRoute(

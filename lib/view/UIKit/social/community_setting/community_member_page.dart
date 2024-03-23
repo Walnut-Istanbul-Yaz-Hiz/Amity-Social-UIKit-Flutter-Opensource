@@ -45,11 +45,11 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff1E2034),
         appBar: AppBar(
           actions: [
             IconButton(
-              icon: const Icon(Icons.add, color: Colors.black),
+              icon: const Icon(Icons.add, color: Color(0xff998455)),
               onPressed: () async {
                 var userList =
                     Provider.of<MemberManagementVM>(context, listen: false)
@@ -87,33 +87,66 @@ class _MemberManagementPageState extends State<MemberManagementPage> {
           ],
           elevation: 0.0,
           iconTheme: const IconThemeData(color: Colors.black),
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xFF292C45),
           title: Text("Community",
-              style: Provider.of<AmityUIConfiguration>(context).titleTextStyle),
-          bottom: const PreferredSize(
+              style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
+              .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20
+                ),
+            ),
+            leading: IconButton(
+              icon: const Icon(
+                Icons.chevron_left,
+                color: Color(0xff998455),
+                size: 30,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          bottom:  PreferredSize(
             preferredSize: Size.fromHeight(
                 48.0), // Provide a height for the AppBar's bottom
-            child: Row(
-              children: [
-                TabBar(
-                  tabAlignment: TabAlignment.start,
-                  isScrollable: true, // Ensure that the TabBar is scrollable
-
-                  labelColor: Color(0xFF1054DE), // #1054DE color
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Color(0xFF1054DE),
-                  labelStyle: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'SF Pro Text',
+            child: Container(
+              color: Color(0xff756548),
+              child: Row(
+                children: [
+                  TabBar(
+                    tabAlignment: TabAlignment.start,
+                   isScrollable: true,
+                      indicatorColor: Color(0xff3DDAB4),
+                      indicatorSize: TabBarIndicatorSize.label,
+                      indicatorWeight: 6,
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Color(0xff998455),
+                      labelStyle: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'SF Pro Text',
+                      ),
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "Members",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800  
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          "Moderators",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800  
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-
-                  tabs: [
-                    Tab(text: "Members"),
-                    Tab(text: "Moderators"),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -151,24 +184,24 @@ class MemberList extends StatelessWidget {
                         ))));
               },
               leading: CircleAvatar(
-                backgroundColor: const Color(0xFFD9E5FC),
+                backgroundColor: Color(0xff998455),
                 backgroundImage: viewModel.userList[index].user?.avatarUrl ==
                         null
                     ? null
                     : NetworkImage(viewModel.userList[index].user!.avatarUrl!),
                 child: viewModel.userList[index].user?.avatarUrl != null
                     ? null
-                    : const Icon(Icons.person, size: 20, color: Colors.white),
+                    : const Icon(Icons.person, size: 20, color: Color(0xFF292C45)),
               ),
               title: Text(
                 viewModel.userList[index].user?.displayName ?? '',
                 style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 15,color: Colors.white),
               ),
               trailing: IconButton(
                 icon: const Icon(
                   Icons.more_horiz_rounded,
-                  color: Colors.black,
+                  color: Color(0xff998455),
                 ),
                 onPressed: () {
                   _showOptionsBottomSheet(
@@ -206,7 +239,7 @@ class ModeratorList extends StatelessWidget {
                         ))));
               },
               leading: CircleAvatar(
-                backgroundColor: const Color(0xFFD9E5FC),
+                backgroundColor: Color(0xff998455),
                 backgroundImage:
                     viewModel.moderatorList[index].user?.avatarUrl == null
                         ? null
@@ -216,18 +249,17 @@ class ModeratorList extends StatelessWidget {
                     ? null
                     : const Icon(Icons.person,
                         size: 20,
-                        color: Colors
-                            .white), // Adjust to use the correct attribute for avatar URL
+                        color: Color(0xFF292C45)), // Adjust to use the correct attribute for avatar URL
               ),
               title: Text(
                 viewModel.moderatorList[index].user?.displayName ?? '',
                 style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.white),
               ),
               trailing: IconButton(
                 icon: const Icon(
                   Icons.more_horiz,
-                  color: Colors.black,
+                  color: Color(0xff998455),
                 ),
                 onPressed: () {
                   _showOptionsBottomSheet(
@@ -254,7 +286,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
         return Container(
           padding: const EdgeInsets.only(top: 20, bottom: 20),
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: Color(0xFF292C45),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
@@ -272,7 +304,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                                   ? 'Dismiss moderator'
                                   : 'Promote to moderator',
                               style:
-                                  const TextStyle(fontWeight: FontWeight.w500),
+                                  const TextStyle(fontWeight: FontWeight.w500,color: Colors.white),
                             ),
                             onTap: () async {
                               Navigator.pop(context);
@@ -294,7 +326,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     ListTile(
                       title: Text(
                         member.user!.isFlaggedByMe ? "Undo Report" : "Report",
-                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500,color: Colors.white),
                       ),
                       onTap: () async {
                         if (member.user!.isFlaggedByMe) {
@@ -313,7 +345,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     ListTile(
                       title: const Text(
                         'Block User',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),
                       ),
                       onTap: () {
                         viewModel.blockUser(member.user!);
@@ -324,7 +356,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                       title: const Text(
                         'Remove from community',
                         style: TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.w500),
+                            color: Color(0xffFC0069), fontWeight: FontWeight.w500),
                       ),
                       onTap: () async {
                         Navigator.pop(context);
@@ -350,7 +382,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     ListTile(
                       title: const Text(
                         'Block User',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),
                       ),
                       onTap: () {
                         viewModel.blockUser(member.user!);
@@ -360,7 +392,7 @@ void _showOptionsBottomSheet(BuildContext context, AmityCommunityMember member,
                     ListTile(
                       title: const Text(
                         'Report',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),
                       ),
                       onTap: () {
                         viewModel.reportUser(member.user!);

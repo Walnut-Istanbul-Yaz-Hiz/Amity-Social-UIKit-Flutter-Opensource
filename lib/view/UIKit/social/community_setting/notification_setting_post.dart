@@ -28,17 +28,24 @@ class _PostNotificationSettingPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
         title: const Text(
           'Posts',
           style: TextStyle(
-            color: Colors.black,
+            color: Color(0xff998455),
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: Color(0xff998455)
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Color(0xFF292C45),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
@@ -53,7 +60,7 @@ class _PostNotificationSettingPageState
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
-                color: Color(0xff292B32),
+                color: Colors.white,
               ),
             ),
           ),
@@ -63,7 +70,7 @@ class _PostNotificationSettingPageState
               "Receive notifications when someone make a reaction to your posts in this community",
               style: TextStyle(
                 fontSize: 14,
-                color: Color(0xff636878),
+                color: Colors.white38,
               ),
             ),
           ),
@@ -102,6 +109,7 @@ class _PostNotificationSettingPageState
             padding: EdgeInsets.only(left: 16, right: 16),
             child: Divider(
               thickness: 1,
+              color: Color(0xff998455),
             ),
           ),
 
@@ -113,7 +121,7 @@ class _PostNotificationSettingPageState
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
-                color: Color(0xff292B32),
+                color: Colors.white,
               ),
             ),
           ),
@@ -123,7 +131,7 @@ class _PostNotificationSettingPageState
               "Receive notifications when someone make a reaction to your posts in this community",
               style: TextStyle(
                 fontSize: 14,
-                color: Color(0xff636878),
+                color: Colors.white38,
               ),
             ),
           ),
@@ -157,7 +165,9 @@ class _PostNotificationSettingPageState
               });
             },
           ),
-          const Divider(),
+          const Divider(
+            color: Color(0xff998455),
+          ),
         ],
       ),
     );
@@ -187,12 +197,11 @@ class _PostNotificationSettingPageState
         title,
         style: const TextStyle(
           fontSize: 14,
-          color: Color(0xff292B32),
+          color: Colors.white54,
         ),
       ),
       trailing: Radio<T>(
-        focusColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
-        activeColor: Provider.of<AmityUIConfiguration>(context).primaryColor,
+        activeColor: Color(0xff3DDAB4),
         value: value,
         groupValue: groupValue,
         onChanged: onChanged,

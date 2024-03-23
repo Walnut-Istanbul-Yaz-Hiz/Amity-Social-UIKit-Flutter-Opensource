@@ -25,14 +25,26 @@ class CommunitySettingPage extends StatelessWidget {
         builder: (context, snapshot) {
           var livecommunity = snapshot.data ?? community;
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xff1E2034),
             appBar: AppBar(
               elevation: 0.0,
               title: Text(snapshot.data?.displayName ?? community.displayName!,
                   style: Provider.of<AmityUIConfiguration>(context)
-                      .titleTextStyle),
-              backgroundColor: Colors.white,
-              iconTheme: const IconThemeData(color: Colors.black),
+                      .titleTextStyle
+                 .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20
+                ),
+              ),
+              backgroundColor: Color(0xFF292C45),
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.close,
+                  color: Color(0xff998455)
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
             ),
             body: ListView(
               children: [
@@ -41,7 +53,7 @@ class CommunitySettingPage extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: Text("Basic Info",
                       style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17,color: Color(0xff998455))),
                 ),
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
                     ? const SizedBox()
@@ -51,14 +63,13 @@ class CommunitySettingPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   4), // Adjust radius to your need
-                              color: const Color(
-                                  0xfff1f1f1), // Choose the color to fit your design
+                              color: Color(0xff998455), // Choose the color to fit your design
                             ),
                             child: const Icon(Icons.edit,
-                                color: Color(0xff292B32))),
+                                color: Color(0xFF292C45))),
                         title: const Text("Edit Profile"),
                         trailing: const Icon(Icons.chevron_right,
-                            color: Color(0xff292B32)),
+                            color: Color(0xff3DDAB4)),
                         onTap: () {
                           // Navigate to Edit Profile Page or perform an action
                           Navigator.of(context).push(MaterialPageRoute(
@@ -72,14 +83,13 @@ class CommunitySettingPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               4), // Adjust radius to your need
-                          color: const Color(
-                              0xfff1f1f1), // Choose the color to fit your design
+                          color: Color(0xff998455), // Choose the color to fit your design
                         ),
                         child:
-                            const Icon(Icons.people, color: Color(0xff292B32))),
-                    title: const Text("Members"),
+                            const Icon(Icons.people, color: Color(0xFF292C45))),
+                    title: const Text("Members",style: TextStyle(color: Colors.white),),
                     trailing: const Icon(Icons.chevron_right,
-                        color: Color(0xff292B32)),
+                        color: Color(0xff3DDAB4)),
                     onTap: () {
                       // Navigate to Members Page or perform an action
                       Navigator.of(context).push(MaterialPageRoute(
@@ -92,17 +102,17 @@ class CommunitySettingPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
                             4), // Adjust radius to your need
-                        color: const Color(
-                            0xfff1f1f1), // Choose the color to fit your design
+                        color: Color(0xff998455), // Choose the color to fit your design
                       ),
                       child: const Icon(Icons.notifications,
-                          color: Color(0xff292B32))),
-                  title: const Text("Notifications"),
+                          color: Color(0xFF292C45))),
+                  title: const Text("Notifications",style: TextStyle(color: Colors.white),),
                   trailing: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("On"), // Replace with dynamic text
-                      Icon(Icons.chevron_right, color: Color(0xff292B32)),
+                      Text("On",
+                      style: TextStyle(color:Color(0xff3DDAB4) ),), // Replace with dynamic text
+                      Icon(Icons.chevron_right, color: Color(0xff3DDAB4)),
                     ],
                   ),
                   onTap: () {
@@ -117,8 +127,8 @@ class CommunitySettingPage extends StatelessWidget {
                     : const Padding(
                         padding: EdgeInsets.only(left: 16, right: 16),
                         child: Divider(
-                          color: Color(0xffEBECEF),
-                          thickness: 1,
+                          color: Color(0xff998455),
+                          thickness: 2,
                         ),
                       ),
 
@@ -129,7 +139,8 @@ class CommunitySettingPage extends StatelessWidget {
                         padding: EdgeInsets.all(16.0),
                         child: Text("Community Permission",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 17)),
+                                fontWeight: FontWeight.w600, fontSize: 17,
+                                color: Colors.white)),
                       ),
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
                     ? const SizedBox()
@@ -139,14 +150,13 @@ class CommunitySettingPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   4), // Adjust radius to your need
-                              color: const Color(
-                                  0xfff1f1f1), // Choose the color to fit your design
+                              color: Color(0xff998455), // Choose the color to fit your design
                             ),
                             child: const Icon(Icons.fact_check,
-                                color: Color(0xff292B32))),
-                        title: const Text("Post Review"),
+                                color: Color(0xFF292C45))),
+                        title: const Text("Post Review",style: TextStyle(color: Colors.white),),
                         trailing: const Icon(Icons.chevron_right,
-                            color: Color(0xff292B32)),
+                            color: Color(0xff3DDAB4)),
                         onTap: () {
                           // Navigate to Post Review Page or perform an action
                           Navigator.of(context).push(MaterialPageRoute(
@@ -155,12 +165,12 @@ class CommunitySettingPage extends StatelessWidget {
                         },
                       ),
                 ListTile(
-                  title: const Text(
+                  title:  Text(
                     "Leave Community",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
-                        color: Colors.red),
+                        color: Color(0xffF75E68)),
                   ),
                   onTap: () async {
                     await ConfirmationDialog().show(
@@ -187,7 +197,7 @@ class CommunitySettingPage extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 16, right: 16),
                   child: Divider(
-                    color: Color(0xffEBECEF),
+                    color: Color(0xff998455),
                     thickness: 1,
                   ),
                 ),
@@ -201,7 +211,7 @@ class CommunitySettingPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
-                            color: Colors.red,
+                            color: Color(0xffFC0069),
                           ),
                         ),
                         subtitle: const Padding(
@@ -211,7 +221,7 @@ class CommunitySettingPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff636878),
+                              color: Colors.white38,
                             ),
                           ),
                         ),
@@ -249,7 +259,7 @@ class CommunitySettingPage extends StatelessWidget {
                     : const Padding(
                         padding: EdgeInsets.only(left: 16, right: 16),
                         child: Divider(
-                          color: Color(0xffEBECEF),
+                          color: Color(0xff998455),
                           thickness: 1,
                         ),
                       ),

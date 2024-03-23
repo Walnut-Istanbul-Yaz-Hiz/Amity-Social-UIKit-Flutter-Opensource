@@ -161,29 +161,29 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
             children: [
               _navigationButton(
                 route: 'Feed',
-                icon: 'images/icons/weserved_icons/newsfeed_icon.png',
+                icon: 'assets/images/weserved/newsfeed_icon.png',
                 text: 'NEWS',
                 index: 1,
               ),
               _navigationButton(
                 route: 'Groups',
-                icon: 'images/icons/weserved_icons/groups_icon.png',
+                icon: 'assets/images/weserved/groups_icon.png',
                 text: 'GROUPS',
               ),
               _navigationButton(
                 route: 'Explore',
-                icon: 'images/icons/weserved_icons/explore_icon.png',
+                icon: 'assets/images/weserved/explore_icon.png',
                 text: 'EXPLORE',
                 index: 0,
               ),
               _navigationButton(
                 route: 'Chat',
-                icon: 'images/icons/weserved_icons/chat_icon.png',
+                icon: 'assets/images/weserved/chat_icon.png',
                 text: 'CHAT',
               ),
               _navigationButton(
                 route: 'Profile',
-                icon: 'images/icons/weserved_icons/navbar_profile_icon.png',
+                icon: 'assets/images/weserved/navbar_profile_icon.png',
                 text: 'CHAT',
               ),
             ],
@@ -214,6 +214,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
           children: [
             Image.asset(
               icon,
+              package: "amity_uikit_beta_service",
               height: 40,
               width: 40,
             ),

@@ -101,13 +101,13 @@ class CommunityScreenState extends State<CommunityScreen> {
             Column(
               children: [
                 Text(community.postsCount.toString(),
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069))),
                 const Text('posts',
-                    style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                    style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
               ],
             ),
             Container(
-              color: const Color(0xffE5E5E5), // Divider color
+              color: Color(0xff998455), // Divider color
               height: 20,
               width: 1,
 
@@ -119,10 +119,10 @@ class CommunityScreenState extends State<CommunityScreen> {
                 children: [
                   Text(
                     community.membersCount.toString(),
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069)),
                   ),
                   const Text('members',
-                      style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                      style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
                 ],
               ),
             ),
@@ -150,7 +150,7 @@ class CommunityScreenState extends State<CommunityScreen> {
               endOffset: const Offset(0, 0),
               slideCurve: Curves.linearToEaseOut,
               child: Container(
-                color: Colors.grey[200],
+                color: Color(0xff1E2034),
                 child: RefreshIndicator(
                   color:
                       Provider.of<AmityUIConfiguration>(context).primaryColor,
@@ -208,14 +208,13 @@ class CommunityScreenState extends State<CommunityScreen> {
                                   )));
                         },
                         backgroundColor:
-                            Provider.of<AmityUIConfiguration>(context)
-                                .primaryColor,
+                            Color(0xff998455),
                         child: Provider.of<AmityUIConfiguration>(context)
                             .iconConfig
-                            .postIcon(iconSize: 28, color: Colors.white),
+                            .postIcon(iconSize: 28, color: Color(0xFF292C45)),
                       )
                     : null,
-                backgroundColor: Colors.white,
+                backgroundColor: Color(0xff1E2034),
                 body: Stack(
                   children: [
                     IntrinsicDimension(
@@ -239,16 +238,16 @@ class CommunityScreenState extends State<CommunityScreen> {
                               expandedHeight:
                                   Provider.of<CompoentSizeVM>(context)
                                       .getCommunityDetailSectionSize(),
-                              shadowColor: Colors.white,
+                              shadowColor: Color(0xFF292C45),
                               elevation: 0,
                               surfaceTintColor: Colors.transparent,
-                              backgroundColor: Colors.white,
+                              backgroundColor: Color(0xFF292C45),
                               floating: false,
                               pinned: true,
                               leading: IconButton(
                                 icon: const Icon(
                                   Icons.chevron_left,
-                                  color: Color(0xff292B32),
+                                  color: Color(0xff998455),
                                   size: 30,
                                 ),
                                 onPressed: () => Navigator.of(context).pop(),
@@ -271,7 +270,7 @@ class CommunityScreenState extends State<CommunityScreen> {
                                                   )));
                                     },
                                     icon: const Icon(Icons.more_horiz_rounded,
-                                        color: Colors.black))
+                                        color: Color(0xff998455)))
                               ],
                               bottom: PreferredSize(
                                 preferredSize: const Size.fromHeight(25),
@@ -280,23 +279,40 @@ class CommunityScreenState extends State<CommunityScreen> {
                                   children: [
                                     Expanded(
                                       child: Container(
-                                        color: Colors.white,
+                                        color: Color(0xff756548),
                                         child: TabBar(
                                           tabAlignment: TabAlignment.start,
                                           controller: _tabController,
                                           isScrollable: true,
-                                          labelColor: const Color(0xFF1054DE),
-                                          unselectedLabelColor: Colors.black,
-                                          indicatorColor:
-                                              const Color(0xFF1054DE),
-                                          labelStyle: const TextStyle(
+                                          indicatorColor: Color(0xff3DDAB4),
+                                          indicatorSize: TabBarIndicatorSize.label,
+                                          indicatorWeight: 6,
+                                          labelColor: Colors.white,
+                                          unselectedLabelColor: Color(0xff998455),
+                                          labelStyle: TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w600,
                                             fontFamily: 'SF Pro Text',
                                           ),
                                           tabs: const [
-                                            Tab(text: "Timeline"),
-                                            Tab(text: "Gallery"),
+                                            Tab(
+                                              child: Text(
+                                                'Timeline',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w800  
+                                                ),
+                                              ),
+                                            ),
+                                            Tab(
+                                              child: Text(
+                                                'Gallery',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w800  
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -366,11 +382,9 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 20.0, vertical: 10.0),
                   decoration: BoxDecoration(
-                    color:
-                        Provider.of<AmityUIConfiguration>(context).primaryColor,
+                    color: Color(0xff3DDAB4),
                     border: Border.all(
-                        color: Provider.of<AmityUIConfiguration>(context)
-                            .primaryColor), // Grey border color
+                        color: Color(0xff3DDAB4)), // Grey border color
                     borderRadius: BorderRadius.circular(4), // Rounded corners
                   ),
                   child: const Row(
@@ -451,9 +465,9 @@ class PedindingButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         decoration: BoxDecoration(
-          color: const Color(0xffEBECEF),
+          color: Color(0xffFC0069),
           border: Border.all(
-            color: const Color(0xffEBECEF),
+            color: Color(0xffFC0069),
           ), // Grey border color
           borderRadius: BorderRadius.circular(4), // Rounded corners
         ),
@@ -466,14 +480,13 @@ class PedindingButton extends StatelessWidget {
                 Icon(
                   Icons.circle,
                   size: 6,
-                  color:
-                      Provider.of<AmityUIConfiguration>(context).primaryColor,
+                  color: Colors.white,
                 ),
                 const SizedBox(width: 8.0), // Space between icon and text
                 const Text(
                   "Pending posts",
                   style: TextStyle(
-                    color: Colors.black, // Text color
+                    color: Colors.white, // Text color
                   ),
                 ),
               ],
@@ -488,7 +501,7 @@ class PedindingButton extends StatelessWidget {
                       ? "Your posts are pending for review"
                       : "${Provider.of<CommuFeedVM>(context).getCommunityPendingPosts().length} posts need approval",
                   style: const TextStyle(
-                      fontSize: 13, color: Color(0xff636878) // Text color
+                      fontSize: 13, color: Colors.white// Text color
                       ),
                 ),
               ],
@@ -519,7 +532,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
         ),
         Text(
           community.description ?? "",
-          style: const TextStyle(fontSize: 15),
+          style: const TextStyle(fontSize: 15,color: Colors.white),
         ),
       ],
     );
@@ -551,13 +564,13 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
             Column(
               children: [
                 Text(community.postsCount.toString(),
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069))),
                 const Text('posts',
-                    style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                    style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
               ],
             ),
             Container(
-              color: const Color(0xffE5E5E5), // Divider color
+              color: Color(0xff998455), // Divider color
               height: 20,
               width: 1,
 
@@ -574,10 +587,10 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                 children: [
                   Text(
                     community.membersCount.toString(),
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069)),
                   ),
                   const Text('members',
-                      style: TextStyle(fontSize: 16, color: Color(0xff898E9E)))
+                      style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
                 ],
               ),
             ),
@@ -596,10 +609,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        Container(
-          color: Colors.white,
-          height: 120,
-        ),
+        
         Stack(
           alignment: AlignmentDirectional.bottomStart,
           children: [
@@ -719,7 +729,10 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                               community: widget.community,
                             )),
                           ],
-                        )
+                        ),
+              const SizedBox(
+                height: 50,
+              ),
             ],
           ),
         ),
