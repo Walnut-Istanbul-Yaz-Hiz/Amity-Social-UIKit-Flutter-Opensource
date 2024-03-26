@@ -5,6 +5,10 @@ import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:amity_uikit_beta_service/viewmodel/channel_viewmodel.dart';
+import 'package:amity_uikit_beta_service/view/chat/chat_screen.dart';
+import 'package:amity_uikit_beta_service/view/chat/single_chat_room.dart';
+// import 'package:amity_uikit_beta_service/view/user/chat_friend_tab.dart';
 
 class UserSettingPage extends StatelessWidget {
   final AmityUser amityUser;
@@ -34,14 +38,12 @@ class UserSettingPage extends StatelessWidget {
               ),
               elevation: 0.0,
               title: Text("Setting",
-                style: Provider.of<AmityUIConfiguration>(context)
-                    .titleTextStyle
-                .copyWith(
-                  color: Color(0xff998455),
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20
-                )
-              ),
+                  style: Provider.of<AmityUIConfiguration>(context)
+                      .titleTextStyle
+                      .copyWith(
+                          color: Color(0xff998455),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20)),
               backgroundColor: Color(0xFF292C45),
               iconTheme: const IconThemeData(color: Colors.black),
             ),
@@ -50,10 +52,11 @@ class UserSettingPage extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text("Basic info",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17,
-                            color: Color(0xff998455),
-                          )),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 17,
+                        color: Color(0xff998455),
+                      )),
                 ),
                 amityUser.userId == AmityCoreClient.getCurrentUser().userId
                     ? ListTile(
@@ -92,10 +95,11 @@ class UserSettingPage extends StatelessWidget {
                                 leading: Container(
                                     padding: const EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          4), // Adjust radius to your need
-                                      color: Color(0xff998455)// Choose the color to fit your design
-                                    ),
+                                        borderRadius: BorderRadius.circular(
+                                            4), // Adjust radius to your need
+                                        color: Color(
+                                            0xff998455) // Choose the color to fit your design
+                                        ),
                                     child: const Icon(Icons.person_add,
                                         color: Color(0xFF292C45))),
                                 title: const Text(
@@ -122,7 +126,8 @@ class UserSettingPage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                           4), // Adjust radius to your need
-                                      color: Color(0xff998455), // Choose the color to fit your design
+                                      color: Color(
+                                          0xff998455), // Choose the color to fit your design
                                     ),
                                     child: const Icon(Icons.person_remove,
                                         color: Color(0xFF292C45))),
@@ -148,10 +153,11 @@ class UserSettingPage extends StatelessWidget {
                             leading: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      4), // Adjust radius to your need
-                                  color: Color(0xff998455) // Choose the color to fit your design
-                                ),
+                                    borderRadius: BorderRadius.circular(
+                                        4), // Adjust radius to your need
+                                    color: Color(
+                                        0xff998455) // Choose the color to fit your design
+                                    ),
                                 child: const Icon(Icons.flag,
                                     color: Color(0xFF292C45))),
                             title: const Text(
@@ -171,10 +177,11 @@ class UserSettingPage extends StatelessWidget {
                             leading: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      4), // Adjust radius to your need
-                                  color: Color(0xff998455) // Choose the color to fit your design
-                                ),
+                                    borderRadius: BorderRadius.circular(
+                                        4), // Adjust radius to your need
+                                    color: Color(
+                                        0xff998455) // Choose the color to fit your design
+                                    ),
                                 child: const Icon(Icons.flag,
                                     color: Color(0xFF292C45))),
                             title: const Text(
@@ -200,7 +207,8 @@ class UserSettingPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   4), // Adjust radius to your need
-                              color: Color(0xff998455),// Choose the color to fit your design
+                              color: Color(
+                                  0xff998455), // Choose the color to fit your design
                             ),
                             child: const Icon(Icons.person_off,
                                 color: Color(0xFF292C45))),
@@ -208,13 +216,13 @@ class UserSettingPage extends StatelessWidget {
                           snapshot.data!.status == AmityFollowStatus.BLOCKED
                               ? "Unblock"
                               : "Block User",
-                            style:  TextStyle(
+                          style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
-                              color: snapshot.data!.status == AmityFollowStatus.BLOCKED
-                              ?Color(0xff3DDAB4)
-                              :Color(0xffFC0069)
-                            ),
+                              color: snapshot.data!.status ==
+                                      AmityFollowStatus.BLOCKED
+                                  ? Color(0xff3DDAB4)
+                                  : Color(0xffFC0069)),
                         ),
                         onTap: () {
                           // Navigate to Members Page or perform an action
@@ -232,6 +240,44 @@ class UserSettingPage extends StatelessWidget {
                             );
                           }
                         }),
+                amityUser.userId == AmityCoreClient.getCurrentUser().userId
+                    ? const SizedBox()
+                    : ListTile(
+                        leading: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                  4), // Adjust radius to your need
+                              color: Color(
+                                  0xff998455), // Choose the color to fit your design
+                            ),
+                            child: const Icon(Icons.chat_outlined,
+                                color: Color(0xFF292C45))),
+                        title: Text(
+                          "Chat",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: snapshot.data!.status ==
+                                      AmityFollowStatus.BLOCKED
+                                  ? Color(0xff3DDAB4)
+                                  : Color(0xffFC0069)),
+                        ),
+                        onTap: () {
+                          // Navigate to Members Page or perform an action
+                        print("user has a chat room with this");
+                        // Navigator.of(context).push(
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                                   
+                        //               // AmitySLEChannelScreen();
+                        //               SingleChatRoom();
+                                      
+                        //             ));
+                      }
+                    ),    
+                    
+                          
                 const Divider(
                   color: Color(0xff998455),
                 )

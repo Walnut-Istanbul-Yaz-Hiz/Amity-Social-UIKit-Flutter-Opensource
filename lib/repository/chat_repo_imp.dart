@@ -195,6 +195,7 @@ class AmityChatRepoImp implements AmityChatRepo {
     log("createChannels...");
     socket.emitWithAck('v3/channel.createConversation', {"userIds": userIds},
         ack: (data) {
+          log("ack conversation");
       var amityResponse = AmityResponse.fromJson(data);
       var responsedata = amityResponse.data;
       if (amityResponse.status == "success") {
