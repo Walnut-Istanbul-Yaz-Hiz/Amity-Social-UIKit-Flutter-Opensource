@@ -69,7 +69,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
 
   Color getFollowingStatusColor(AmityFollowStatus amityFollowStatus) {
     if (amityFollowStatus == AmityFollowStatus.NONE) {
-      return Color(0xff998455);
+      return Color(0xff3DDAB4);
     } else if (amityFollowStatus == AmityFollowStatus.PENDING) {
       return Colors.white38;
     } else if (amityFollowStatus == AmityFollowStatus.ACCEPTED) {
@@ -345,7 +345,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                 decoration: BoxDecoration(
                                                     border: Border.all(
                                                         color:
-                                                            getFollowingStatusTextColor(
+                                                            getFollowingStatusColor(
                                                                 snapshot.data!
                                                                     .status),
                                                         style:
@@ -421,7 +421,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                       children: [
                         const SizedBox(height: 100),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16),
+                          padding: const EdgeInsets.only(left: 16, right: 16, top:10),
                           child: Column(
                             children: [
                               SizedBox(

@@ -51,18 +51,18 @@ class _MyCommunityPageState extends State<MyCommunityPage> {
             fontSize: 20
           ), // Adjust as needed
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add, color:  Color(0xff998455)),
-              onPressed: () async {
-                await Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        const CreateCommunityPage())); // Replace with your CreateCommunityPage
-                await Provider.of<MyCommunityVM>(context, listen: false)
-                    .initMyCommunity();
-              },
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(Icons.add, color:  Color(0xff998455)),
+          //     onPressed: () async {
+          //       await Navigator.of(context).push(MaterialPageRoute(
+          //           builder: (context) =>
+          //               const CreateCommunityPage())); // Replace with your CreateCommunityPage
+          //       await Provider.of<MyCommunityVM>(context, listen: false)
+          //           .initMyCommunity();
+          //     },
+          //   ),
+          // ],
         ),
         body: ListView.builder(
           controller: vm.scrollcontroller,

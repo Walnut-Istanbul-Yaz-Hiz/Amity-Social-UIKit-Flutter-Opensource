@@ -67,6 +67,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
               fontWeight: FontWeight.w600,
               fontSize: 30,
               color: Colors.white,
+              fontFamily: 'SF Pro Text',
             ),
           ),
           actions: [
@@ -184,7 +185,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
               _navigationButton(
                 route: 'Profile',
                 icon: 'assets/images/weserved/navbar_profile_icon.png',
-                text: 'CHAT',
+                text: 'PROFILE',
               ),
             ],
           ),

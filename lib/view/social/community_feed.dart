@@ -431,12 +431,12 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                 children: <Widget>[
                   Provider.of<AmityUIConfiguration>(context)
                       .iconConfig
-                      .editIcon(color: Colors.black),
+                      .editIcon(color: Colors.white),
                   const SizedBox(width: 8.0), // Space between icon and text
                   const Text(
                     "Edit Profile",
                     style: TextStyle(
-                      color: Colors.black, // Text color
+                      color: Colors.white, // Text color
                     ),
                   ),
                 ],
