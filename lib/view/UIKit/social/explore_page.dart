@@ -143,7 +143,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
   }
   Widget _bottomNavigationBar(){
     return Container(
-      height: 80,
+      height: 90,
         decoration: BoxDecoration(
           color: Color(0xFF292C45),
           boxShadow: [
@@ -156,7 +156,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(right: 16, left: 16,top: 10),
+          padding: const EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -220,7 +220,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
               width: 40,
             ),
             Padding(
-              padding: const EdgeInsets.only(top:5,bottom: 5),
+              padding: const EdgeInsets.only(top:5, bottom: 5),
               child: Text(
                 text,
                 style: TextStyle(
@@ -634,9 +634,14 @@ class CategorySection extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: const BoxDecoration(
-                                color: Color(0xFF292C45),
+                                color: Color(0xff998455),
                                 shape: BoxShape.circle),
-                            child: const Icon(
+                            child: category.avatar!=null
+                            ?CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  category.avatar?.fileUrl ?? ''),
+                            )
+                            : const Icon(
                               Icons.category,
                               color: Colors.white,
                             ),
@@ -712,11 +717,15 @@ class CategoryListPage extends StatelessWidget {
                 leading: Container(
                   height: 40,
                   width: 40,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF292C45),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
+                   decoration: const BoxDecoration(
+                    color: Color(0xff998455),
+                    shape: BoxShape.circle),
+                  child: category.avatar!=null
+                  ?CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        category.avatar?.fileUrl ?? ''),
+                  )
+                  : const Icon(
                     Icons.category,
                     color: Colors.white,
                   ),
