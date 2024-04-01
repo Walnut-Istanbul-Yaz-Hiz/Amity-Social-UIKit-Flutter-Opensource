@@ -80,13 +80,16 @@ class ChatSingleScreen extends StatelessWidget {
                 reverse: true,
                 controller: Provider.of<MessageVM>(context, listen: false)
                     .scrollController,
-                child: MessageComponent(
+                child: InkWell(
+                  onTap: () {},
+                  onLongPress: () {}, 
+                  child: MessageComponent(
                   bheight: bHeight - textfielHeight,
                   theme: theme,
                   mediaQuery: mediaQuery,
                   channelId: channel.channelId!,
                   channel: channel,
-                ),
+                ),),
               ),
             ),
             Column(

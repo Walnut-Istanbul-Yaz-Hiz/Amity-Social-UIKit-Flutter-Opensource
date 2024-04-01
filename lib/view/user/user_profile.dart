@@ -280,6 +280,16 @@ class UserProfileScreenState extends State<UserProfileScreen>
                     GestureDetector(
                       onTap: () {
                         Provider.of<ChannelVM>(context, listen: false).initVM();
+                        var userToChatDisplayName =
+                            widget.amityUser!.displayName;
+                        var currentUserDisplayName =
+                            AmityCoreClient.getCurrentUser().displayName;
+
+                        // Check if both display names are available before concatenating
+                        var chatName = userToChatDisplayName != null &&
+                                currentUserDisplayName != null
+                            ? userToChatDisplayName + " : " + currentUserDisplayName
+                            : "Display name";
 
                         Provider.of<ChannelVM>(context, listen: false)
                             .createConversationChannel([
@@ -299,7 +309,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                               ),
                             );
                           }
-                        });
+                        }, chatName);
                       },
                       child: Container(
                         decoration: BoxDecoration(

@@ -190,12 +190,14 @@ class AmityChatRepoImp implements AmityChatRepo {
     });
   }
 
-  Future<void> createConversationChannel(List<String> userIds,
-      Function(ChannelList? data, String? error) callback) async {
+  Future<void> createConversationChannel(
+      List<String> userIds,
+      Function(ChannelList? data, String? error) callback,
+      String? displayName) async {
     log("createChannels...");
-    socket.emitWithAck('v3/channel.createConversation', {"userIds": userIds},
-        ack: (data) {
-          log("ack conversation");
+    socket.emitWithAck('v3/channel.createConversation',
+        {"userIds": userIds, "displayName": displayName}, ack: (data) {
+      log("ack conversation");
       var amityResponse = AmityResponse.fromJson(data);
       var responsedata = amityResponse.data;
       if (amityResponse.status == "success") {

@@ -2,12 +2,15 @@ import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:provider/provider.dart';
+import 'package:amity_sdk/amity_sdk.dart';
+
 
 import '../../components/custom_user_avatar.dart';
 import '../../viewmodel/channel_list_viewmodel.dart';
 import '../../viewmodel/channel_viewmodel.dart';
 import '../../viewmodel/configuration_viewmodel.dart';
 import '../../viewmodel/user_viewmodel.dart';
+import '../../model/amity_channel_model.dart';
 import 'chat_screen.dart';
 
 class ChatItems {
@@ -152,11 +155,41 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                                         )
                                       : Container(),
                                 ),
+                                Positioned(
+                                  top: 0,
+                                  child: GestureDetector(
+                                    child: Icon(Icons.delete),
+                                    onTap: () {
+                                      Channels channel =
+                                          vm.getChannelList()[index];
+                                      Provider.of<ChannelVM>(context,
+                                              listen: false)
+                                          .deleteConversationChannel(
+                                              channel.channelId!,
+                                              (result, error) {
+                                        setState(() {
+                                          vm.refreshChannels();
+                                        });
+                                      });
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                             title: Text(
-                              vm.getChannelList()[index].displayName ??
-                                  "Display name",
+                              (() {
+                                String displayName =
+                                    vm.getChannelList()[index].displayName ?? "Display name";
+                                var currentUserDisplayName = AmityCoreClient.getCurrentUser().displayName;
+                                List<String> names = displayName.split(" : ");
+                                if (names.length == 2 &&
+                                    names[0] == currentUserDisplayName) {
+                                  displayName = "${names[1]}";
+                                } else {
+                                  displayName = "${names[0]}";
+                                }
+                                return displayName;
+                              })(),
                               style: TextStyle(
                                 color: rand
                                     ? Provider.of<AmityUIConfiguration>(context)
