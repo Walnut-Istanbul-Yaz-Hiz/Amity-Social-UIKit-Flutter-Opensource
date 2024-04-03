@@ -97,7 +97,10 @@ class MessageWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: message!.user!.userId! ==
+                      AmityCoreClient.getCurrentUser().userId
+                  ? Color(0xFF292C45)
+                  : Color(0xFFD9D9D9),
               borderRadius: BorderRadius.circular(12),
               boxShadow: const [
                 BoxShadow(color: Colors.black12, blurRadius: 4, spreadRadius: 2)
@@ -158,7 +161,9 @@ class MessageWidget extends StatelessWidget {
                           Text(
                             DateFormat('dd-MM-yyyy HH:mm').format(
                                 value.createdAt?.toLocal() ?? DateTime.now()),
-                            style: themeData.textTheme.caption!.copyWith(),
+                            style: themeData.textTheme.caption!.copyWith(
+                              color: Color(0xff998455),
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Text(
@@ -168,6 +173,7 @@ class MessageWidget extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          const SizedBox(width: 12),
                         ],
                       ),
                       // Text(
@@ -258,7 +264,13 @@ class MessageWidget extends StatelessWidget {
                 //   ),
                 // ),
                 PopupMenuButton(
-                  child: const Icon(Icons.arrow_drop_down_circle_outlined),
+                  child: Icon(
+                    Icons.arrow_drop_down_circle_outlined,
+                    color: message!.user!.userId! ==
+                            AmityCoreClient.getCurrentUser()!.userId
+                        ? Color(0xFFD9D9D9)
+                        : Color(0xFF292C45),
+                  ),
                   itemBuilder: (context) {
                     return [
                       // const PopupMenuItem(
@@ -661,7 +673,7 @@ class MessageWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
         ],
       ),
     );
@@ -791,7 +803,13 @@ class AmityMessageContentWidget extends StatelessWidget {
                         data.text!.substring(e.index, e.index + e.length + 1))
                     .toList()
               ],
-        style: themeData.textTheme.bodyMedium!.copyWith(),
+        style: themeData.textTheme.bodyMedium!.copyWith(
+          color: amityMessage!.user!.userId! ==
+                  AmityCoreClient.getCurrentUser().userId
+              ? Color(0xFFD9D9D9)
+              : Color(0xFF292C45),
+          fontWeight: FontWeight.w600,
+        ),
         onHighlightClick: (value) {
           if (value.toLowerCase().contains('all')) {
             final temp =
