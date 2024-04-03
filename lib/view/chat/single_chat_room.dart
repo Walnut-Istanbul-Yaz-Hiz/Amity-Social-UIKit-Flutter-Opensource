@@ -47,7 +47,7 @@ class _SingleChatRoomState extends State<SingleChatRoom> {
             create: (context) => MessageVM(),
             child: ChatSingleScreen(
                 key: Key(widget.channelId),
-                channel: Provider.of<ChannelVM>(context).amitySingleChannel!),
+                channelId: Provider.of<ChannelVM>(context).amitySingleChannel!.channelId!),
           );
   }
 }

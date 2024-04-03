@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CommonSnackbar {
   static void showPositiveSnackbar(BuildContext context, String title, String message,
-      {Duration duration = const Duration(seconds: 1)}) {
+      {Duration duration = const Duration(seconds: 3)}) {
     final themeData = Theme.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

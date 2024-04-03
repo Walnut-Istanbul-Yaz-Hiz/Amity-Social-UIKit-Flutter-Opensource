@@ -303,7 +303,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   create: (context) => MessageVM(),
                                   child: ChatSingleScreen(
                                     key: UniqueKey(),
-                                    channel: channel.channels![0],
+                                    channelId: channel.channels![0].channelId!,
                                   ),
                                 ),
                               ),

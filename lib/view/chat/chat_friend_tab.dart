@@ -110,7 +110,7 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                                         create: (context) => MessageVM(),
                                         child: ChatSingleScreen(
                                           key: UniqueKey(),
-                                          channel: vm.getChannelList()[index],
+                                          channelId: vm.getChannelList()[index].channelId!,
                                         ),
                                       )));
                             },
