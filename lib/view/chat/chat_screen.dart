@@ -1,5 +1,7 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/components/add_message_widget.dart';
 import 'package:amity_uikit_beta_service/components/common_snackbar.dart';
 import 'package:amity_uikit_beta_service/components/dialog/edit_text_dialog.dart';
@@ -64,125 +66,141 @@ class _ChatSingleScreenState extends State<ChatSingleScreen> {
     }
   }
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Color(0xFF292C45),
+        elevation: 0.0, // Remove shadow
+
+        title: Text(
+          "Chat",
+          style: Provider.of<AmityUIConfiguration>(context)
+              .titleTextStyle
+              .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
+        ),
+        iconTheme: const IconThemeData(color: Color(0xff998455), weight: 800.0),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    child: PopupMenuButton<int>(
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            value: 0,
-                            child: Text(AmityMessageDataType.TEXT.value),
-                          ),
-                          PopupMenuItem(
-                            value: 1,
-                            child: Text(AmityMessageDataType.IMAGE.value),
-                          ),
-                          PopupMenuItem(
-                            value: 2,
-                            child: Text(AmityMessageDataType.FILE.value),
-                          ),
-                          PopupMenuItem(
-                            value: 3,
-                            child: Text(AmityMessageDataType.AUDIO.value),
-                          ),
-                          PopupMenuItem(
-                            value: 4,
-                            child: Text(AmityMessageDataType.CUSTOM.value),
-                          ),
-                          const PopupMenuItem(
-                            value: 5,
-                            child: Text('All'),
-                          )
-                        ];
-                      },
-                      child: const Icon(
-                        Icons.filter_alt_rounded,
-                        size: 18,
-                      ),
-                      onSelected: (index) {
-                        if (index != 5) {
-                          _type = AmityMessageDataType.values[index];
-                        } else {
-                          _type = null;
-                        }
+            // Container(
+            //   child: Row(
+            //     children: [
+                  // Container(
+                  //   padding: const EdgeInsets.all(8),
+                  //   child: PopupMenuButton<int>(
+                  //     itemBuilder: (context) {
+                  //       return [
+                  //         PopupMenuItem(
+                  //           value: 0,
+                  //           child: Text(AmityMessageDataType.TEXT.value),
+                  //         ),
+                  //         PopupMenuItem(
+                  //           value: 1,
+                  //           child: Text(AmityMessageDataType.IMAGE.value),
+                  //         ),
+                  //         PopupMenuItem(
+                  //           value: 2,
+                  //           child: Text(AmityMessageDataType.FILE.value),
+                  //         ),
+                  //         PopupMenuItem(
+                  //           value: 3,
+                  //           child: Text(AmityMessageDataType.AUDIO.value),
+                  //         ),
+                  //         PopupMenuItem(
+                  //           value: 4,
+                  //           child: Text(AmityMessageDataType.CUSTOM.value),
+                  //         ),
+                  //         const PopupMenuItem(
+                  //           value: 5,
+                  //           child: Text('All'),
+                  //         )
+                  //       ];
+                  //     },
+                  //     child: const Icon(
+                  //       Icons.filter_alt_rounded,
+                  //       size: 18,
+                  //     ),
+                  //     onSelected: (index) {
+                  //       if (index != 5) {
+                  //         _type = AmityMessageDataType.values[index];
+                  //       } else {
+                  //         _type = null;
+                  //       }
 
-                        messageLiveCollection.reset();
-                        messageLiveCollection.loadNext();
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    child: InkWell(
-                      child: const Icon(Icons.tag, size: 18),
-                      onTap: () {
-                        EditTextDialog.show(context,
-                            title: 'Enter tags, separate by comma',
-                            defString: (_tags ?? []).join(','),
-                            hintText: 'type tags here', onPress: (value) {
-                          if (value.isNotEmpty) {
-                            _tags = value.trim().split(',');
-                          }
-                          if (value.isEmpty) {
-                            _tags = [];
-                          }
-                          messageLiveCollection.reset();
-                          messageLiveCollection.loadNext();
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    child: InkWell(
-                      child: const Icon(Icons.tag, size: 18),
-                      onTap: () {
-                        EditTextDialog.show(context,
-                            title: 'Enter excluding tags, separate by comma',
-                            defString: (_excludingTags ?? []).join(','),
-                            hintText: 'type tags here', onPress: (value) {
-                          if (value.isNotEmpty) {
-                            _excludingTags = value.trim().split(',');
-                          }
-                          if (value.isEmpty) {
-                            _excludingTags = [];
-                          }
-                          messageLiveCollection.reset();
-                          messageLiveCollection.loadNext();
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        Checkbox(
-                          value: parentsOnly,
-                          onChanged: (value) {
-                            setState(() {
-                              parentsOnly = value ?? false;
-                            });
-                            messageLiveCollection.reset();
-                            messageLiveCollection.loadNext();
-                          },
-                        ),
-                        const Text('Parent only')
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+                  //       messageLiveCollection.reset();
+                  //       messageLiveCollection.loadNext();
+                  //     },
+                  //   ),
+                  // ),
+                  // Container(
+                  //   padding: const EdgeInsets.all(8),
+                  //   child: InkWell(
+                  //     child: const Icon(Icons.tag, size: 18),
+                  //     onTap: () {
+                  //       EditTextDialog.show(context,
+                  //           title: 'Enter tags, separate by comma',
+                  //           defString: (_tags ?? []).join(','),
+                  //           hintText: 'type tags here', onPress: (value) {
+                  //         if (value.isNotEmpty) {
+                  //           _tags = value.trim().split(',');
+                  //         }
+                  //         if (value.isEmpty) {
+                  //           _tags = [];
+                  //         }
+                  //         messageLiveCollection.reset();
+                  //         messageLiveCollection.loadNext();
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                  // Container(
+                  //   padding: const EdgeInsets.all(8),
+                  //   child: InkWell(
+                  //     child: const Icon(Icons.tag, size: 18),
+                  //     onTap: () {
+                  //       EditTextDialog.show(context,
+                  //           title: 'Enter excluding tags, separate by comma',
+                  //           defString: (_excludingTags ?? []).join(','),
+                  //           hintText: 'type tags here', onPress: (value) {
+                  //         if (value.isNotEmpty) {
+                  //           _excludingTags = value.trim().split(',');
+                  //         }
+                  //         if (value.isEmpty) {
+                  //           _excludingTags = [];
+                  //         }
+                  //         messageLiveCollection.reset();
+                  //         messageLiveCollection.loadNext();
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                  // Container(
+                  //   child: Row(
+                  //     children: [
+                  //       Checkbox(
+                  //         value: parentsOnly,
+                  //         onChanged: (value) {
+                  //           setState(() {
+                  //             parentsOnly = value ?? false;
+                  //           });
+                  //           messageLiveCollection.reset();
+                  //           messageLiveCollection.loadNext();
+                  //         },
+                  //       ),
+                  //       const Text('Parent only')
+                  //     ],
+                  //   ),
+                  // )
+            //     ],
+            //   ),
+            // ),
             if (messageLiveCollection.isFetching)
               Container(
                 alignment: Alignment.center,

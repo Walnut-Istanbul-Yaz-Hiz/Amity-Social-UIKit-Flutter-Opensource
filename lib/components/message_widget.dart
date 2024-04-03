@@ -11,6 +11,7 @@ import './dialog/positive_dialog.dart';
 import './dialog/progress_dialog_widget.dart';
 import './dialog/dynamic_text_highlighting.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile.dart';
+import 'package:amity_uikit_beta_service/components/message_edit.dart';
 
 class MessageWidget extends StatelessWidget {
   const MessageWidget(
@@ -286,17 +287,30 @@ class MessageWidget extends StatelessWidget {
                       //   onReplyTap(message);
                       //   break;
                       case 1:
+                        var currentUserId = AmityCoreClient.getUserId();
                         if (message.data is MessageTextData) {
                           // Update Message
-                          // GoRouter.of(context).pushNamed(AppRoute.updateMessage,
-                          //     queryParams: {'messageId': message.messageId!});
+                          if (message.userId != currentUserId) {
+                            CommonSnackbar.showPositiveSnackbar(
+                                context,
+                                'Message',
+                                'Error - You are not allowed to do this.');
+                            return;
+                          }
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MessageUpdateScreen(
+                              messageId: message.messageId!,
+                            ),
+                          ));
                         }
                         break;
                       case 2:
                         var currentUserId = AmityCoreClient.getUserId();
                         if (message.userId != currentUserId) {
                           CommonSnackbar.showPositiveSnackbar(
-                              context, 'Message', 'Delete Error - You are not allowed to do this.');
+                              context,
+                              'Message',
+                              'Delete Error - You are not allowed to do this.');
                           return;
                         }
 
