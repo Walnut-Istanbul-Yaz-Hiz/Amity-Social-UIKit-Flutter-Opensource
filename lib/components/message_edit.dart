@@ -1,5 +1,7 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/components/dialog/error_dialog.dart';
 import 'package:amity_uikit_beta_service/components/dialog/progress_dialog_widget.dart';
 
@@ -15,8 +17,19 @@ class MessageUpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff1E2034),
       appBar: AppBar(
-        title: Text('Update Message'),
+        title: Text(
+          'Update Message',
+          style: Provider.of<AmityUIConfiguration>(context)
+              .titleTextStyle
+              .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20),
+        ),
+        iconTheme: const IconThemeData(color: Color(0xff998455), weight: 800.0),
+        backgroundColor: Color(0xFF292C45),
       ),
       body: FutureBuilder<AmityMessage>(
           future: AmityChatClient.newMessageRepository().getMessage(messageId),
@@ -53,6 +66,9 @@ class MessageUpdateScreen extends StatelessWidget {
                       TextFormField(
                         controller: _textEditController,
                         decoration: const InputDecoration(hintText: 'Text'),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                       // SizedBox(
                       //   height: 80,

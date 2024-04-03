@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:collection/collection.dart';
@@ -22,6 +23,7 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color(0xff1E2034),
       child: _getBody(context, message),
     );
   }
@@ -70,21 +72,21 @@ class MessageWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        final Completer completer = Completer();
-        ProgressDialog.showCompleter(context, completer);
+        // final Completer completer = Completer();
+        // ProgressDialog.showCompleter(context, completer);
 
-        AmityChatClient.newMessageRepository()
-            .getMessage(message.messageId!)
-            .then((value) {
-          completer.complete();
-          PositiveDialog.show(context,
-              title: 'Message View',
-              message: value.toString().replaceAll(',', ', \n\n'));
-        }).onError((error, stackTrace) {
-          completer.completeError(error!);
-          CommonSnackbar.showNagativeSnackbar(
-              context, 'Error', error.toString());
-        });
+        // AmityChatClient.newMessageRepository()
+        //     .getMessage(message.messageId!)
+        //     .then((value) {
+        //   completer.complete();
+        //   PositiveDialog.show(context,
+        //       title: 'Message View',
+        //       message: value.toString().replaceAll(',', ', \n\n'));
+        // }).onError((error, stackTrace) {
+        //   completer.completeError(error!);
+        //   CommonSnackbar.showNagativeSnackbar(
+        //       context, 'Error', error.toString());
+        // });
       },
       onLongPress: () {
         _reactionDialog(context, message);
@@ -114,21 +116,26 @@ class MessageWidget extends StatelessWidget {
                               amityUserId: AmityCoreClient.getUserId(),
                             )));
                   },
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey.withOpacity(.3)),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: user.avatarUrl != null
-                        ? Image.network(
-                            user.avatarUrl!,
-                            fit: BoxFit.fill,
-                          )
-                        : Image.asset('assets/images/user_placeholder.png',
-                            package: "amity_uikit_beta_service"),
-                  ),
+                  child: AmityCoreClient.getUserId() != user.userId
+                      ? Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey.withOpacity(.3),
+                          ),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: user.avatarUrl != null
+                              ? Image.network(
+                                  user.avatarUrl!,
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.asset(
+                                  'assets/images/user_placeholder.png',
+                                  package: "amity_uikit_beta_service",
+                                ),
+                        )
+                      : SizedBox(width: 0, height: 0),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -139,6 +146,7 @@ class MessageWidget extends StatelessWidget {
                         user.displayName!,
                         style: themeData.textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: Color(0xff998455),
                         ),
                       ),
                       AmityMessageContentWidget(
@@ -148,14 +156,17 @@ class MessageWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            value.createdAt?.toLocal().toIso8601String() ??
-                                DateTime.now().toLocal().toIso8601String(),
+                            DateFormat('dd-MM-yyyy HH:mm').format(
+                                value.createdAt?.toLocal() ?? DateTime.now()),
                             style: themeData.textTheme.caption!.copyWith(),
                           ),
                           const SizedBox(width: 12),
                           Text(
                             value.syncState!.value.toUpperCase(),
-                            style: themeData.textTheme.bodySmall!.copyWith(),
+                            style: themeData.textTheme.bodySmall!.copyWith(
+                              color: Color(0xffF78F4C6),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
