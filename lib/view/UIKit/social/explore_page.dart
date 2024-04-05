@@ -143,7 +143,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
   }
   Widget _bottomNavigationBar(){
     return Container(
-      height: 90,
+      height: 95,
         decoration: BoxDecoration(
           color: Color(0xFF292C45),
           boxShadow: [
