@@ -8,6 +8,11 @@ import 'package:amity_uikit_beta_service/view/social/user_follow_screen.dart';
 import 'package:amity_uikit_beta_service/view/user/medie_component.dart';
 import 'package:amity_uikit_beta_service/view/user/user_setting.dart';
 import 'package:amity_uikit_beta_service/viewmodel/follower_following_viewmodel.dart';
+import 'package:amity_uikit_beta_service/view/chat/chat_screen.dart';
+import 'package:amity_uikit_beta_service/viewmodel/channel_list_viewmodel.dart';
+import 'package:amity_uikit_beta_service/viewmodel/channel_viewmodel.dart';
+import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
+import 'package:amity_uikit_beta_service/repository/chat_repo_imp.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -272,38 +277,74 @@ class UserProfileScreenState extends State<UserProfileScreen>
                 var followWidget = Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // GestureDetector(
-                    //   onTap: () {},
-                    //   child: Container(
-                    //     width: constraints.maxWidth * 0.35,
-                    //     decoration: BoxDecoration(
-                    //         border: Border.all(
-                    //             color: Provider.of<
-                    //                         AmityUIConfiguration>(
-                    //                     context)
-                    //                 .primaryColor,
-                    //             style: BorderStyle.solid,
-                    //             width: 1),
-                    //         borderRadius:
-                    //             BorderRadius.circular(10),
-                    //         color: Colors.white),
-                    //     padding: const EdgeInsets.fromLTRB(
-                    //         10, 10, 10, 10),
-                    //     child: Text(
-                    //       "Messages",
-                    //       style: theme.textTheme.subtitle2!
-                    //           .copyWith(
-                    //         color: Provider.of<
-                    //                     AmityUIConfiguration>(
-                    //                 context)
-                    //             .primaryColor,
-                    //         fontSize: 12,
-                    //       ),
-                    //       textAlign: TextAlign.center,
-                    //     ),
-                    //   ),
-                    // ),
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<ChannelVM>(context, listen: false).initVM();
+                        var userToChatDisplayName =
+                            widget.amityUser!.displayName;
+                        var currentUserDisplayName =
+                            AmityCoreClient.getCurrentUser().displayName;
 
+                        // Check if both display names are available before concatenating
+                        var chatName = userToChatDisplayName != null &&
+                                currentUserDisplayName != null
+                            ? userToChatDisplayName + " : " + currentUserDisplayName
+                            : "Display name";
+
+                        Provider.of<ChannelVM>(context, listen: false)
+                            .createConversationChannel([
+                          AmityCoreClient.getUserId(),
+                          widget.amityUserId
+                        ], (channel, error) {
+                          if (channel != null) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ChangeNotifierProvider(
+                                  create: (context) => MessageVM(),
+                                  child: ChatSingleScreen(
+                                    key: UniqueKey(),
+                                    channelId: channel.channels![0].channelId!,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }, chatName);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.pink,
+                                style: BorderStyle.solid,
+                                width: 1),
+                            borderRadius: BorderRadius.circular(4),
+                            color: Colors.pink),
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.add,
+                              size: 16,
+                              color: Colors.white,
+                              weight: 4,
+                            ),
+                            const SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              "Chat",
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.titleSmall!.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(),
@@ -322,9 +363,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   "",
                                   textAlign: TextAlign.center,
                                   style: theme.textTheme.titleSmall!.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.white
-                                  ),
+                                      fontSize: 12, color: Colors.white),
                                 ),
                               )
                             : StreamBuilder<AmityUserFollowInfo>(
@@ -332,70 +371,54 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                 initialData: vm.amityMyFollowInfo,
                                 builder: (context, snapshot) {
                                   return FadeAnimation(
-                                      child: snapshot.data!.status ==
-                                              AmityFollowStatus.ACCEPTED
-                                          ? const SizedBox()
-                                          : GestureDetector(
-                                              onTap: () {
-                                                vm.followButtonAction(
-                                                    vm.amityUser!,
-                                                    snapshot.data!.status);
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color:
-                                                            getFollowingStatusColor(
-                                                                snapshot.data!
-                                                                    .status),
-                                                        style:
-                                                            BorderStyle.solid,
-                                                        width: 1),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                    color:
-                                                        getFollowingStatusColor(
-                                                            snapshot
-                                                                .data!.status)),
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 10, 10, 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.add,
-                                                      size: 16,
-                                                      color: Colors.white,
-                                                      weight: 4,
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 2,
-                                                    ),
-                                                    Text(
-                                                      getFollowingStatusString(
-                                                          snapshot
-                                                              .data!.status),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: theme
-                                                          .textTheme.titleSmall!
-                                                          .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color:
-                                                            getFollowingStatusTextColor(
-                                                                snapshot.data!
-                                                                    .status),
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ));
+                                      child: GestureDetector(
+                                    onTap: () {
+                                      vm.followButtonAction(
+                                          vm.amityUser!, snapshot.data!.status);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: getFollowingStatusColor(
+                                                  snapshot.data!.status),
+                                              style: BorderStyle.solid,
+                                              width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          color: getFollowingStatusColor(
+                                              snapshot.data!.status)),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 10, 10, 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.add,
+                                            size: 16,
+                                            color: Colors.white,
+                                            weight: 4,
+                                          ),
+                                          const SizedBox(
+                                            width: 2,
+                                          ),
+                                          Text(
+                                            getFollowingStatusString(
+                                                snapshot.data!.status),
+                                            textAlign: TextAlign.center,
+                                            style: theme.textTheme.titleSmall!
+                                                .copyWith(
+                                              fontWeight: FontWeight.w700,
+                                              color:
+                                                  getFollowingStatusTextColor(
+                                                      snapshot.data!.status),
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ));
                                 }),
                       ),
                     ),
@@ -479,11 +502,11 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                                         .displayName))));
                                                   },
                                                   child: Text(
-                                                      '${vm.amityMyFollowInfo.followingCount.toString()} following  ',
-                                                        style: TextStyle(
-                                                          color:  Color(0xff3DDAB4),
-                                                        ),
-                                                      ),
+                                                    '${vm.amityMyFollowInfo.followingCount.toString()} following  ',
+                                                    style: TextStyle(
+                                                      color: Color(0xff3DDAB4),
+                                                    ),
+                                                  ),
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
@@ -501,11 +524,11 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                                         .displayName))));
                                                   },
                                                   child: Text(
-                                                      '${vm.amityMyFollowInfo.followerCount.toString()} followers',
-                                                        style: TextStyle(
-                                                          color:  Color(0xff3DDAB4),
-                                                        ),
-                                                      ),
+                                                    '${vm.amityMyFollowInfo.followerCount.toString()} followers',
+                                                    style: TextStyle(
+                                                      color: Color(0xff3DDAB4),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             )
@@ -524,8 +547,8 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   children: [
                                     Text(
                                       getAmityUser().description ?? "",
-                                      style: const TextStyle(fontSize: 16,
-                                      color: Colors.white54),
+                                      style: const TextStyle(
+                                          fontSize: 16, color: Colors.white54),
                                     ),
                                   ],
                                 ),
@@ -565,7 +588,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                                 children: [
                                                   const Icon(
                                                     Icons.edit_outlined,
-                                                    color: Colors.white,      
+                                                    color: Colors.white,
                                                   ),
                                                   Text(
                                                     "Edit Profile",
@@ -637,20 +660,22 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   fontFamily: 'SF Pro Text',
                                 ),
                                 tabs: const [
-                                  Tab(child: Text("Timeline",
+                                  Tab(
+                                    child: Text(
+                                      "Timeline",
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w800  
-                                      ),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800),
                                     ),
                                   ),
-                                  Tab(child: Text("Gallery",
+                                  Tab(
+                                    child: Text(
+                                      "Gallery",
                                       style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w800  
-                                      ),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800),
                                     ),
-                                  )   
+                                  )
                                 ],
                               ),
                             ),
@@ -661,7 +686,6 @@ class UserProfileScreenState extends State<UserProfileScreen>
                   ),
                 ];
               },
-              
               body: TabBarView(controller: _tabController, children: tablist),
             ),
           ),

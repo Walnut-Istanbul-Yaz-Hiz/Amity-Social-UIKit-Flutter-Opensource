@@ -1,329 +1,363 @@
-import 'dart:developer';
-
 import 'package:amity_sdk/amity_sdk.dart';
-import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodel/channel_viewmodel.dart';
-import '../../viewmodel/configuration_viewmodel.dart';
-import '../../components/custom_user_avatar.dart';
-import '../../model/amity_channel_model.dart';
-import '../../model/amity_message_model.dart';
+import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
+import 'package:amity_uikit_beta_service/components/add_message_widget.dart';
+import 'package:amity_uikit_beta_service/components/common_snackbar.dart';
+import 'package:amity_uikit_beta_service/components/dialog/edit_text_dialog.dart';
+import 'package:amity_uikit_beta_service/components/message_widget.dart';
 
-class ChatSingleScreen extends StatelessWidget {
-  final Channels channel;
+class ChatSingleScreen extends StatefulWidget {
+  const ChatSingleScreen({Key? key, required this.channelId}) : super(key: key);
+  final String channelId;
+  @override
+  State<ChatSingleScreen> createState() => _ChatSingleScreenState();
+}
 
-  const ChatSingleScreen({Key? key, required this.channel}) : super(key: key);
+class _ChatSingleScreenState extends State<ChatSingleScreen> {
+  late MessageLiveCollection messageLiveCollection;
+  List<AmityMessage> amityMessages = [];
+  final scrollcontroller = ScrollController();
+
+  AmityMessageDataType? _type;
+  final AmityChannelSortOption _sort = AmityChannelSortOption.LAST_ACTIVITY;
+  List<String>? _tags;
+  List<String>? _excludingTags;
+  bool parentsOnly = false;
+
+  AmityMessage? replyToMessage;
+
+  @override
+  void initState() {
+    messageLiveCollection = MessageLiveCollection(
+      request: () => AmityChatClient.newMessageRepository()
+          .getMessages(widget.channelId)
+          .stackFromEnd(true)
+          .type(_type)
+          .includingTags(_tags ?? [])
+          .excludingTags(_excludingTags ?? [])
+          .includeDeleted(true)
+          .filterByParent(parentsOnly)
+          .build(),
+    );
+
+    messageLiveCollection.getStreamController().stream.listen((event) {
+      //   print(event.map((e) => "${e.channelSegment}, ").toList());
+      if (mounted) {
+        setState(() {
+          amityMessages = event;
+        });
+      }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      messageLiveCollection.loadNext();
+    });
+
+    scrollcontroller.addListener(pagination);
+
+    super.initState();
+  }
+
+  void pagination() {
+    if ((scrollcontroller.position.pixels >=
+            (scrollcontroller.position.maxScrollExtent - 100)) &&
+        messageLiveCollection.hasNextPage()) {
+      messageLiveCollection.loadNext();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final mediaQuery = MediaQuery.of(context);
-    final myAppBar = AppBar(
-      automaticallyImplyLeading: false,
-      elevation: 0,
-      backgroundColor: Provider.of<AmityUIConfiguration>(context)
-          .messageRoomConfig
-          .backgroundColor,
-      leadingWidth: 0,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Icon(Icons.chevron_left,
-                  color:
-                      Provider.of<AmityUIConfiguration>(context).primaryColor,
-                  size: 30)),
-          Container(
-            height: 45,
-            margin: const EdgeInsets.symmetric(vertical: 4),
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: FadedScaleAnimation(
-              child: getCommuAvatarImage(null, fileId: channel.avatarFileId),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              channel.displayName ?? "N/A",
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.headline6!.copyWith(
-                fontSize: 16.7,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    final bHeight = mediaQuery.size.height -
-        mediaQuery.padding.top -
-        myAppBar.preferredSize.height;
-
-    const textfielHeight = 60.0;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: myAppBar,
+      backgroundColor: Color(0xff1E2034),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF292C45),
+        elevation: 0.0, // Remove shadow
+        title: Text(
+          "myChat.",
+          style: Provider.of<AmityUIConfiguration>(context)
+              .titleTextStyle
+              .copyWith(
+                  color: Color(0xff998455),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 32),
+        ),
+        iconTheme: const IconThemeData(color: Color(0xff998455), weight: 800.0),
+      ),
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            FadedSlideAnimation(
-              beginOffset: const Offset(0, 0.3),
-              endOffset: const Offset(0, 0),
-              slideCurve: Curves.linearToEaseOut,
-              child: SingleChildScrollView(
-                reverse: true,
-                controller: Provider.of<MessageVM>(context, listen: false)
-                    .scrollController,
-                child: MessageComponent(
-                  bheight: bHeight - textfielHeight,
-                  theme: theme,
-                  mediaQuery: mediaQuery,
-                  channelId: channel.channelId!,
-                  channel: channel,
+            // Container(
+            //   child: Row(
+            //     children: [
+            // Container(
+            //   padding: const EdgeInsets.all(8),
+            //   child: PopupMenuButton<int>(
+            //     itemBuilder: (context) {
+            //       return [
+            //         PopupMenuItem(
+            //           value: 0,
+            //           child: Text(AmityMessageDataType.TEXT.value),
+            //         ),
+            //         PopupMenuItem(
+            //           value: 1,
+            //           child: Text(AmityMessageDataType.IMAGE.value),
+            //         ),
+            //         PopupMenuItem(
+            //           value: 2,
+            //           child: Text(AmityMessageDataType.FILE.value),
+            //         ),
+            //         PopupMenuItem(
+            //           value: 3,
+            //           child: Text(AmityMessageDataType.AUDIO.value),
+            //         ),
+            //         PopupMenuItem(
+            //           value: 4,
+            //           child: Text(AmityMessageDataType.CUSTOM.value),
+            //         ),
+            //         const PopupMenuItem(
+            //           value: 5,
+            //           child: Text('All'),
+            //         )
+            //       ];
+            //     },
+            //     child: const Icon(
+            //       Icons.filter_alt_rounded,
+            //       size: 18,
+            //     ),
+            //     onSelected: (index) {
+            //       if (index != 5) {
+            //         _type = AmityMessageDataType.values[index];
+            //       } else {
+            //         _type = null;
+            //       }
+
+            //       messageLiveCollection.reset();
+            //       messageLiveCollection.loadNext();
+            //     },
+            //   ),
+            // ),
+            // Container(
+            //   padding: const EdgeInsets.all(8),
+            //   child: InkWell(
+            //     child: const Icon(Icons.tag, size: 18),
+            //     onTap: () {
+            //       EditTextDialog.show(context,
+            //           title: 'Enter tags, separate by comma',
+            //           defString: (_tags ?? []).join(','),
+            //           hintText: 'type tags here', onPress: (value) {
+            //         if (value.isNotEmpty) {
+            //           _tags = value.trim().split(',');
+            //         }
+            //         if (value.isEmpty) {
+            //           _tags = [];
+            //         }
+            //         messageLiveCollection.reset();
+            //         messageLiveCollection.loadNext();
+            //       });
+            //     },
+            //   ),
+            // ),
+            // Container(
+            //   padding: const EdgeInsets.all(8),
+            //   child: InkWell(
+            //     child: const Icon(Icons.tag, size: 18),
+            //     onTap: () {
+            //       EditTextDialog.show(context,
+            //           title: 'Enter excluding tags, separate by comma',
+            //           defString: (_excludingTags ?? []).join(','),
+            //           hintText: 'type tags here', onPress: (value) {
+            //         if (value.isNotEmpty) {
+            //           _excludingTags = value.trim().split(',');
+            //         }
+            //         if (value.isEmpty) {
+            //           _excludingTags = [];
+            //         }
+            //         messageLiveCollection.reset();
+            //         messageLiveCollection.loadNext();
+            //       });
+            //     },
+            //   ),
+            // ),
+            // Container(
+            //   child: Row(
+            //     children: [
+            //       Checkbox(
+            //         value: parentsOnly,
+            //         onChanged: (value) {
+            //           setState(() {
+            //             parentsOnly = value ?? false;
+            //           });
+            //           messageLiveCollection.reset();
+            //           messageLiveCollection.loadNext();
+            //         },
+            //       ),
+            //       const Text('Parent only')
+            //     ],
+            //   ),
+            // )
+            //     ],
+            //   ),
+            // ),
+            if (messageLiveCollection.isFetching)
+              Container(
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator(
+                  backgroundColor: Colors.transparent,
                 ),
               ),
+
+            Expanded(
+              child: amityMessages.isEmpty
+                  ? const Center(
+                      child: Text('No Message'),
+                    )
+                  : ListView.builder(
+                      controller: scrollcontroller,
+                      itemCount: amityMessages.length,
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        final message = amityMessages[index];
+                        final bool isCurrentUser = message!.user!.userId! ==
+                            AmityCoreClient.getCurrentUser().userId;
+                        final AlignmentGeometry alignment = isCurrentUser
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft;
+                        return Align(
+                          alignment: alignment,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: MessageWidget(
+                                message: message,
+                                onReplyTap: (value) => setState(() {
+                                  replyToMessage = value;
+                                }),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ChatTextFieldComponent(
-                    theme: theme,
-                    textfielHeight: textfielHeight,
-                    mediaQuery: mediaQuery),
-              ],
+            if (replyToMessage != null)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(color: Colors.grey.shade200),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text('Reply to '),
+                        Text('@${replyToMessage!.user!.displayName}'),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              replyToMessage = null;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.clear_rounded,
+                          ),
+                        )
+                      ],
+                    ),
+                    AmityMessageContentWidget(
+                      amityMessage: replyToMessage!,
+                    )
+                  ],
+                ),
+              ),
+            Container(
+              margin: const EdgeInsets.all(12),
+              child: AddMessageWidget(
+                widget.channelId,
+                AmityCoreClient.getCurrentUser(),
+                (value) async {
+                  late AmityMessageCreator messageBuilder;
+
+                  if (value.message != null) {
+                    messageBuilder = AmityChatClient.newMessageRepository()
+                        .createMessage(widget.channelId)
+                        .text(value.message!);
+                  }
+
+                  if (value.image != null) {
+                    messageBuilder = AmityChatClient.newMessageRepository()
+                        .createMessage(widget.channelId)
+                        .image(Uri(path: value.image!.path))
+                        .caption(value.message!);
+                  }
+
+                  if (value.file != null) {
+                    messageBuilder = AmityChatClient.newMessageRepository()
+                        .createMessage(widget.channelId)
+                        .file(Uri(path: value.file!.path))
+                        .caption(value.message!);
+                  }
+
+                  if (value.amityMentionMetadata != null) {
+                    /// Clean up mention data, since user could have deleted some mention
+                    value.amityMentionMetadata!.removeWhere((element) =>
+                        !value.message!.contains(element.displayName ?? ''));
+
+                    /// Rearrange the indexing
+                    final amityMentioneesMetadata = value.amityMentionMetadata!
+                        .map<AmityMentionMetadata>((e) {
+                      return e.amityMentionMetaData(
+                          value.message!.indexOf('@${e.displayName!}'));
+                    }).toList();
+
+                    messageBuilder.metadata(
+                        AmityMentionMetadataCreator(amityMentioneesMetadata)
+                            .create());
+
+                    /// Calculate the mention data
+                    final userIds = <String>[];
+                    for (MentionData amityMention
+                        in value.amityMentionMetadata!) {
+                      ///Check if we have channel mention and add mention channel
+                      if (amityMention.mentionType ==
+                          AmityMentionType.CHANNEL.value) {
+                        messageBuilder.mentionChannel();
+                      }
+                      if (amityMention.mentionType ==
+                          AmityMentionType.USER.value) {
+                        userIds.add(amityMention.userId!);
+                      }
+                    }
+
+                    ///If mention userIds is not empaty, add them to mention userIds
+                    if (userIds.isNotEmpty) {
+                      messageBuilder.mentionUsers(userIds);
+                    }
+                  }
+
+                  if (replyToMessage != null) {
+                    messageBuilder.parentId(replyToMessage!.messageId);
+                  }
+                  if (value.tags != null) {
+                    messageBuilder.tags(value.tags!);
+                  }
+                  messageBuilder.send().then((value) {
+                    scrollcontroller.jumpTo(0);
+                    setState(() {
+                      replyToMessage = null;
+                    });
+                  }).onError((error, stackTrace) {
+                    print(error.toString());
+                    print(stackTrace.toString());
+                    CommonSnackbar.showNagativeSnackbar(
+                        context, 'Error', error.toString());
+                  });
+                  return;
+                },
+              ),
             ),
           ],
         ),
       ),
     );
-  }
-}
-
-class ChatTextFieldComponent extends StatelessWidget {
-  const ChatTextFieldComponent({
-    Key? key,
-    required this.theme,
-    required this.textfielHeight,
-    required this.mediaQuery,
-  }) : super(key: key);
-
-  final ThemeData theme;
-  final double textfielHeight;
-  final MediaQueryData mediaQuery;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: theme.canvasColor,
-          border: Border(top: BorderSide(color: theme.highlightColor))),
-      height: textfielHeight,
-      width: mediaQuery.size.width,
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Row(
-        children: [
-          // SizedBox(
-          //   width: 5,
-          // ),
-          // Icon(
-          //   Icons.emoji_emotions_outlined,
-          //   color: theme.primaryIconTheme.color,
-          //   size: 22,
-          // ),
-          const SizedBox(width: 10),
-          SizedBox(
-            width: mediaQuery.size.width * 0.7,
-            child: TextField(
-              controller: Provider.of<MessageVM>(context, listen: false)
-                  .textEditingController,
-              decoration: const InputDecoration(
-                hintText: "Write your message",
-                hintStyle: TextStyle(fontSize: 14),
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              HapticFeedback.heavyImpact();
-              Provider.of<MessageVM>(context, listen: false).sendMessage();
-            },
-            child: Icon(
-              Icons.send,
-              color: Provider.of<AmityUIConfiguration>(context).primaryColor,
-              size: 22,
-            ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MessageComponent extends StatefulWidget {
-  const MessageComponent({
-    Key? key,
-    required this.theme,
-    required this.mediaQuery,
-    required this.channelId,
-    required this.bheight,
-    required this.channel,
-  }) : super(key: key);
-  final String channelId;
-  final Channels channel;
-
-  final ThemeData theme;
-
-  final MediaQueryData mediaQuery;
-
-  final double bheight;
-
-  @override
-  State<MessageComponent> createState() => _MessageComponentState();
-}
-
-class _MessageComponentState extends State<MessageComponent> {
-  @override
-  void initState() {
-    Provider.of<MessageVM>(context, listen: false)
-        .initVM(widget.channelId, widget.channel);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  String getTimeStamp(Messages msg) {
-    String hour = DateTime.parse(msg.editedAt!).hour.toString();
-    String minute = "";
-    if (DateTime.parse(msg.editedAt!).minute > 9) {
-      minute = DateTime.parse(msg.editedAt!).minute.toString();
-    } else {
-      minute = "0${DateTime.parse(msg.editedAt!).minute}";
-    }
-    return "$hour:$minute";
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<MessageVM>(builder: (context, vm, _) {
-      return vm.amityMessageList == null
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        backgroundColor: widget.theme.highlightColor,
-                        color: Provider.of<AmityUIConfiguration>(context)
-                            .primaryColor,
-                      )
-                    ],
-                  ),
-                )
-              ],
-            )
-          : Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: vm.amityMessageList?.length,
-                itemBuilder: (context, index) {
-                  var data = vm.amityMessageList![index].data;
-                  log(data!.text.toString());
-                  bool isSendbyCurrentUser =
-                      vm.amityMessageList?[index].userId !=
-                          AmityCoreClient.getCurrentUser().userId;
-                  return Column(
-                    crossAxisAlignment: isSendbyCurrentUser
-                        ? CrossAxisAlignment.start
-                        : CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: isSendbyCurrentUser
-                            ? MainAxisAlignment.start
-                            : MainAxisAlignment.end,
-                        children: [
-                          if (!isSendbyCurrentUser)
-                            Text(
-                              getTimeStamp(vm.amityMessageList![index]),
-                              style: const TextStyle(
-                                  color: Colors.grey, fontSize: 8),
-                            ),
-                          vm.amityMessageList![index].data!.text == null
-                              ? Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(10, 4, 10, 4),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.red),
-                                  child: const Text("Unsupport type message😰",
-                                      style: TextStyle(color: Colors.white)),
-                                )
-                              : Flexible(
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                        maxWidth:
-                                            widget.mediaQuery.size.width * 0.7),
-                                    margin:
-                                        const EdgeInsets.fromLTRB(10, 4, 10, 4),
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: isSendbyCurrentUser
-                                          ? const Color(0xfff1f1f1)
-                                          : Provider.of<AmityUIConfiguration>(
-                                                  context)
-                                              .primaryColor,
-                                    ),
-                                    child: Text(
-                                      vm.amityMessageList?[index].data!.text ??
-                                          "N/A",
-                                      style: widget.theme.textTheme.bodyText1!
-                                          .copyWith(
-                                              fontSize: 14.7,
-                                              color: isSendbyCurrentUser
-                                                  ? Colors.black
-                                                  : Colors.white),
-                                    ),
-                                  ),
-                                ),
-                          if (isSendbyCurrentUser)
-                            Text(
-                              getTimeStamp(vm.amityMessageList![index]),
-                              style: TextStyle(
-                                  color: Colors.grey[500], fontSize: 8),
-                            ),
-                        ],
-                      ),
-                      if (index + 1 == vm.amityMessageList?.length)
-                        const SizedBox(
-                          height: 90,
-                        )
-                    ],
-                  );
-                },
-              ),
-            );
-    });
   }
 }

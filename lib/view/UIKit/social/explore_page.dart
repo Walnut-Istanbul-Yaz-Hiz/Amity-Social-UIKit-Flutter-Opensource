@@ -21,7 +21,8 @@ class CommunityPage extends StatefulWidget {
   State<CommunityPage> createState() => _CommunityPageState();
 }
 
-class _CommunityPageState extends State<CommunityPage> with TickerProviderStateMixin{
+class _CommunityPageState extends State<CommunityPage>
+    with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -34,8 +35,8 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
         .queryCommunityCategories(AmityCommunityCategorySortOption.NAME);
     _tabController = TabController(length: 2, vsync: this);
     _tabController.index = 0;
-    
   }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -52,10 +53,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
           elevation: 0.05, // Add this line to remove the shadow
           backgroundColor: Color(0xFF292C45),
           leading: IconButton(
-            icon: const Icon(
-              Icons.close,
-              color: Color(0xff998455)
-            ),
+            icon: const Icon(Icons.close, color: Color(0xff998455)),
             onPressed: () => Navigator.of(context).pop(),
           ),
           // centerTitle: false,
@@ -83,7 +81,7 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
               },
             )
           ],
-          bottom:  PreferredSize(
+          bottom: PreferredSize(
             preferredSize: Size.fromHeight(
                 48.0), // Provide a height for the AppBar's bottom
             child: Container(
@@ -109,18 +107,14 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
                         child: Text(
                           'Explore',
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800  
-                          ),
+                              fontSize: 20, fontWeight: FontWeight.w800),
                         ),
                       ),
                       Tab(
                         child: Text(
                           'Newsfeed',
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800  
-                          ),
+                              fontSize: 20, fontWeight: FontWeight.w800),
                         ),
                       ),
                     ],
@@ -133,15 +127,16 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
         body: TabBarView(
           controller: _tabController,
           children: [
-             ExplorePage(),
-             NewsfeedPage(),
+            ExplorePage(),
+            NewsfeedPage(),
           ],
         ),
         bottomNavigationBar: _bottomNavigationBar(),
       ),
     );
   }
-  Widget _bottomNavigationBar(){
+
+  Widget _bottomNavigationBar() {
     return Container(
       height: 95,
         decoration: BoxDecoration(
@@ -192,12 +187,12 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
         ),
       );
   }
+
   Widget _navigationButton({
     required String icon,
     required String route,
     required String text,
     int? index,
-
   }) {
     return Container(
       color: Color(0xFF292C45),
@@ -224,10 +219,9 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Color(0xff756548),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700
-                ),
+                    color: Color(0xff756548),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700),
               ),
             ),
           ],
@@ -236,42 +230,33 @@ class _CommunityPageState extends State<CommunityPage> with TickerProviderStateM
     );
   }
 }
+
 Future<void> goPage(String route, BuildContext context) async {
-    switch (route) {
-      case 'Groups':
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) =>
-              const Scaffold(body: MyCommunityPage()),
-        ));
-        break;
-      case 'Profile':
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (_) =>
-                  UserProfileScreen(
-                    amityUser:
-                        AmityCoreClient
-                            .getCurrentUser(),
-                    amityUserId:
-                        AmityCoreClient
-                            .getUserId(),
-                  ))
-          );
-        break;
-      // case 'Chat':
-      //   Navigator.of(context).push(MaterialPageRoute(
-      //       builder: (context) =>ChatsPage()
-      //     )
-      //   );
-      //   break;
-      // case 'More':
-      default:
-    }
+  switch (route) {
+    case 'Groups':
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const Scaffold(body: MyCommunityPage()),
+      ));
+      break;
+    case 'Profile':
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => UserProfileScreen(
+                amityUser: AmityCoreClient.getCurrentUser(),
+                amityUserId: AmityCoreClient.getUserId(),
+              )));
+      break;
+    case 'Chat':
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => ChatsPage()));
+      break;
+    // case 'More':
+    default:
   }
+}
 
 class NewsfeedPage extends StatelessWidget {
   final isShowMyCommunity;
-  const NewsfeedPage({super.key, this.isShowMyCommunity=true});
+  const NewsfeedPage({super.key, this.isShowMyCommunity = true});
 
   @override
   Widget build(BuildContext context) {
@@ -295,6 +280,7 @@ class NewsfeedPage extends StatelessWidget {
     );
   }
 }
+
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
 
@@ -330,7 +316,7 @@ class RecommendationSection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xff998455),  
+                    color: Color(0xff998455),
                   ),
                 ),
               ),
@@ -350,8 +336,7 @@ class RecommendationSection extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  CommunityScreen(community: community))
-                          );
+                                  CommunityScreen(community: community)));
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(
@@ -412,11 +397,10 @@ class RecommendationSection extends StatelessWidget {
                                 ),
                                 Text(
                                   '${community.membersCount} Members',
-                                  style:
-                                      const TextStyle(
-                                        color: Color(0xff3DDAB4),
-                                        fontSize: 13,
-                                      ),
+                                  style: const TextStyle(
+                                    color: Color(0xff3DDAB4),
+                                    fontSize: 13,
+                                  ),
                                   overflow: TextOverflow
                                       .ellipsis, // Handle text overflow
                                 ),
@@ -461,7 +445,7 @@ class TrendingSection extends StatelessWidget {
     return Consumer<ExplorePageVM>(
       builder: (context, vm, _) {
         return Container(
-          color:  Color(0xFF292C45) ,
+          color: Color(0xFF292C45),
           padding: const EdgeInsets.only(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,8 +508,7 @@ class TrendingSection extends StatelessWidget {
                     title: Text(
                       community.displayName ?? '',
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     subtitle: community.categories!.isEmpty
                         ? Text(
@@ -536,8 +519,7 @@ class TrendingSection extends StatelessWidget {
                         : Text(
                             '${community.categories?[0]?.name ?? ""} • ${community.membersCount} members',
                             style: const TextStyle(
-                                fontSize: 13, color: Color(0xff3DDAB4)
-                              ),
+                                fontSize: 13, color: Color(0xff3DDAB4)),
                           ),
                   );
                 },
@@ -691,12 +673,9 @@ class CategoryListPage extends StatelessWidget {
                   fontSize: 20),
         ),
         leading: IconButton(
-            icon: const Icon(
-              Icons.close,
-              color: Color(0xff998455)
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          icon: const Icon(Icons.close, color: Color(0xff998455)),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Consumer<ExplorePageVM>(
         builder: (context, vm, _) {
@@ -730,7 +709,8 @@ class CategoryListPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                title: Text(category.name ?? '',
+                title: Text(
+                  category.name ?? '',
                   style: TextStyle(
                     fontSize: 13,
                     color: Color(0xff3DDAB4),
@@ -813,7 +793,8 @@ class _CommunityListPageState extends State<CommunityListPage> {
                           color: Colors.white,
                         ),
                 ),
-                title: Text(community.displayName ?? '',
+                title: Text(
+                  community.displayName ?? '',
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.white,

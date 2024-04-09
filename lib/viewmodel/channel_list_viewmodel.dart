@@ -8,6 +8,8 @@ import '../components/alert_dialog.dart';
 import '../model/amity_channel_model.dart';
 import '../repository/chat_repo_imp.dart';
 import '../utils/navigation_key.dart';
+import '../utils/env_manager.dart';
+import 'package:dio/dio.dart';
 import 'user_viewmodel.dart';
 
 class ChannelVM extends ChangeNotifier {
@@ -17,7 +19,10 @@ class ChannelVM extends ChangeNotifier {
   Channels? amitySingleChannel;
   Map<String, ChannelUsers> channelUserMap = {};
   List<Channels> getChannelList() {
-    return _amityChannelList;
+    return _amityChannelList
+        .where((element) => !(element.isDeleted ?? false))
+        .toList();
+     
   }
 
   Future<void> initVM() async {
@@ -71,7 +76,10 @@ class ChannelVM extends ChangeNotifier {
         _addUnreadCountToEachChannel(data);
 
         if (data.channels != null) {
-          for (var channel in data.channels!) {
+          //here write a code in data.channels if channel.isDeleted = false then add them to _amithChannelList 
+            for (var channel in data.channels!) {
+          // Check if the channel is not deleted
+          if (!(channel.isDeleted ?? false)) {
             _addLatestMessage(channel);
             _amityChannelList.add(channel);
             String key =
@@ -83,6 +91,7 @@ class ChannelVM extends ChangeNotifier {
             }
           }
         }
+      }
       } else {
         log(error.toString());
         await AmityDialog()
@@ -161,8 +170,10 @@ class ChannelVM extends ChangeNotifier {
     }, avatarFileId: avatarFileId);
   }
 
-  createConversationChannel(List<String> userIds,
-      Function(ChannelList? data, String? error) callback) async {
+  createConversationChannel(
+      List<String> userIds,
+      Function(ChannelList? data, String? error) callback,
+      String? displayName) async {
     await channelRepoImp.createConversationChannel(userIds,
         (data, error) async {
       if (data != null) {
@@ -175,6 +186,30 @@ class ChannelVM extends ChangeNotifier {
             .showAlertErrorDialog(title: "Error!", message: error!);
         callback(null, error);
       }
+    }, displayName);
+  }
+
+  Future<void> deleteConversationChannel(
+      String channelId, Function(bool? result, String? error) callback) async {
+    var accessToken = Provider.of<UserVM>(
+            NavigationService.navigatorKey.currentContext!,
+            listen: false)
+        .accessToken;
+
+    var dio = Dio();
+    await dio
+        .delete(
+      "https://api.${env!.region}.amity.co/api/v3/channels/${channelId}",
+      options: Options(
+        headers: {'Authorization': 'Bearer ' + accessToken!},
+      ),
+    )
+        .then((value) {
+      log("channel delete success");
+      callback(true, null);
+    }).onError((error, stackTrace) async {
+      log("channel delete failed");
+      callback(false, error.toString());
     });
   }
 
