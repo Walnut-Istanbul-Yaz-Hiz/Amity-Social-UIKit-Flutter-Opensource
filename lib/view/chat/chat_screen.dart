@@ -203,7 +203,9 @@ class _ChatSingleScreenState extends State<ChatSingleScreen> {
             if (messageLiveCollection.isFetching)
               Container(
                 alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicator(
+                  backgroundColor: Colors.transparent,
+                ),
               ),
 
             Expanded(

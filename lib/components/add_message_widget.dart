@@ -49,11 +49,13 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
   void initState() {
     super.initState();
 
+    _focusNode.requestFocus();
+  
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
-        // hideOverLay();
+        hideOverLay();
       } else {
-        // Future.delayed(const Duration(seconds: 2), updateOverLay);
+        Future.delayed(const Duration(seconds: 2), updateOverLay);
       }
     });
     // Used to obtain the change of the window size to determine whether the keyboard is hidden.
@@ -70,13 +72,13 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
   @override
   void didChangeMetrics() {
     _debouncer.run(() {
-      // if (WidgetsBinding.instance.window.viewInsets.bottom != 0.0) {
-      //   // Keyboard is visible.
-      //   updateOverLay();
-      // } else {
-      //   // Keyboard is not visible.
-      //   FocusManager.instance.primaryFocus?.unfocus();
-      // }
+      if (WidgetsBinding.instance.window.viewInsets.bottom != 0.0) {
+        // Keyboard is visible.
+        updateOverLay();
+      } else {
+        // Keyboard is not visible.
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
     });
   }
 
@@ -264,9 +266,9 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                           hintText: 'Write your message here',
                         ),
                         onChanged: (value) {
-                          // hideOverLay();
+                          hideOverLay();
 
-                          // updateOverLay();
+                          updateOverLay();
                         },
                       ),
                     ),
