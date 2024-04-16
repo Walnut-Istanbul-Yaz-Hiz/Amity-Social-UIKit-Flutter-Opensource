@@ -161,12 +161,12 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
       metadataTextStyle: style.copyWith(
         fontSize: 14,
         fontWeight: FontWeight.w400,
-        color: Colors.white,
+        color: Colors.black,
       ),
       animationDuration: const Duration(milliseconds: 300),
       metadataTitleStyle: style.copyWith(
         fontWeight: FontWeight.w800,
-        color: Colors.white,
+        color: Colors.black,
 
       ),
       textWidget: const SizedBox(
@@ -472,7 +472,7 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                             child: Text(
                               "${files.length - 3}+",
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 24, // Adjust the font size as needed
                                 fontWeight: FontWeight.bold,
                               ),
@@ -679,7 +679,7 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
                               child: Text(
                                 "${files.length - 3}+",
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize:
                                       24, // Adjust the font size as needed
                                   fontWeight: FontWeight.bold,
@@ -815,7 +815,7 @@ class TextPost extends StatelessWidget {
   Widget buildURLWidget(String text) {
     return LinkWell(text,
       style: TextStyle(
-        color: Colors.white
+        color: Colors.black
       ),
     );
   }

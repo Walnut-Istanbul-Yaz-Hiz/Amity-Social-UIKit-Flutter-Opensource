@@ -221,15 +221,16 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
       required bool isEnable,
       String? debugingText}) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         debugingText == null ? const SizedBox() : Text(debugingText),
         CircleAvatar(
-          radius: 16,
+          radius: 26,
           backgroundColor: Color(0xff998455),
           child: IconButton(
             icon: Icon(
               icon,
-              size: 18,
+              size: 24,
               color: isEnable ?  Color(0xff1E2034) : Colors.white54
             ),
             onPressed: () {

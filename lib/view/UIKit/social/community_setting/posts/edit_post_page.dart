@@ -104,7 +104,7 @@ class _AmityEditPostScreenState extends State<AmityEditPostScreen> {
                           scrollPhysics: const NeverScrollableScrollPhysics(),
                           maxLines: null,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           decoration: const InputDecoration(
                             border: InputBorder.none,

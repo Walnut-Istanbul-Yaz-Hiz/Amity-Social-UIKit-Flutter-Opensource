@@ -16,7 +16,7 @@ class MediaGalleryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff1E2034),
+      color: Colors.white,
       child: Column(
         children: [
           const SizedBox(
@@ -75,16 +75,16 @@ class MediaGalleryPage extends StatelessWidget {
         foregroundColor: galleryFeed == GalleryFeed.community
             ? Provider.of<CommuFeedVM>(context).getMediaType() == type
                 ? Colors.white
-                :  Color(0xFF292C45)
+                : Color(0xFF292C45)
             : Provider.of<UserFeedVM>(context).getMediaType() == type
                 ? Colors.white
-                :  Color(0xFF292C45),
+                : Color(0xFF292C45),
         backgroundColor: galleryFeed == GalleryFeed.community
             ? Provider.of<CommuFeedVM>(context).getMediaType() == type
-                ?  Color(0xff3DDAB4)
+                ? Color(0xff3DDAB4)
                 : Color(0xff998455)
             : Provider.of<UserFeedVM>(context).getMediaType() == type
-                ?  Color(0xff3DDAB4)
+                ? Color(0xff3DDAB4)
                 : Color(0xff998455),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
@@ -108,16 +108,15 @@ class MediaGalleryPage extends StatelessWidget {
         const Text(
           "This account is private",
           style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              color: Colors.white),
+              fontSize: 17, fontWeight: FontWeight.w600, color: Colors.black),
         ),
         const Text(
           "Follow this user to see all posts",
           style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.white38),
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+          ),
         ),
       ],
     );
@@ -141,7 +140,7 @@ class MediaGalleryPage extends StatelessWidget {
               style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white),
+                  color: Colors.black),
             ),
           ],
         ),

@@ -333,7 +333,7 @@ class _PostWidgetState extends State<PostWidget>
               },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 0),
-                color: Color(0xFF292C45),
+                color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: Column(
@@ -391,7 +391,7 @@ class _PostWidgetState extends State<PostWidget>
                                       .copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                 ),
                               ),
@@ -432,7 +432,7 @@ class _PostWidgetState extends State<PostWidget>
                                             .copyWith(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
-                                              color: Colors.white,
+                                              color: Colors.white38,
                                             ),
                                       ),
                                     )
@@ -453,7 +453,7 @@ class _PostWidgetState extends State<PostWidget>
                                         Icon(
                                           Icons.circle,
                                           size: 4,
-                                          color: Colors.white,
+                                          color: Colors.white38,
                                         ),
                                         SizedBox(
                                           width: 5,
@@ -498,6 +498,7 @@ class _PostWidgetState extends State<PostWidget>
                       widget.feedType == FeedType.pending
                           ? const SizedBox()
                           : Container(
+                            color: Colors.white,
                               child: Padding(
                                   padding: const EdgeInsets.only(
                                       top: 16, bottom: 16, left: 0, right: 0),
@@ -797,7 +798,7 @@ class _PostWidgetState extends State<PostWidget>
                   : widget.post.latestComments!.isEmpty
                       ? const SizedBox()
                       : Container(
-                          color: Color(0xFF292C45),
+                          color: Colors.white,
                           child: LatestCommentComponent(
                               postId: widget.post.data!.postId,
                               comments: widget.post.latestComments!),
@@ -1000,7 +1001,7 @@ class _LatestCommentComponentState extends State<LatestCommentComponent> {
                                     title:
                                         Text(comments.user?.displayName ?? "",
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                         ),
                                     subtitle: TimeAgoWidget(
@@ -1012,7 +1013,7 @@ class _LatestCommentComponentState extends State<LatestCommentComponent> {
                                     margin: const EdgeInsets.only(
                                         left: 70.0, right: 18),
                                     decoration: BoxDecoration(
-                                      color: Color(0xff1E2034),
+                                      color: Colors.white,
                                       borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(10),
                                         bottomRight: Radius.circular(10),
@@ -1023,7 +1024,7 @@ class _LatestCommentComponentState extends State<LatestCommentComponent> {
                                       commentData.text!,
                                       style: const TextStyle(
                                         fontSize: 15,
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),

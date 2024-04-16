@@ -101,7 +101,8 @@ class CommunityScreenState extends State<CommunityScreen> {
             Column(
               children: [
                 Text(community.postsCount.toString(),
-                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069))),
+                    style: const TextStyle(
+                        fontSize: 16, color: Color(0xffFC0069))),
                 const Text('posts',
                     style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
               ],
@@ -119,7 +120,8 @@ class CommunityScreenState extends State<CommunityScreen> {
                 children: [
                   Text(
                     community.membersCount.toString(),
-                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069)),
+                    style:
+                        const TextStyle(fontSize: 16, color: Color(0xffFC0069)),
                   ),
                   const Text('members',
                       style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
@@ -150,7 +152,7 @@ class CommunityScreenState extends State<CommunityScreen> {
               endOffset: const Offset(0, 0),
               slideCurve: Curves.linearToEaseOut,
               child: Container(
-                color: Color(0xff1E2034),
+                color: Colors.white,
                 child: RefreshIndicator(
                   color:
                       Provider.of<AmityUIConfiguration>(context).primaryColor,
@@ -198,137 +200,156 @@ class CommunityScreenState extends State<CommunityScreen> {
               )
             ];
             return Scaffold(
-                floatingActionButton: (snapshot.data!.isJoined!)
-                    ? FloatingActionButton(
-                        shape: const CircleBorder(),
-                        onPressed: () async {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context2) => AmityCreatePostV2Screen(
-                                    community: snapshot.data!,
-                                  )));
-                        },
-                        backgroundColor:
-                            Color(0xff998455),
-                        child: Provider.of<AmityUIConfiguration>(context)
-                            .iconConfig
-                            .postIcon(iconSize: 28, color: Color(0xFF292C45)),
-                      )
-                    : null,
-                backgroundColor: Color(0xff1E2034),
-                body: Stack(
-                  children: [
-                    IntrinsicDimension(
-                        listener: (context, width, height, startOffset) {
-                      print('HEIGHT: $height');
-                      Provider.of<CompoentSizeVM>(context, listen: false)
-                          .setCommunityDetailSectionSize(height);
-                    }, builder: (_, __, ___, ____) {
-                      return CommunityDetailComponent(
-                        community: snapshot.data!,
-                      );
-                    }),
-                    DefaultTabController(
-                      length: 2,
-                      child: NestedScrollView(
-                        controller: vm.scrollcontroller,
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverAppBar(
-                              expandedHeight:
-                                  Provider.of<CompoentSizeVM>(context)
-                                      .getCommunityDetailSectionSize(),
-                              shadowColor: Color(0xFF292C45),
-                              elevation: 0,
-                              surfaceTintColor: Colors.transparent,
-                              backgroundColor: Color(0xFF292C45),
-                              floating: false,
-                              pinned: true,
-                              leading: IconButton(
-                                icon: const Icon(
-                                  Icons.chevron_left,
-                                  color: Color(0xff998455),
-                                  size: 30,
-                                ),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                              flexibleSpace: FlexibleSpaceBar(
-                                background: CommunityDetailComponent(
+              floatingActionButton: (snapshot.data!.isJoined!)
+                  ? FloatingActionButton(
+                      shape: const CircleBorder(),
+                      onPressed: () async {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context2) => AmityCreatePostV2Screen(
                                   community: snapshot.data!,
-                                ),
+                                )));
+                      },
+                      backgroundColor: Color(0xff998455),
+                      child: Provider.of<AmityUIConfiguration>(context)
+                          .iconConfig
+                          .postIcon(iconSize: 28, color: Color(0xFF292C45)),
+                    )
+                  : null,
+              body: Stack(
+                children: [
+                  IntrinsicDimension(
+                      listener: (context, width, height, startOffset) {
+                    print('HEIGHT: $height');
+                    Provider.of<CompoentSizeVM>(context, listen: false)
+                        .setCommunityDetailSectionSize(height);
+                  }, builder: (_, __, ___, ____) {
+                    return CommunityDetailComponent(
+                      community: snapshot.data!,
+                    );
+                  }),
+                  DefaultTabController(
+                    length: 2,
+                    child: NestedScrollView(
+                      controller: vm.scrollcontroller,
+                      headerSliverBuilder:
+                          (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          SliverAppBar(
+                            expandedHeight: Provider.of<CompoentSizeVM>(context)
+                                .getCommunityDetailSectionSize(),
+                            shadowColor: Color(0xFF292C45),
+                            elevation: 1,
+                            backgroundColor: Color(0xFF292C45),
+                            foregroundColor: Color(0xFF292C45),
+                            surfaceTintColor: Color(0xFF292C45),
+                            floating: false,
+                            pinned: true,
+                            leading: Container(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: IconButton(
+                              icon: const Icon(
+                                Icons.chevron_left,
+                                color: Color(0xff998455),
+                                size: 30,
+                                weight: 700,
                               ),
-                              actions: [
-                                // Text(
-                                //     "${Provider.of<CompoentSizeVM>(context).getCommunityDetailSectionSize()}"),
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context2) =>
-                                                  CommunitySettingPage(
-                                                    community: snapshot.data!,
-                                                  )));
-                                    },
-                                    icon: const Icon(Icons.more_horiz_rounded,
-                                        color: Color(0xff998455)))
-                              ],
-                              bottom: PreferredSize(
-                                preferredSize: const Size.fromHeight(25),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        color: Color(0xff756548),
-                                        child: TabBar(
-                                          tabAlignment: TabAlignment.start,
-                                          controller: _tabController,
-                                          isScrollable: true,
-                                          indicatorColor: Color(0xff3DDAB4),
-                                          indicatorSize: TabBarIndicatorSize.label,
-                                          indicatorWeight: 6,
-                                          labelColor: Colors.white,
-                                          unselectedLabelColor: Color(0xff998455),
-                                          labelStyle: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: 'SF Pro Text',
-                                          ),
-                                          tabs: const [
-                                            Tab(
-                                              child: Text(
-                                                'Timeline',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w800  
-                                                ),
-                                              ),
-                                            ),
-                                            Tab(
-                                              child: Text(
-                                                'Gallery',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w800  
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                            ),
+                            title: Container(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                              widget.community.displayName != null
+                                  ? widget.community.displayName!
+                                  : "Community",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xff998455),
                               ),
                             ),
-                          ];
-                        },
-                        body: TabBarView(
-                            controller: _tabController, children: tablist),
-                      ),
+                            ),
+                            
+                            
+                            flexibleSpace: FlexibleSpaceBar(
+                              background: CommunityDetailComponent(
+                                community: snapshot.data!,
+                              ),
+                            ),
+                            actions: [
+                              // Text(
+                              //     "${Provider.of<CompoentSizeVM>(context).getCommunityDetailSectionSize()}"),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context2) =>
+                                                CommunitySettingPage(
+                                                  community: snapshot.data!,
+                                                )));
+                                  },
+                                  icon: const Icon(Icons.more_horiz_rounded,
+                                      color: Color(0xff998455)))
+                            ],
+                            bottom: PreferredSize(
+                              preferredSize: const Size.fromHeight(35),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(0),
+                                      color: Colors.white,
+                                      child: TabBar(
+                                        tabAlignment: TabAlignment.start,
+                                        controller: _tabController,
+                                        isScrollable: true,
+                                        indicatorColor: Color(0xff3DDAB4),
+                                        indicatorSize:
+                                            TabBarIndicatorSize.label,
+                                        indicatorWeight: 6,
+                                        labelColor: Colors.black,
+                                        dividerColor: Color(0xff998455),
+                                        unselectedLabelColor: Color(0xff998455),
+                                        labelStyle: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'SF Pro Text',
+                                        ),
+                                        tabs: const [
+                                          Tab(
+                                            child: Text(
+                                              'Timeline',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
+                                          ),
+                                          Tab(
+                                            child: Text(
+                                              'Gallery',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ];
+                      },
+                      body: TabBarView(
+                          controller: _tabController, children: tablist),
                     ),
-                  ],
-                ));
+                  ),
+                ],
+              ),
+            );
           });
     });
   }
@@ -383,8 +404,7 @@ class _EditProfileButtonState extends State<EditProfileButton> {
                       horizontal: 20.0, vertical: 10.0),
                   decoration: BoxDecoration(
                     color: Color(0xff3DDAB4),
-                    border: Border.all(
-                        color: Color(0xff3DDAB4)), // Grey border color
+                    border: Border.all(color: Color(0xff3DDAB4)),
                     borderRadius: BorderRadius.circular(4), // Rounded corners
                   ),
                   child: const Row(
@@ -501,7 +521,7 @@ class PedindingButton extends StatelessWidget {
                       ? "Your posts are pending for review"
                       : "${Provider.of<CommuFeedVM>(context).getCommunityPendingPosts().length} posts need approval",
                   style: const TextStyle(
-                      fontSize: 13, color: Colors.white// Text color
+                      fontSize: 13, color: Colors.white // Text color
                       ),
                 ),
               ],
@@ -532,7 +552,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
         ),
         Text(
           community.description ?? "",
-          style: const TextStyle(fontSize: 15,color: Colors.white),
+          style: const TextStyle(fontSize: 15, color: Colors.black),
         ),
       ],
     );
@@ -564,7 +584,8 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
             Column(
               children: [
                 Text(community.postsCount.toString(),
-                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069))),
+                    style: const TextStyle(
+                        fontSize: 16, color: Color(0xffFC0069))),
                 const Text('posts',
                     style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
               ],
@@ -587,7 +608,8 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                 children: [
                   Text(
                     community.membersCount.toString(),
-                    style: const TextStyle(fontSize: 16,color: Color(0xffFC0069)),
+                    style:
+                        const TextStyle(fontSize: 16, color: Color(0xffFC0069)),
                   ),
                   const Text('members',
                       style: TextStyle(fontSize: 16, color: Color(0xff3DDAB4)))
@@ -607,136 +629,246 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: [
-        
-        Stack(
-          alignment: AlignmentDirectional.bottomStart,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.width * 0.7,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD9E5FC),
-                      image: widget.community.avatarImage != null
-                          ? DecorationImage(
-                              image: NetworkImage(widget.community.avatarImage!
-                                  .getUrl(AmityImageSize.LARGE)),
-                              fit: BoxFit.cover,
-                            )
-                          : const DecorationImage(
-                              image: AssetImage("assets/images/IMG_5637.JPG",
-                                  package: 'amity_uikit_beta_service'),
-                              fit: BoxFit.cover),
-                    ),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(
-                            0.4), // Applying a 40% dark filter to the entire container
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      widget.community.isPublic!
-                          ? const SizedBox()
-                          : const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                      widget.community.isPublic!
-                          ? const SizedBox()
-                          : const SizedBox(
-                              width: 7,
-                            ),
-                      Text(
-                          widget.community.displayName != null
-                              ? widget.community.displayName!
-                              : "Community",
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white)),
-                    ],
-                  ),
-                  widget.community.categories == null
-                      ? const SizedBox()
-                      : Text(
-                          widget.community.displayName != null
-                              ? widget.community.categories!.isEmpty
-                                  ? "no category"
-                                  : widget.community.categories![0]?.name ?? ""
-                              : "",
-                          style: const TextStyle(
-                              overflow: TextOverflow.ellipsis,
-                              fontSize: 16,
-                              color: Colors.white)),
-                  const SizedBox(
-                    height: 16,
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      // color: Color(0xFF292C45),
+      child: Wrap(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
             children: [
-              communityInfo(widget.community),
-              const SizedBox(
-                height: 16,
-              ),
-              communityDescription(widget.community),
-              const SizedBox(
-                height: 16,
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                      child: EditProfileButton(
-                    community: widget.community,
-                  )),
+                  // Expanded(
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: MediaQuery.of(context).size.width * 0.7,
+                  //     decoration: BoxDecoration(
+                  //       color: const Color(0xFFD9E5FC),
+                  //       image: widget.community.avatarImage != null
+                  //           ? DecorationImage(
+                  //               image: NetworkImage(widget.community.avatarImage!
+                  //                   .getUrl(AmityImageSize.LARGE)),
+                  //               fit: BoxFit.cover,
+                  //             )
+                  //           : const DecorationImage(
+                  //               image: AssetImage("assets/images/IMG_5637.JPG",
+                  //                   package: 'amity_uikit_beta_service'),
+                  //               fit: BoxFit.cover),
+                  //     ),
+                  //     child: DecoratedBox(
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.black.withOpacity(
+                  //             0.4), // Applying a 40% dark filter to the entire container
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 20),
                 ],
               ),
-              const SizedBox(
-                height: 12,
-              ),
-              !widget.community.isJoined!
-                  ? const SizedBox()
-                  : !widget.community.isPostReviewEnabled!
-                      ? const SizedBox()
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+              Container(
+                padding: const EdgeInsets.only(top: 100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 16, right: 16, top: 30),
+                        child: Column(
                           children: [
-                            Expanded(
-                                child: PedindingButton(
-                              community: widget.community,
-                            )),
+                            SizedBox(
+                              height: 64,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipOval(
+                                    child: Container(
+                                      height: 64,
+                                      width: 64,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFD9E5FC),
+                                        image: widget.community.avatarImage !=
+                                                null
+                                            ? DecorationImage(
+                                                image: NetworkImage(widget
+                                                    .community.avatarImage!
+                                                    .getUrl(
+                                                        AmityImageSize.LARGE)),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : const DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/IMG_5637.JPG",
+                                                    package:
+                                                        'amity_uikit_beta_service'),
+                                                fit: BoxFit.cover),
+                                      ),
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.4),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              widget.community.displayName !=
+                                                      null
+                                                  ? widget
+                                                      .community.displayName!
+                                                  : "Community",
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black)),
+                                          Row(
+                                            children: [
+                                              // Text(
+                                              //     widget.community.displayName !=
+                                              //             null
+                                              //         ? widget.community
+                                              //                 .categories!.isEmpty
+                                              //             ? "no category"
+                                              //             : widget
+                                              //                     .community
+                                              //                     .categories![0]
+                                              //                     ?.name ??
+                                              //                 ""
+                                              //         : "",
+                                              //     style: const TextStyle(
+                                              //         overflow:
+                                              //             TextOverflow.ellipsis,
+                                              //         fontSize: 16,
+                                              //         color: Colors.white),),
+                                              Text(
+                                                '${widget.community.membersCount.toString()} members',
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0xff3DDAB4)),
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                '${widget.community.postsCount.toString()} posts',
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0xff3DDAB4)),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-              const SizedBox(
-                height: 50,
+                      ),
+                    ),
+                    // Wrap(
+                    //   crossAxisAlignment: WrapCrossAlignment.center,
+                    //   children: [
+                    //     widget.community.isPublic!
+                    //         ? const SizedBox()
+                    //         : const Icon(
+                    //             Icons.lock,
+                    //             color: Colors.white,
+                    //             size: 16,
+                    //           ),
+                    //     widget.community.isPublic!
+                    //         ? const SizedBox()
+                    //         : const SizedBox(
+                    //             width: 7,
+                    //           ),
+                    //     Text(
+                    //         widget.community.displayName != null
+                    //             ? widget.community.displayName!
+                    //             : "Community",
+                    //         style: const TextStyle(
+                    //             fontSize: 20,
+                    //             fontWeight: FontWeight.w800,
+                    //             color: Colors.white)),
+                    //   ],
+                    // ),
+                    // widget.community.categories == null
+                    //     ? const SizedBox()
+                    //     : Text(
+                    //         widget.community.displayName != null
+                    //             ? widget.community.categories!.isEmpty
+                    //                 ? "no category"
+                    //                 : widget.community.categories![0]?.name ?? ""
+                    //             : "",
+                    //         style: const TextStyle(
+                    //             overflow: TextOverflow.ellipsis,
+                    //             fontSize: 16,
+                    //             color: Colors.white)),
+                    // const SizedBox(
+                    //   height: 16,
+                    // )
+                  ],
+                ),
               ),
             ],
           ),
-        ),
-      ],
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // communityInfo(widget.community),
+                // const SizedBox(
+                //   height: 16,
+                // ),
+                communityDescription(widget.community),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: EditProfileButton(
+                      community: widget.community,
+                    )),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                !widget.community.isJoined!
+                    ? const SizedBox()
+                    : !widget.community.isPostReviewEnabled!
+                        ? const SizedBox()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                  child: PedindingButton(
+                                community: widget.community,
+                              )),
+                            ],
+                          ),
+                // const SizedBox(
+                //   height: 50,
+                // ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -345,6 +345,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                         ),
                       ),
                     ),
+                    SizedBox(width:6,),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(),
@@ -444,7 +445,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                       children: [
                         const SizedBox(height: 100),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, top:10),
+                          padding: const EdgeInsets.only(left: 16, right: 16, top:30),
                           child: Column(
                             children: [
                               SizedBox(
