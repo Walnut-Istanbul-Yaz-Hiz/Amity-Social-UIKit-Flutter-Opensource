@@ -1,9 +1,12 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/video_player.dart';
 import 'package:amity_uikit_beta_service/viewmodel/community_feed_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_feed_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../social/imag_viewer.dart';
 
 enum MediaType { photos, videos }
 
@@ -161,10 +164,20 @@ class MediaGalleryPage extends StatelessWidget {
         var url = imageData.getUrl(AmityImageSize.MEDIUM);
         // return Text(url);
 
-        return GridTile(
-          child: Image.network(
-            url,
-            fit: BoxFit.cover,
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ImageViewerScreen(files: amityPosts),
+              ),
+            );
+          },
+          child: GridTile(
+            child: Image.network(
+              url,
+              fit: BoxFit.cover,
+            ),
           ),
         );
       },
@@ -238,32 +251,42 @@ class MediaGalleryPage extends StatelessWidget {
         String thumbnailUrl =
             videoData.thumbnail!.getUrl(AmityImageSize.MEDIUM);
 
-        return GridTile(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        thumbnailUrl,
-                      )),
-                  color: Colors.black38,
-                ),
+        return GestureDetector(
+          onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VideoPlayerScreen(files: amityPosts),
               ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: Colors.black38,
-                  shape: BoxShape.circle,
+            );
+          },
+          child: GridTile(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          thumbnailUrl,
+                        )),
+                    color: Colors.black38,
+                  ),
                 ),
-                child: const Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 50.0, // Adjust the size as needed
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black38,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 50.0, // Adjust the size as needed
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
