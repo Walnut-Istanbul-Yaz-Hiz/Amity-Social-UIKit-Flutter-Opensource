@@ -445,7 +445,8 @@ class UserProfileScreenState extends State<UserProfileScreen>
                       children: [
                         const SizedBox(height: 100),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, top:30),
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, top: 30),
                           child: Column(
                             children: [
                               SizedBox(
@@ -454,16 +455,15 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     FadedScaleAnimation(
-                                        child: getAvatarImage(
-                                            isCurrentUser
-                                                ? Provider.of<AmityVM>(
-                                                    context,
-                                                  ).currentamityUser?.avatarUrl
-                                                : Provider.of<UserFeedVM>(
-                                                        context)
-                                                    .amityUser!
-                                                    .avatarUrl,
-                                            radius: 32)),
+                                      child: getAvatarImage(
+                                        isCurrentUser
+                                            ? Provider.of<AmityVM>(context).currentamityUser?.avatarCustomUrl ??
+                                                Provider.of<AmityVM>(context).currentamityUser?.avatarUrl
+                                            : Provider.of<UserFeedVM>(context).amityUser!.avatarCustomUrl ??
+                                                Provider.of<UserFeedVM>(context).amityUser!.avatarUrl,
+                                        radius: 32,
+                                      ),
+                                    ),
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: Container(
