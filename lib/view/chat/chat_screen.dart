@@ -200,13 +200,13 @@ class _ChatSingleScreenState extends State<ChatSingleScreen> {
             //     ],
             //   ),
             // ),
-            if (messageLiveCollection.isFetching)
-              Container(
-                alignment: Alignment.center,
-                child: const CircularProgressIndicator(
-                  backgroundColor: Colors.transparent,
-                ),
-              ),
+            // if (messageLiveCollection.isFetching)
+            //   Container(
+            //     alignment: Alignment.center,
+            //     child: const CircularProgressIndicator(
+            //       backgroundColor: Colors.transparent,
+            //     ),
+            //   ),
 
             Expanded(
               child: amityMessages.isEmpty
@@ -226,13 +226,13 @@ class _ChatSingleScreenState extends State<ChatSingleScreen> {
                             : Alignment.centerLeft;
                         return Align(
                           alignment: alignment,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: MessageWidget(
-                                message: message,
-                                onReplyTap: (value) => setState(() {
-                                  replyToMessage = value;
-                                }),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: MessageWidget(
+                              message: message,
+                              onReplyTap: (value) => setState(() {
+                                replyToMessage = value;
+                              }),
                             ),
                           ),
                         );
