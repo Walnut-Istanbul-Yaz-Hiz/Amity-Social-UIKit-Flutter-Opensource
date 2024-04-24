@@ -432,6 +432,7 @@ class MessageWidget extends StatelessWidget {
           if (value.reactions!.reactions != null &&
               value.reactions!.reactions!.isNotEmpty)
             Positioned.fill(
+              right: 10,
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
@@ -443,11 +444,13 @@ class MessageWidget extends StatelessWidget {
                     },
                     child: Stack(
                       // mainAxisSize: MainAxisSize.min,
+                      clipBehavior: Clip.hardEdge,
                       children: [
                         if (value.reactions!.getCount('like') > 0)
                           Container(
-                            // width: 36,
-                            // height: 36,
+                            alignment: Alignment.center,
+                            width: 36,
+                            height: 36,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.blue.shade100,
@@ -481,7 +484,7 @@ class MessageWidget extends StatelessWidget {
                               icon: Row(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(top: 8),
+                                    margin: const EdgeInsets.only(top: 4),
                                     child: Text(
                                       value.reactions!
                                           .getCount('like')
@@ -490,7 +493,6 @@ class MessageWidget extends StatelessWidget {
                                           .copyWith(fontSize: 14),
                                     ),
                                   ),
-                                  const SizedBox(width: 2),
                                   Image.asset(
                                     'assets/images/ic_liked.png',
                                     height: 20,
@@ -503,8 +505,9 @@ class MessageWidget extends StatelessWidget {
                           ),
                         if (value.reactions!.getCount('Like') > 0)
                           Container(
-                            // width: 36,
-                            // height: 36,
+                            alignment: Alignment.center,
+                            width: 36,
+                            height: 36,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.blue.shade100,
@@ -538,7 +541,7 @@ class MessageWidget extends StatelessWidget {
                               icon: Row(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.only(top: 8),
+                                    margin: const EdgeInsets.only(top: 4),
                                     child: Text(
                                       value.reactions!
                                           .getCount('like')
@@ -547,7 +550,6 @@ class MessageWidget extends StatelessWidget {
                                           .copyWith(fontSize: 14),
                                     ),
                                   ),
-                                  const SizedBox(width: 2),
                                   Image.asset(
                                     'assets/images/ic_liked.png',
                                     height: 20,
@@ -560,8 +562,9 @@ class MessageWidget extends StatelessWidget {
                           ),
                         if (value.reactions!.getCount('love') > 0)
                           Container(
-                            // width: 36,
-                            // height: 36,
+                            alignment: Alignment.center,
+                            width: 36,
+                            height: 36,
                             margin: const EdgeInsets.only(left: 30),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -602,7 +605,6 @@ class MessageWidget extends StatelessWidget {
                                     style: themeData.textTheme.caption!
                                         .copyWith(fontSize: 14),
                                   ),
-                                  const SizedBox(width: 2),
                                   Image.asset(
                                     'assets/images/ic_heart.png',
                                     height: 20,
@@ -615,8 +617,9 @@ class MessageWidget extends StatelessWidget {
                           ),
                         if (value.reactions!.getCount('Love') > 0)
                           Container(
-                            // width: 36,
-                            // height: 36,
+                            alignment: Alignment.center,
+                            width: 36,
+                            height: 36,
                             margin: const EdgeInsets.only(left: 30),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -657,7 +660,6 @@ class MessageWidget extends StatelessWidget {
                                     style: themeData.textTheme.caption!
                                         .copyWith(fontSize: 14),
                                   ),
-                                  const SizedBox(width: 2),
                                   Image.asset(
                                     'assets/images/ic_heart.png',
                                     height: 20,
