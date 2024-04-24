@@ -49,8 +49,6 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
   void initState() {
     super.initState();
 
-    _focusNode.requestFocus();
-  
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         hideOverLay();
@@ -58,6 +56,7 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
         Future.delayed(const Duration(seconds: 2), updateOverLay);
       }
     });
+
     // Used to obtain the change of the window size to determine whether the keyboard is hidden.
     WidgetsBinding.instance.addObserver(this);
   }
@@ -118,16 +117,15 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                           _selectedImage = null;
                         });
                       },
-                      icon: const Icon(
-                        Icons.clear,
-                      ),
+                      icon: const Icon(Icons.clear, color: Colors.white),
                     )
                   ],
                 )
               : Container(),
           _selectedFile != null
               ? ListTile(
-                  leading: const Icon(Icons.attach_file_rounded),
+                  leading: const Icon(Icons.attach_file_rounded,
+                      color: Colors.white),
                   title: Text(_selectedFile!.path.split('/').last),
                   trailing: IconButton(
                     onPressed: () {
@@ -163,7 +161,10 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                         });
                       }
                     },
-                    icon: const Icon(Icons.file_present_outlined),
+                    icon: const Icon(
+                      Icons.file_present_outlined,
+                      color: Colors.white,
+                    ),
                     iconSize: 28,
                   ),
                   IconButton(
@@ -181,7 +182,10 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                         });
                       }
                     },
-                    icon: const Icon(Icons.add_a_photo_rounded),
+                    icon: const Icon(
+                      Icons.add_a_photo_rounded,
+                      color: Colors.white,
+                    ),
                     iconSize: 28,
                   ),
                   IconButton(
@@ -199,7 +203,10 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                         });
                       }
                     },
-                    icon: const Icon(Icons.camera),
+                    icon: const Icon(
+                      Icons.camera,
+                      color: Colors.white,
+                    ),
                     iconSize: 28,
                   ),
                   // ToggleButtons(
@@ -290,7 +297,7 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                         return;
                       }
 
-                      List<String>? tagToBeAdded  = [];
+                      List<String>? tagToBeAdded = [];
                       // for (var i = 0; i < _selectedTags.length; i++) {
                       //   if (_selectedTags[i]) {
                       //     tagToBeAdded.add((tags[i] as Text).data!);
@@ -302,7 +309,7 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                           message: text,
                           image: _selectedImage,
                           file: _selectedFile,
-                          tags: (tagToBeAdded.isNotEmpty) ? tagToBeAdded : null, 
+                          tags: (tagToBeAdded.isNotEmpty) ? tagToBeAdded : null,
                           amityMentionMetadata: _amityMentionMetadata,
                         ),
                       );
@@ -311,7 +318,7 @@ class _AddMessageWidgetState extends State<AddMessageWidget>
                       _selectedFile = null;
                       _amityMentionMetadata = null;
                     },
-                    icon: const Icon(Icons.send_rounded),
+                    icon: const Icon(Icons.send_rounded, color: Colors.white),
                     iconSize: 28,
                   )
                 ],
@@ -443,7 +450,12 @@ class MessageData {
   File? file;
   List<MentionData>? amityMentionMetadata;
   List<String>? tags;
-  MessageData({this.message, this.image,this.tags, this.file, this.amityMentionMetadata});
+  MessageData(
+      {this.message,
+      this.image,
+      this.tags,
+      this.file,
+      this.amityMentionMetadata});
 }
 
 class MentionData {
