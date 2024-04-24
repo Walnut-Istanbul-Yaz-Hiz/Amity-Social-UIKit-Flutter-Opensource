@@ -104,172 +104,181 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                         // }
                         return Stack(
                           children: [
-                            Card(
-                              color: Color(0xFF292C45),
-                              elevation: 1.0,
-                              child: ListTile(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        ChangeNotifierProvider(
-                                      create: (context) => MessageVM(),
-                                      child: ChatSingleScreen(
-                                        key: UniqueKey(),
-                                        channelId: vm
-                                            .getChannelList()[index]
-                                            .channelId!,
-                                      ),
-                                    ),
-                                  ));
-                                },
-                                leading: Stack(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                                      child: FadedScaleAnimation(
-                                        child: getCommuAvatarImage(
-                                          null,
-                                          fileId: vm
-                                              .getChannelList()[index]
-                                              .avatarFileId,
+                            Dismissible(
+                              key: UniqueKey(),
+                              direction: DismissDirection.startToEnd,
+                              onDismissed: (direction) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Confirm Deletion"),
+                                      content: Text(
+                                          "Are you sure you want to delete this conversation?"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            setState(() {
+                                              vm.refreshChannels();
+                                            });
+                                          },
+                                          child: Text("Cancel"),
                                         ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: rand
-                                          ? Container(
-                                              decoration: BoxDecoration(
-                                                color: Provider.of<
-                                                            AmityUIConfiguration>(
-                                                        context)
-                                                    .primaryColor,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      4, 0, 4, 2),
-                                              child: Center(
-                                                child: Text(
-                                                  vm
-                                                      .getChannelList()[index]
-                                                      .unreadCount
-                                                      .toString(),
-                                                  style: theme
-                                                      .textTheme.bodyLarge!
-                                                      .copyWith(
-                                                    color: Colors.white,
-                                                    fontSize: 8,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          : Container(),
-                                    ),
-                                  ],
-                                ),
-                                title: Text(
-                                  (() {
-                                    String displayName = vm
-                                            .getChannelList()[index]
-                                            .displayName ??
-                                        "Display name";
-                                    var currentUserDisplayName =
-                                        AmityCoreClient.getCurrentUser()
-                                            .displayName;
-                                    List<String> names =
-                                        displayName.split(" : ");
-                                    if (names.length == 2 &&
-                                        names[0] == currentUserDisplayName) {
-                                      displayName = "${names[1]}";
-                                    } else {
-                                      displayName = "${names[0]}";
-                                    }
-                                    return displayName;
-                                  })(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13.3,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  vm.getChannelList()[index].latestMessage,
-                                  style: theme.textTheme.titleSmall!.copyWith(
-                                    color: Provider.of<AmityUIConfiguration>(
-                                            context)
-                                        .channelListConfig
-                                        .latestMessageColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                trailing: Text(
-                                  (vm.getChannelList()[index].lastActivity ==
-                                          null)
-                                      ? ""
-                                      : getDateTime(vm
-                                          .getChannelList()[index]
-                                          .lastActivity!),
-                                  style: theme.textTheme.bodyLarge!.copyWith(
-                                    color: Provider.of<AmityUIConfiguration>(
-                                            context)
-                                        .channelListConfig
-                                        .latestTimeColor,
-                                    fontSize: 9.3,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: -10,
-                              right: 0,
-                              child: GestureDetector(
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                ),
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("Confirm Deletion"),
-                                        content: Text(
-                                            "Are you sure you want to delete this conversation?"),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog
-                                            },
-                                            child: Text("Cancel"),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Channels channel =
-                                                  vm.getChannelList()[index];
-                                              Provider.of<ChannelVM>(context,
-                                                      listen: false)
-                                                  .deleteConversationChannel(
-                                                      channel.channelId!,
-                                                      (result, error) {
+                                        TextButton(
+                                          onPressed: () {
+                                            Channels channel =
+                                                vm.getChannelList()[index];
+
+                                            Provider.of<ChannelVM>(context,
+                                                    listen: false)
+                                                .deleteConversationChannel(
+                                              channel.channelId!,
+                                              (result, error) {
                                                 setState(() {
                                                   vm.refreshChannels();
                                                 });
-                                              });
-                                              Navigator.of(context)
-                                                  .pop(); // Close the dialog after deletion
-                                            },
-                                            child: Text("Delete"),
+
+                                                // Close the dialog after deletion
+                                                Navigator.of(context).pop();
+                                              },
+                                            );
+                                          },
+                                          child: Text("Delete"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              background: Container(
+                                color: Colors.red,
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              child: Card(
+                                color: Color(0xFF292C45),
+                                elevation: 1.0,
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatSingleScreen(
+                                          channelId: vm
+                                              .getChannelList()[index]
+                                              .channelId!,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  leading: Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 5, 0),
+                                        child: FadedScaleAnimation(
+                                          child: getCommuAvatarImage(
+                                            null,
+                                            fileId: vm
+                                                .getChannelList()[index]
+                                                .avatarFileId,
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: rand
+                                            ? Container(
+                                                decoration: BoxDecoration(
+                                                  color: Provider.of<
+                                                              AmityUIConfiguration>(
+                                                          context)
+                                                      .primaryColor,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 0, 4, 2),
+                                                child: Center(
+                                                  child: Text(
+                                                    vm
+                                                        .getChannelList()[index]
+                                                        .unreadCount
+                                                        .toString(),
+                                                    style: theme
+                                                        .textTheme.bodyLarge!
+                                                        .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 8,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(),
+                                      ),
+                                    ],
+                                  ),
+                                  title: Text(
+                                    (() {
+                                      String displayName = vm
+                                              .getChannelList()[index]
+                                              .displayName ??
+                                          "Display name";
+                                      var currentUserDisplayName =
+                                          AmityCoreClient.getCurrentUser()
+                                              .displayName;
+                                      List<String> names =
+                                          displayName.split(" : ");
+                                      if (names.length == 2 &&
+                                          names[0] == currentUserDisplayName) {
+                                        displayName = "${names[1]}";
+                                      } else {
+                                        displayName = "${names[0]}";
+                                      }
+                                      return displayName;
+                                    })(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13.3,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    vm.getChannelList()[index].latestMessage,
+                                    style: theme.textTheme.titleSmall!.copyWith(
+                                      color: Provider.of<AmityUIConfiguration>(
+                                              context)
+                                          .channelListConfig
+                                          .latestMessageColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    (vm.getChannelList()[index].lastActivity ==
+                                            null)
+                                        ? ""
+                                        : getDateTime(vm
+                                            .getChannelList()[index]
+                                            .lastActivity!),
+                                    style: theme.textTheme.bodyLarge!.copyWith(
+                                      color: Provider.of<AmityUIConfiguration>(
+                                              context)
+                                          .channelListConfig
+                                          .latestTimeColor,
+                                      fontSize: 9.3,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
