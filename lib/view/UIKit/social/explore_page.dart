@@ -105,14 +105,14 @@ class _CommunityPageState extends State<CommunityPage>
                     tabs: [
                       Tab(
                         child: Text(
-                          'Explore',
+                          'Newsfeed',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w800),
                         ),
                       ),
                       Tab(
                         child: Text(
-                          'Newsfeed',
+                          'Explore',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w800),
                         ),
@@ -127,8 +127,8 @@ class _CommunityPageState extends State<CommunityPage>
         body: TabBarView(
           controller: _tabController,
           children: [
-            ExplorePage(),
             NewsfeedPage(),
+            ExplorePage(),
           ],
         ),
         bottomNavigationBar: _bottomNavigationBar(),
