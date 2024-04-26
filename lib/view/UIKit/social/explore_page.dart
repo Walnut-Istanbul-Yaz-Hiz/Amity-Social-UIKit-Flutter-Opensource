@@ -159,7 +159,7 @@ class _CommunityPageState extends State<CommunityPage>
                 route: 'Feed',
                 icon: 'assets/images/weserved/newsfeed_icon.png',
                 text: 'NEWS',
-                index: 1,
+                index: 0,
               ),
               _navigationButton(
                 route: 'Groups',
@@ -170,7 +170,7 @@ class _CommunityPageState extends State<CommunityPage>
                 route: 'Explore',
                 icon: 'assets/images/weserved/explore_icon.png',
                 text: 'EXPLORE',
-                index: 0,
+                index: 1,
               ),
               // _navigationButton(
               //   route: 'Chat',
