@@ -172,11 +172,11 @@ class _CommunityPageState extends State<CommunityPage>
                 text: 'EXPLORE',
                 index: 0,
               ),
-              _navigationButton(
-                route: 'Chat',
-                icon: 'assets/images/weserved/chat_icon.png',
-                text: 'CHAT',
-              ),
+              // _navigationButton(
+              //   route: 'Chat',
+              //   icon: 'assets/images/weserved/chat_icon.png',
+              //   text: 'CHAT',
+              // ),
               _navigationButton(
                 route: 'Profile',
                 icon: 'assets/images/weserved/navbar_profile_icon.png',

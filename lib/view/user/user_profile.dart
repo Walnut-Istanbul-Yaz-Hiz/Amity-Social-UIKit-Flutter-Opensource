@@ -277,75 +277,75 @@ class UserProfileScreenState extends State<UserProfileScreen>
                 var followWidget = Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Provider.of<ChannelVM>(context, listen: false).initVM();
-                        var userToChatDisplayName =
-                            widget.amityUser!.displayName;
-                        var currentUserDisplayName =
-                            AmityCoreClient.getCurrentUser().displayName;
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Provider.of<ChannelVM>(context, listen: false).initVM();
+                    //     var userToChatDisplayName =
+                    //         widget.amityUser!.displayName;
+                    //     var currentUserDisplayName =
+                    //         AmityCoreClient.getCurrentUser().displayName;
 
-                        // Check if both display names are available before concatenating
-                        var chatName = userToChatDisplayName != null &&
-                                currentUserDisplayName != null
-                            ? userToChatDisplayName + " : " + currentUserDisplayName
-                            : "Display name";
+                    //     // Check if both display names are available before concatenating
+                    //     var chatName = userToChatDisplayName != null &&
+                    //             currentUserDisplayName != null
+                    //         ? userToChatDisplayName + " : " + currentUserDisplayName
+                    //         : "Display name";
 
-                        Provider.of<ChannelVM>(context, listen: false)
-                            .createConversationChannel([
-                          AmityCoreClient.getUserId(),
-                          widget.amityUserId
-                        ], (channel, error) {
-                          if (channel != null) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ChangeNotifierProvider(
-                                  create: (context) => MessageVM(),
-                                  child: ChatSingleScreen(
-                                    key: UniqueKey(),
-                                    channelId: channel.channels![0].channelId!,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        }, chatName);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.pink,
-                                style: BorderStyle.solid,
-                                width: 1),
-                            borderRadius: BorderRadius.circular(4),
-                            color: Colors.pink),
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.add,
-                              size: 16,
-                              color: Colors.white,
-                              weight: 4,
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              "Chat",
-                              textAlign: TextAlign.center,
-                              style: theme.textTheme.titleSmall!.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width:6,),
+                    //     Provider.of<ChannelVM>(context, listen: false)
+                    //         .createConversationChannel([
+                    //       AmityCoreClient.getUserId(),
+                    //       widget.amityUserId
+                    //     ], (channel, error) {
+                    //       if (channel != null) {
+                    //         Navigator.of(context).push(
+                    //           MaterialPageRoute(
+                    //             builder: (context) => ChangeNotifierProvider(
+                    //               create: (context) => MessageVM(),
+                    //               child: ChatSingleScreen(
+                    //                 key: UniqueKey(),
+                    //                 channelId: channel.channels![0].channelId!,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         );
+                    //       }
+                    //     }, chatName);
+                    //   },
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //         border: Border.all(
+                    //             color: Colors.pink,
+                    //             style: BorderStyle.solid,
+                    //             width: 1),
+                    //         borderRadius: BorderRadius.circular(4),
+                    //         color: Colors.pink),
+                    //     padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         const Icon(
+                    //           Icons.add,
+                    //           size: 16,
+                    //           color: Colors.white,
+                    //           weight: 4,
+                    //         ),
+                    //         const SizedBox(
+                    //           width: 2,
+                    //         ),
+                    //         Text(
+                    //           "Chat",
+                    //           textAlign: TextAlign.center,
+                    //           style: theme.textTheme.titleSmall!.copyWith(
+                    //             fontWeight: FontWeight.w700,
+                    //             color: Colors.white,
+                    //             fontSize: 15,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(width:6,),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(),
