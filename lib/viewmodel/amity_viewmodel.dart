@@ -67,7 +67,7 @@ class AmityVM extends ChangeNotifier {
                 title: "Error!", message: error.toString());
           });
         } else {
-          await AmityCoreClient.login(userID).submit().then((value) async {
+          await AmityCoreClient.login(userID).authToken(authToken!).submit().then((value) async {
             log("flat login success");
             isProcessing = false;
             getUserByID(userID);

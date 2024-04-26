@@ -456,14 +456,15 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                   children: [
                                     FadedScaleAnimation(
                                       child: getAvatarImage(
-                                        isCurrentUser
-                                            ? Provider.of<AmityVM>(context).currentamityUser?.avatarCustomUrl ??
-                                                Provider.of<AmityVM>(context).currentamityUser?.avatarUrl
-                                            : Provider.of<UserFeedVM>(context).amityUser!.avatarCustomUrl ??
-                                                Provider.of<UserFeedVM>(context).amityUser!.avatarUrl,
-                                        radius: 32,
-                                      ),
-                                    ),
+                                            isCurrentUser
+                                                ? Provider.of<AmityVM>(
+                                                    context,
+                                                  ).currentamityUser?.avatarUrl
+                                                : Provider.of<UserFeedVM>(
+                                                        context)
+                                                    .amityUser!
+                                                    .avatarUrl,
+                                            radius: 32)),
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: Container(
