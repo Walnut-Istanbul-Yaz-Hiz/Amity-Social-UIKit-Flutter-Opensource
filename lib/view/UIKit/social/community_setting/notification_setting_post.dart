@@ -70,7 +70,7 @@ class _PostNotificationSettingPageState
               "Receive notifications when someone make a reaction to your posts in this community",
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white38,
+                color: Colors.black,
               ),
             ),
           ),
@@ -131,7 +131,7 @@ class _PostNotificationSettingPageState
               "Receive notifications when someone make a reaction to your posts in this community",
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white38,
+                color: Colors.black,
               ),
             ),
           ),

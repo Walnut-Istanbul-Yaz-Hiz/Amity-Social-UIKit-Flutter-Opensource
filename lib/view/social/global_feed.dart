@@ -432,7 +432,7 @@ class _PostWidgetState extends State<PostWidget>
                                             .copyWith(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
-                                              color: Colors.white38,
+                                              color: Colors.black,
                                             ),
                                       ),
                                     )
@@ -453,7 +453,7 @@ class _PostWidgetState extends State<PostWidget>
                                         Icon(
                                           Icons.circle,
                                           size: 4,
-                                          color: Colors.white38,
+                                          color: Colors.black,
                                         ),
                                         SizedBox(
                                           width: 5,
@@ -462,7 +462,7 @@ class _PostWidgetState extends State<PostWidget>
                                           "Edited",
                                           style: TextStyle(
                                             fontSize: 13,
-                                            color: Colors.white38,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ],
@@ -526,7 +526,7 @@ class _PostWidgetState extends State<PostWidget>
                                                       widget.post.reactionCount
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color: Colors.white38,
+                                                          color: Colors.black,
                                                           fontSize:
                                                               feedReactionCountSize,
                                                           letterSpacing: 1)),
@@ -539,7 +539,7 @@ class _PostWidgetState extends State<PostWidget>
                                                           ? "likes"
                                                           : "like",
                                                       style: TextStyle(
-                                                          color: Colors.white38,
+                                                          color: Colors.black,
                                                           fontSize:
                                                               feedReactionCountSize,
                                                           letterSpacing: 1)),
@@ -555,7 +555,7 @@ class _PostWidgetState extends State<PostWidget>
                                           return Text(
                                             '${widget.post.commentCount} comments',
                                             style: TextStyle(
-                                                color: Colors.white38,
+                                                color: Colors.black,
                                                 fontSize: feedReactionCountSize,
                                                 letterSpacing: 0.5),
                                           );
@@ -568,7 +568,7 @@ class _PostWidgetState extends State<PostWidget>
                                           return Text(
                                             '${widget.post.commentCount} comment',
                                             style: TextStyle(
-                                                color: Colors.white38,
+                                                color: Colors.black,
                                                 fontSize: feedReactionCountSize,
                                                 letterSpacing: 0.5),
                                           );

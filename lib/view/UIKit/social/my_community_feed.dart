@@ -286,7 +286,7 @@ class CommunityIconWidget extends StatelessWidget {
                             height: 40,
                             width: 40,
                             decoration: const BoxDecoration(
-                                color: Colors.white38,
+                                color: Colors.black,
                                 shape: BoxShape.circle),
                             child: const Icon(
                               Icons.group,

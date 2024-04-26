@@ -190,7 +190,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                         title: const Text('Public',style: TextStyle(color: Colors.white),),
                         subtitle: const Text(
                             'Anyone can join, view and search this community',
-                            style: TextStyle(color: Colors.white38),),
+                            style: TextStyle(color: Colors.black),),
                         trailing: Radio(
                           activeColor: Color(0xff3DDAB4),
                           hoverColor: Color(0xff998455),
@@ -218,7 +218,7 @@ class _CreateCommunityPageState extends State<CreateCommunityPage> {
                         title: const Text('Private',style: TextStyle(color: Colors.white),),
                         subtitle: const Text(
                             'Only members invited by the moderators can join, view and search this community',
-                            style: TextStyle(color: Colors.white38),),
+                            style: TextStyle(color: Colors.black),),
                         trailing: Radio(
                           activeColor: Color(0xff3DDAB4),
                           hoverColor: Color(0xff998455),

@@ -61,7 +61,7 @@ class _PostToPageState extends State<PostToPage> {
                         height: 40,
                         width: 40,
                         decoration: const BoxDecoration(
-                            color: Colors.white38, shape: BoxShape.circle),
+                            color: Colors.black, shape: BoxShape.circle),
                         child: const Icon(
                           Icons.person,
                           color: Colors.white,
@@ -107,7 +107,7 @@ class _PostToPageState extends State<PostToPage> {
                                 height: 40,
                                 width: 40,
                                 decoration: const BoxDecoration(
-                                    color: Colors.white38,
+                                    color: Colors.black,
                                     shape: BoxShape.circle),
                                 child: const Icon(
                                   Icons.group,

@@ -57,7 +57,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
           ListTile(
             title: const Text(
               'Turn on to receive push notification from this community',
-              style: TextStyle(color: Colors.white38),
+              style: TextStyle(color: Colors.black),
             ),
             trailing: Switch(
               activeColor: Color(0xff3DDAB4),

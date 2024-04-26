@@ -181,7 +181,7 @@ class _CommentsNotificationSettingPageState
         text,
         style: const TextStyle(
           fontSize: 14,
-          color: Colors.white38,
+          color: Colors.black,
         ),
       ),
     );

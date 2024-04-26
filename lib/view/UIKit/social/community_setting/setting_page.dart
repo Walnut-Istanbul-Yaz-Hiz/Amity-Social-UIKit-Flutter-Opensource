@@ -221,7 +221,7 @@ class CommunitySettingPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
-                              color: Colors.white38,
+                              color: Colors.black,
                             ),
                           ),
                         ),
