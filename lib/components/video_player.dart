@@ -244,21 +244,28 @@ class _MyVideoPlayer2State extends State<MyVideoPlayer2> {
 
 class VideoPlayerScreen extends StatefulWidget {
   final List<AmityPost> files;
+  final int? initialIndex;
+  const VideoPlayerScreen({
+    Key? key,
+    required this.files,
+    this.initialIndex,
 
-  const VideoPlayerScreen({Key? key, required this.files}) : super(key: key);
+  }) : super(key: key);
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  final PageController _pageController = PageController();
+  PageController _pageController = PageController();
   int _currentIndex = 0;
   List<VideoPlayerController>? _controllers; // Changed from late to nullable
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex ?? 0;
+    _pageController = PageController(initialPage: widget.initialIndex ?? 0);
     _initializeControllers();
   }
 

@@ -169,7 +169,10 @@ class MediaGalleryPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ImageViewerScreen(files: amityPosts),
+                builder: (context) => ImageViewerScreen(
+                  files: amityPosts,
+                  initialIndex: index,
+                ),
               ),
             );
           },
@@ -256,7 +259,10 @@ class MediaGalleryPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => VideoPlayerScreen(files: amityPosts),
+                builder: (context) => VideoPlayerScreen(
+                  files: amityPosts,
+                  initialIndex: index,
+                ),
               ),
             );
           },

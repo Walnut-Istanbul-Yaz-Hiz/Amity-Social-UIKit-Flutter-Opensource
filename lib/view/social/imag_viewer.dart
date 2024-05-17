@@ -3,20 +3,27 @@ import 'package:flutter/material.dart';
 
 class ImageViewerScreen extends StatefulWidget {
   final List<AmityPost> files;
+  final int? initialIndex;
 
-  const ImageViewerScreen({Key? key, required this.files}) : super(key: key);
+  const ImageViewerScreen({
+    Key? key,
+    required this.files,
+    this.initialIndex,
+  }) : super(key: key);
 
   @override
   _ImageViewerScreenState createState() => _ImageViewerScreenState();
 }
 
 class _ImageViewerScreenState extends State<ImageViewerScreen> {
-  final PageController _pageController = PageController();
+  PageController _pageController = PageController();
   int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex ?? 0;
+    _pageController = PageController(initialPage: widget.initialIndex ?? 0);
   }
 
   @override
@@ -66,6 +73,7 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
               ),
             );
           },
-        ));
+        )
+        );
   }
 }
