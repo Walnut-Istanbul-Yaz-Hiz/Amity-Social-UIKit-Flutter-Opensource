@@ -221,18 +221,20 @@ class CommentScreenState extends State<CommentScreen> {
               appBar: AppBar(
                 elevation: 0.0, // Add this line to remove the shadow
                 leading: IconButton(
-                  icon: const Icon(Icons.chevron_left,
-                  color: Color(0xff998455),),
+                  icon: const Icon(
+                    Icons.chevron_left,
+                    color: Color(0xff998455),
+                  ),
                   onPressed: () => Navigator.pop(context),
                 ),
                 title: Text(
                   "Comments",
-                  style: Provider.of<AmityUIConfiguration>(context).titleTextStyle
-                  .copyWith(
-                    color: Color(0xff998455),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 20
-                  ),
+                  style: Provider.of<AmityUIConfiguration>(context)
+                      .titleTextStyle
+                      .copyWith(
+                          color: Color(0xff998455),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20),
                 ),
                 backgroundColor: Color(0xff1E2034),
               ),
@@ -469,11 +471,7 @@ class CommentTextField extends StatelessWidget {
             },
             child: Text("Post  ",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff3DDAB4)
-                  )
-              )
-            ),
+                    fontWeight: FontWeight.bold, color: Color(0xff3DDAB4)))),
       ),
     );
   }
@@ -593,8 +591,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
             },
             child: Text(
               'Save',
-              style: TextStyle(
-                  color: Color(0xff998455)),
+              style: TextStyle(color: Color(0xff998455)),
             ),
           ),
         ],
@@ -609,8 +606,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
           decoration: InputDecoration(
               hintText: widget.initailText,
               border: InputBorder.none,
-              hintStyle: TextStyle(color: Color(0xff3DDAB4))
-          ),
+              hintStyle: TextStyle(color: Color(0xff3DDAB4))),
         ),
       ),
     );
@@ -703,13 +699,13 @@ class _CommentComponentState extends State<CommentComponent> {
                       ),
                     )
                   : Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xff292C45),
-                        ),
-                        child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color(0xff292C45),
+                          ),
+                          child: Column(
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -726,9 +722,10 @@ class _CommentComponentState extends State<CommentComponent> {
                                                     builder: (context) =>
                                                         UserProfileScreen(
                                                             amityUserId:
-                                                                comments.userId!,
-                                                            amityUser:
-                                                                comments.user!)));
+                                                                comments
+                                                                    .userId!,
+                                                            amityUser: comments
+                                                                .user!)));
                                           },
                                           child: getAvatarImage(
                                               comments.user!.avatarUrl)),
@@ -737,16 +734,15 @@ class _CommentComponentState extends State<CommentComponent> {
                                       comments.user!.displayName!,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
-                                            color: Colors.white
-                                          ),
+                                          color: Colors.white),
                                     ),
                                     subtitle: Row(
                                       children: [
                                         TimeAgoWidget(
-                                          createdAt:
-                                              comments.createdAt == comments.editedAt
-                                                  ? comments.editedAt!
-                                                  : comments.createdAt!,
+                                          createdAt: comments.createdAt ==
+                                                  comments.editedAt
+                                              ? comments.editedAt!
+                                              : comments.createdAt!,
                                         ),
                                         comments.createdAt == comments.editedAt
                                             ? const SizedBox()
@@ -762,13 +758,14 @@ class _CommentComponentState extends State<CommentComponent> {
                                                   const SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(comments.createdAt ==
-                                                          comments.editedAt
-                                                      ? ""
-                                                      : "Edited",
-                                                      style: TextStyle(
-                                                        color: Colors.white
-                                                      ),),
+                                                  Text(
+                                                    comments.createdAt ==
+                                                            comments.editedAt
+                                                        ? ""
+                                                        : "Edited",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                                 ],
                                               )
                                       ],
@@ -785,23 +782,20 @@ class _CommentComponentState extends State<CommentComponent> {
                                         bottomLeft: Radius.circular(10),
                                       ),
                                     ),
-                                    child: Text(
-                                      commentData.text!,
-                                      style: TextStyle(
-                                        color: Colors.white
-                                      )
-                                    ),
+                                    child: Text(commentData.text!,
+                                        style: TextStyle(color: Colors.white)),
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 70.0, top: 0),
+                                    padding: const EdgeInsets.only(
+                                        left: 70.0, top: 0),
                                     child: Row(
                                       children: [
                                         // Like Button
                                         isLiked(snapshot)
                                             ? GestureDetector(
                                                 onTap: () {
-                                                  vm.removeCommentReaction(comments);
+                                                  vm.removeCommentReaction(
+                                                      comments);
                                                 },
                                                 child: Row(
                                                   children: [
@@ -809,7 +803,9 @@ class _CommentComponentState extends State<CommentComponent> {
                                                             context)
                                                         .iconConfig
                                                         .likedIcon(
-                                                            color:Color(0xff3DDAB4),),
+                                                          color:
+                                                              Color(0xff3DDAB4),
+                                                        ),
                                                     Text(
                                                         " ${snapshot.data?.reactionCount ?? 0}"),
                                                   ],
@@ -817,23 +813,28 @@ class _CommentComponentState extends State<CommentComponent> {
                                               )
                                             : GestureDetector(
                                                 onTap: () {
-                                                  vm.addCommentReaction(comments);
+                                                  vm.addCommentReaction(
+                                                      comments);
                                                 },
                                                 child: Row(
                                                   children: [
                                                     Provider.of<AmityUIConfiguration>(
                                                             context)
                                                         .iconConfig
-                                                        .likeIcon(iconSize: 16,color: Color(0xff756548)),
+                                                        .likeIcon(
+                                                            iconSize: 16,
+                                                            color: Color(
+                                                                0xff756548)),
                                                     const Text(
                                                       " Like",
                                                       style: TextStyle(
-                                                          color: Color(0xff756548),
+                                                          color:
+                                                              Color(0xff756548),
                                                           fontSize: 15),
                                                     ),
                                                   ],
                                                 )),
-                        
+
                                         const SizedBox(width: 10),
                                         // Reply Button
                                         GestureDetector(
@@ -848,22 +849,24 @@ class _CommentComponentState extends State<CommentComponent> {
                                               Provider.of<AmityUIConfiguration>(
                                                       context)
                                                   .iconConfig
-                                                  .replyIcon(iconSize: 16,color: Color(0xff756548)),
+                                                  .replyIcon(
+                                                      iconSize: 16,
+                                                      color: Color(0xff756548)),
                                               const SizedBox(
                                                 width: 5,
                                               ),
                                               const Text(
                                                 "Reply",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color(0xff756548),
-                                                    fontSize: 15,
-                                                    ),
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Color(0xff756548),
+                                                  fontSize: 15,
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
-                        
+
                                         // More Options Button
                                         IconButton(
                                           icon: const Icon(
@@ -872,9 +875,11 @@ class _CommentComponentState extends State<CommentComponent> {
                                           ),
                                           onPressed: () {
                                             AmityGeneralCompomemt
-                                                .showOptionsBottomSheet(context, [
+                                                .showOptionsBottomSheet(
+                                                    context, [
                                               comments.user?.userId! ==
-                                                      AmityCoreClient.getCurrentUser()
+                                                      AmityCoreClient
+                                                              .getCurrentUser()
                                                           .userId
                                                   ? const SizedBox()
                                                   : ListTile(
@@ -884,23 +889,28 @@ class _CommentComponentState extends State<CommentComponent> {
                                                             : 'Report',
                                                         style: const TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w500),
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                       onTap: () async {
-                                                        if (!comments.isFlaggedByMe) {
+                                                        if (!comments
+                                                            .isFlaggedByMe) {
                                                           vm.flagComment(
-                                                              comments, context);
+                                                              comments,
+                                                              context);
                                                         } else {
                                                           vm.unFlagComment(
-                                                              comments, context);
+                                                              comments,
+                                                              context);
                                                         }
                                                         Navigator.pop(context);
                                                       },
                                                     ),
-                        
+
                                               ///check admin
                                               comments.user?.userId! !=
-                                                      AmityCoreClient.getCurrentUser()
+                                                      AmityCoreClient
+                                                              .getCurrentUser()
                                                           .userId
                                                   ? const SizedBox()
                                                   : ListTile(
@@ -908,26 +918,29 @@ class _CommentComponentState extends State<CommentComponent> {
                                                         'Edit Comment',
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w500),
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                       onTap: () async {
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context)
+                                                            .pop();
                                                         Navigator.of(context).push(
                                                             MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    EditCommentPage(
-                                                                      initailText:
-                                                                          commentData
-                                                                              .text!,
-                                                                      comment:
-                                                                          comments,
-                                                                      postCallback:
-                                                                          () async {},
-                                                                    )));
+                                                                builder:
+                                                                    (context) =>
+                                                                        EditCommentPage(
+                                                                          initailText:
+                                                                              commentData.text!,
+                                                                          comment:
+                                                                              comments,
+                                                                          postCallback:
+                                                                              () async {},
+                                                                        )));
                                                       },
                                                     ),
                                               comments.user?.userId! !=
-                                                      AmityCoreClient.getCurrentUser()
+                                                      AmityCoreClient
+                                                              .getCurrentUser()
                                                           .userId
                                                   ? const SizedBox()
                                                   : ListTile(
@@ -935,25 +948,29 @@ class _CommentComponentState extends State<CommentComponent> {
                                                         'Delete Comment',
                                                         style: TextStyle(
                                                             fontWeight:
-                                                                FontWeight.w500),
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                       onTap: () async {
-                                                        ConfirmationDialog().show(
-                                                            context: context,
-                                                            title:
-                                                                "Delete this comment",
-                                                            detailText:
-                                                                " This comment will be permanently deleted. You'll no longer to see and find this comment",
-                                                            onConfirm: () {
-                                                              vm.deleteComment(
-                                                                  comments);
-                                                              // AmitySuccessDialog
-                                                              //     .showTimedDialog(
-                                                              //         "Success",
-                                                              //         context:
-                                                              //             context);
-                                                              Navigator.pop(context);
-                                                            });
+                                                        ConfirmationDialog()
+                                                            .show(
+                                                                context:
+                                                                    context,
+                                                                title:
+                                                                    "Delete this comment",
+                                                                detailText:
+                                                                    " This comment will be permanently deleted. You'll no longer to see and find this comment",
+                                                                onConfirm: () {
+                                                                  vm.deleteComment(
+                                                                      comments);
+                                                                  // AmitySuccessDialog
+                                                                  //     .showTimedDialog(
+                                                                  //         "Success",
+                                                                  //         context:
+                                                                  //             context);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                });
                                                       },
                                                     ),
                                             ]);
@@ -963,10 +980,11 @@ class _CommentComponentState extends State<CommentComponent> {
                                     ),
                                   ),
                                   Container(
-                                    padding:
-                                        const EdgeInsets.only(left: 60, right: 15),
+                                    padding: const EdgeInsets.only(
+                                        left: 60, right: 15),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Provider.of<ReplyVM>(context)
                                                         .amityReplyCommentsMap[
@@ -977,16 +995,17 @@ class _CommentComponentState extends State<CommentComponent> {
                                                 shrinkWrap: true,
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
-                                                itemCount:
-                                                    Provider.of<ReplyVM>(context)
-                                                        .amityReplyCommentsMap[
-                                                            comments.commentId]!
-                                                        .length,
+                                                itemCount: Provider.of<ReplyVM>(
+                                                        context)
+                                                    .amityReplyCommentsMap[
+                                                        comments.commentId]!
+                                                    .length,
                                                 itemBuilder: (context, index) {
-                                                  var replyComment =
-                                                      Provider.of<ReplyVM>(context)
-                                                              .amityReplyCommentsMap[
-                                                          comments.commentId]![index];
+                                                  var replyComment = Provider.of<
+                                                              ReplyVM>(context)
+                                                          .amityReplyCommentsMap[
+                                                      comments
+                                                          .commentId]![index];
                                                   return ReplyCommentComponent(
                                                     comment: replyComment,
                                                   );
@@ -1005,15 +1024,23 @@ class _CommentComponentState extends State<CommentComponent> {
                                                   );
                                                 },
                                                 child: Container(
-                                                  margin: const EdgeInsets.all(12),
-                                                  decoration: const BoxDecoration(
-                                                      color: Color(0xffEBECEF),
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(4))),
-                                                  padding: const EdgeInsets.all(5.0),
+                                                  margin:
+                                                      const EdgeInsets.all(12),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color:
+                                                              Color(0xffEBECEF),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          4))),
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
                                                   child: const Wrap(
                                                     crossAxisAlignment:
-                                                        WrapCrossAlignment.center,
+                                                        WrapCrossAlignment
+                                                            .center,
                                                     children: [
                                                       SizedBox(
                                                         width: 14,
@@ -1022,7 +1049,8 @@ class _CommentComponentState extends State<CommentComponent> {
                                                         Icons
                                                             .subdirectory_arrow_right,
                                                         size: 15,
-                                                        color: Color(0xff636878),
+                                                        color:
+                                                            Color(0xff636878),
                                                       ),
                                                       SizedBox(
                                                         width: 14,
@@ -1030,7 +1058,8 @@ class _CommentComponentState extends State<CommentComponent> {
                                                       Text(
                                                         "View more replies",
                                                         style: TextStyle(
-                                                            color: Color(0xff636878),
+                                                            color: Color(
+                                                                0xff636878),
                                                             fontSize: 13),
                                                       ),
                                                       SizedBox(
@@ -1052,10 +1081,10 @@ class _CommentComponentState extends State<CommentComponent> {
                               // ),
                             ],
                           ),
-                      ),
-                      SizedBox(height: 15)
-                    ],
-                  );
+                        ),
+                        SizedBox(height: 15)
+                      ],
+                    );
             },
           );
         },
@@ -1266,7 +1295,10 @@ class ReplyCommentComponent extends StatelessWidget {
                           ),
                           title: Text(
                             comment.user!.displayName!,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                           subtitle: TimeAgoWidget(
                             createdAt: snapshot.data!.createdAt!,
@@ -1276,7 +1308,7 @@ class ReplyCommentComponent extends StatelessWidget {
                           padding: const EdgeInsets.all(10.0),
                           margin: const EdgeInsets.only(left: 70.0),
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
+                            color: Color(0xFF292C45),
                             borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               bottomRight: Radius.circular(10),
@@ -1285,6 +1317,9 @@ class ReplyCommentComponent extends StatelessWidget {
                           ),
                           child: Text(
                             commentData.text!,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         Padding(
@@ -1303,12 +1338,14 @@ class ReplyCommentComponent extends StatelessWidget {
                                                   context)
                                               .iconConfig
                                               .likedIcon(
-                                                  color: Provider.of<
-                                                              AmityUIConfiguration>(
-                                                          context)
-                                                      .primaryColor),
+                                                  color: Color(0xff3DDAB4)),
                                           Text(
-                                              " ${snapshot.data?.reactionCount ?? 0}"),
+                                              " ${snapshot.data?.reactionCount ?? 0}",
+                                              style: TextStyle(
+                                                color: Color(0xff3DDAB4),
+                                              ),
+                                          
+                                          ),
                                         ],
                                       ),
                                     )
@@ -1321,12 +1358,15 @@ class ReplyCommentComponent extends StatelessWidget {
                                           Provider.of<AmityUIConfiguration>(
                                                   context)
                                               .iconConfig
-                                              .likeIcon(iconSize: 16),
+                                              .likeIcon(
+                                                iconSize: 16,
+                                                color: Color(0xff756548),
+                                              ),
                                           const Text(
                                             " Like",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w600,
-                                                color: Color(0xff898E9E),
+                                                color: Color(0xff756548),
                                                 fontSize: 15),
                                           ),
                                         ],
@@ -1349,7 +1389,7 @@ class ReplyCommentComponent extends StatelessWidget {
                               IconButton(
                                 icon: const Icon(
                                   Icons.more_horiz,
-                                  color: Color(0xff898E9E),
+                                  color: Color(0xff756548),
                                 ),
                                 onPressed: () {
                                   AmityGeneralCompomemt.showOptionsBottomSheet(
