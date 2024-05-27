@@ -77,8 +77,9 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
           ),
           actions: [
             TextButton(
-              onPressed: hasContent
-                  ? () async {
+              onPressed: () async{
+                hasContent && vm.textEditingController.text.isNotEmpty
+                  ? {
                       if (vm.isUploadComplete) {
                         if (widget.community == null) {
                           //creat post in user Timeline
@@ -88,7 +89,7 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
                             } else {}
-                          });
+                          })
                         } else {
                           //create post in Community
                           await vm.createPost(context,
@@ -106,11 +107,13 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                               //           ),
                               //         )));
                             }
-                          });
+                          })
                         }
                       }
                     }
-                  : null,
+                  : AmityDialog()
+                      .showAlertErrorDialog(title: "Attention Needed", message: 'Please write something about your post.');
+              },
               child: Text("Post",
                   style: TextStyle(
                       color: vm.isPostValid
@@ -178,24 +181,24 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                         _handleImageTap(context);
                       },
                     ),
-                    _iconButton(
-                      Icons.play_circle_outline,
-                      label: "Video",
-                      isEnable:
-                          vm.availableFileSelectionOptions()[MyFileType.video]!,
-                      onTap: () async {
-                        _handleVideoTap(context);
-                      },
-                    ),
-                    _iconButton(
-                      Icons.attach_file_outlined,
-                      label: "File",
-                      isEnable:
-                          vm.availableFileSelectionOptions()[MyFileType.file]!,
-                      onTap: () async {
-                        _handleFileTap(context);
-                      },
-                    ),
+                    // _iconButton(
+                    //   Icons.play_circle_outline,
+                    //   label: "Video",
+                    //   isEnable:
+                    //       vm.availableFileSelectionOptions()[MyFileType.video]!,
+                    //   onTap: () async {
+                    //     _handleVideoTap(context);
+                    //   },
+                    // ),
+                    // _iconButton(
+                    //   Icons.attach_file_outlined,
+                    //   label: "File",
+                    //   isEnable:
+                    //       vm.availableFileSelectionOptions()[MyFileType.file]!,
+                    //   onTap: () async {
+                    //     _handleFileTap(context);
+                    //   },
+                    // ),
                     _iconButton(
                       Icons.more_horiz,
                       isEnable: true,
@@ -288,31 +291,31 @@ class _AmityCreatePostV2ScreenState extends State<AmityCreatePostV2Screen> {
                       Navigator.pop(context);
                     },
                   ),
-                  ListTile(
-                    leading: _iconButton(Icons.attach_file_rounded,
-                        isEnable: true, label: "Attachment", onTap: () {}),
-                    title: const Text('Attachment',
-                    style: TextStyle(
-                        color: Color(0xff1E2034),
-                      ),),
-                    onTap: () {
-                      _handleFileTap(context);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: _iconButton(Icons.play_circle_outline_outlined,
-                        isEnable: true, label: "Video", onTap: () {}),
-                    title: const Text('Video',
-                      style: TextStyle(
-                        color: Color(0xff1E2034),
-                      ),
-                    ),
-                    onTap: () {
-                      _handleVideoTap(context);
-                      Navigator.pop(context);
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: _iconButton(Icons.attach_file_rounded,
+                  //       isEnable: true, label: "Attachment", onTap: () {}),
+                  //   title: const Text('Attachment',
+                  //   style: TextStyle(
+                  //       color: Color(0xff1E2034),
+                  //     ),),
+                  //   onTap: () {
+                  //     _handleFileTap(context);
+                  //     Navigator.pop(context);
+                  //   },
+                  // ),
+                  // ListTile(
+                  //   leading: _iconButton(Icons.play_circle_outline_outlined,
+                  //       isEnable: true, label: "Video", onTap: () {}),
+                  //   title: const Text('Video',
+                  //     style: TextStyle(
+                  //       color: Color(0xff1E2034),
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     _handleVideoTap(context);
+                  //     Navigator.pop(context);
+                  //   },
+                  // ),
                 ],
               ),
             ),
