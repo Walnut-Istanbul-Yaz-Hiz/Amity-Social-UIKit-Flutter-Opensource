@@ -121,44 +121,49 @@ class ProfileScreenState extends State<ProfileScreen> {
       actions: [
         TextButton(
           onPressed: () async {
-            if (Provider.of<ImagePickerVM>(context, listen: false).imageState !=
-                ImageState.loading) {
-              //edit profile
+            _displayNameController.text.isNotEmpty
+            ? {
+              if (Provider.of<ImagePickerVM>(context, listen: false).imageState !=
+                  ImageState.loading) {
+                //edit profile
 
-              if (Provider.of<ImagePickerVM>(context, listen: false)
-                      .amityImage !=
-                  null) {
-                log("Image was selected and will be adding to user profile...");
+                if (Provider.of<ImagePickerVM>(context, listen: false)
+                        .amityImage !=
+                    null) {
+                  log("Image was selected and will be adding to user profile..."),
 
-                await Provider.of<UserFeedVM>(context, listen: false)
-                    .editCurrentUserInfo(
-                        displayName: _displayNameController.text,
-                        description: _descriptionController.text,
-                        avatarFileId:
-                            Provider.of<ImagePickerVM>(context, listen: false)
-                                .amityImage
-                                ?.fileId);
-              } else {
-                log("No Image was selected and current avatarImage will be adding to user profile...");
-                await Provider.of<UserFeedVM>(context, listen: false)
-                    .editCurrentUserInfo(
-                        displayName: _displayNameController.text,
-                        description: _descriptionController.text,
-                        avatarFileId:
-                            Provider.of<AmityVM>(context, listen: false)
-                                .currentamityUser!
-                                .avatarFileId);
+                  await Provider.of<UserFeedVM>(context, listen: false)
+                      .editCurrentUserInfo(
+                          displayName: _displayNameController.text,
+                          description: _descriptionController.text,
+                          avatarFileId:
+                              Provider.of<ImagePickerVM>(context, listen: false)
+                                  .amityImage
+                                  ?.fileId),
+                } else {
+                  log("No Image was selected and current avatarImage will be adding to user profile..."),
+                  await Provider.of<UserFeedVM>(context, listen: false)
+                      .editCurrentUserInfo(
+                          displayName: _displayNameController.text,
+                          description: _descriptionController.text,
+                          avatarFileId:
+                              Provider.of<AmityVM>(context, listen: false)
+                                  .currentamityUser!
+                                  .avatarFileId),
+                },
+                // ignore: use_build_context_synchronously
+                await Provider.of<AmityVM>(context, listen: false)
+                    .refreshCurrentUserData()
+                    .then((value) {
+                  Navigator.of(context).pop();
+                  AmityDialog().showAlertErrorDialog(
+                      title: "Success!",
+                      message: "Profile updated successfully!");
+                })
               }
-              // ignore: use_build_context_synchronously
-              await Provider.of<AmityVM>(context, listen: false)
-                  .refreshCurrentUserData()
-                  .then((value) {
-                Navigator.of(context).pop();
-                AmityDialog().showAlertErrorDialog(
-                    title: "Success!",
-                    message: "Profile updated successfully!");
-              });
             }
+            : AmityDialog()
+                      .showAlertErrorDialog(title: "Error!", message: 'Display name field cannot be empty.');
           },
           child: Text(
             "Save",
