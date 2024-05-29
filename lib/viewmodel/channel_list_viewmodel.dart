@@ -22,7 +22,6 @@ class ChannelVM extends ChangeNotifier {
     return _amityChannelList
         .where((element) => !(element.isDeleted ?? false))
         .toList();
-     
   }
 
   Future<void> initVM() async {
@@ -76,22 +75,22 @@ class ChannelVM extends ChangeNotifier {
         _addUnreadCountToEachChannel(data);
 
         if (data.channels != null) {
-          //here write a code in data.channels if channel.isDeleted = false then add them to _amithChannelList 
-            for (var channel in data.channels!) {
-          // Check if the channel is not deleted
-          if (!(channel.isDeleted ?? false)) {
-            _addLatestMessage(channel);
-            _amityChannelList.add(channel);
-            String key =
-                channel.channelId! + AmityCoreClient.getCurrentUser().userId!;
-            if (channelUserMap[key] != null) {
-              var count =
-                  channel.messageCount! - channelUserMap[key]!.readToSegment!;
-              channel.setUnreadCount(count);
+          //here write a code in data.channels if channel.isDeleted = false then add them to _amithChannelList
+          for (var channel in data.channels!) {
+            // Check if the channel is not deleted
+            if (!(channel.isDeleted ?? false)) {
+              _addLatestMessage(channel);
+              _amityChannelList.add(channel);
+              String key =
+                  channel.channelId! + AmityCoreClient.getCurrentUser().userId!;
+              if (channelUserMap[key] != null) {
+                var count =
+                    channel.messageCount! - channelUserMap[key]!.readToSegment!;
+                channel.setUnreadCount(count);
+              }
             }
           }
         }
-      }
       } else {
         log(error.toString());
         await AmityDialog()
@@ -200,6 +199,32 @@ class ChannelVM extends ChangeNotifier {
     await dio
         .delete(
       "https://api.${env!.region}.amity.co/api/v3/channels/${channelId}",
+      options: Options(
+        headers: {'Authorization': 'Bearer ' + accessToken!},
+      ),
+    )
+        .then((value) {
+      log("channel delete success");
+      callback(true, null);
+    }).onError((error, stackTrace) async {
+      log("channel delete failed");
+      callback(false, error.toString());
+    });
+  }
+
+  Future<void> leaveConversationChannel(
+      String channelId, Function(bool? result, String? error) callback) async {
+    var accessToken = Provider.of<UserVM>(
+            NavigationService.navigatorKey.currentContext!,
+            listen: false)
+        .accessToken;
+
+    log(accessToken!);
+
+    var dio = Dio();
+    await dio
+        .delete(
+      "https://api.${env!.region}.amity.co/api/v3/channels/${channelId}/leave",
       options: Options(
         headers: {'Authorization': 'Bearer ' + accessToken!},
       ),

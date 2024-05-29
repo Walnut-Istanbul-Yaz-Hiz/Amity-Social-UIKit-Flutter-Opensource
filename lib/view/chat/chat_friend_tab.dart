@@ -126,13 +126,13 @@ class AmitySLEChannelScreenState extends State<AmitySLEChannelScreen> {
                                           child: Text("Cancel"),
                                         ),
                                         TextButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             Channels channel =
                                                 vm.getChannelList()[index];
 
                                             Provider.of<ChannelVM>(context,
                                                     listen: false)
-                                                .deleteConversationChannel(
+                                                .leaveConversationChannel(
                                               channel.channelId!,
                                               (result, error) {
                                                 setState(() {

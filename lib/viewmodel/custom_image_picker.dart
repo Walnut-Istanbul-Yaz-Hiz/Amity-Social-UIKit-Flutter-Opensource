@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'dart:io';
+import 'dart:io' if (dart.library.html) 'dart:html' as html;
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:flutter/material.dart';
