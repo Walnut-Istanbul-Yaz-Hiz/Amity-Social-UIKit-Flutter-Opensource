@@ -37,7 +37,7 @@ class UserSettingPage extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               elevation: 0.0,
-              title: Text("Setting",
+              title: Text("Settings",
                   style: Provider.of<AmityUIConfiguration>(context)
                       .titleTextStyle
                       .copyWith(
